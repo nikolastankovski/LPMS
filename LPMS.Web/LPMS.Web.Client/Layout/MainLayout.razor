@@ -1,0 +1,30 @@
+﻿@inherits LayoutComponentBase
+
+<RadzenLayout>
+    <ndHeader OnToggleSideBar="@IsExpandedSideBar"></ndHeader>
+    <ndSideBar IsExpandedSideBar="@isSideBarExpanded"></ndSideBar>
+    <RadzenBody>
+        <main id="main-container">
+            <article class="content px-4">
+                @Body
+            </article>
+        </main>
+    </RadzenBody>
+    @*<RadzenFooter>
+        Footer
+    </RadzenFooter>*@
+</RadzenLayout>
+
+@code {
+    private bool isSideBarExpanded = false;
+
+    private void IsExpandedSideBar(bool isExpanded)
+    {
+        isSideBarExpanded = isExpanded;
+    }
+}
+
+<RadzenContextMenu />
+<RadzenDialog />
+<RadzenContextMenu />
+<RadzenTooltip />

@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LPMS.API", "LPMS.API\LPMS.API.csproj", "{38B9AAA5-47F0-40F0-AE37-48D879340303}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LPMS.Infrastructure", "LPMS.Infrastructure\LPMS.Infrastructure.csproj", "{802B0EC6-0BFA-46C9-BF6D-DEDCBF6BEA0F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LPMS.Domain", "LPMS.Domain\LPMS.Domain.csproj", "{D0C9A1D2-CF00-4A94-BE78-68EC046F3DB9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LPMS.Shared", "LPMS.Shared\LPMS.Shared.csproj", "{933782F6-9664-4543-8A3A-D9E34DA4118F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Radzen.Blazor", "..\radzen-blazor\Radzen.Blazor\Radzen.Blazor.csproj", "{DEED33DA-E199-48C8-9701-225EC6C28465}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LPMS.Web", "LPMS.Web\LPMS.Web\LPMS.Web.csproj", "{A4D4D31E-06F6-4B13-88EE-889A7313391A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LPMS.Web.Client", "LPMS.Web\LPMS.Web.Client\LPMS.Web.Client.csproj", "{603AC917-004B-466D-84FD-A15057EEF9C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38B9AAA5-47F0-40F0-AE37-48D879340303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38B9AAA5-47F0-40F0-AE37-48D879340303}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38B9AAA5-47F0-40F0-AE37-48D879340303}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38B9AAA5-47F0-40F0-AE37-48D879340303}.Release|Any CPU.Build.0 = Release|Any CPU
+		{802B0EC6-0BFA-46C9-BF6D-DEDCBF6BEA0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{802B0EC6-0BFA-46C9-BF6D-DEDCBF6BEA0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{802B0EC6-0BFA-46C9-BF6D-DEDCBF6BEA0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{802B0EC6-0BFA-46C9-BF6D-DEDCBF6BEA0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0C9A1D2-CF00-4A94-BE78-68EC046F3DB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0C9A1D2-CF00-4A94-BE78-68EC046F3DB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0C9A1D2-CF00-4A94-BE78-68EC046F3DB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0C9A1D2-CF00-4A94-BE78-68EC046F3DB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{933782F6-9664-4543-8A3A-D9E34DA4118F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{933782F6-9664-4543-8A3A-D9E34DA4118F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{933782F6-9664-4543-8A3A-D9E34DA4118F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{933782F6-9664-4543-8A3A-D9E34DA4118F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEED33DA-E199-48C8-9701-225EC6C28465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEED33DA-E199-48C8-9701-225EC6C28465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEED33DA-E199-48C8-9701-225EC6C28465}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4D4D31E-06F6-4B13-88EE-889A7313391A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4D4D31E-06F6-4B13-88EE-889A7313391A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4D4D31E-06F6-4B13-88EE-889A7313391A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4D4D31E-06F6-4B13-88EE-889A7313391A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{603AC917-004B-466D-84FD-A15057EEF9C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{603AC917-004B-466D-84FD-A15057EEF9C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{603AC917-004B-466D-84FD-A15057EEF9C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{603AC917-004B-466D-84FD-A15057EEF9C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {217DF3DB-5DFD-4842-A289-FBB9F95BE91D}
+	EndGlobalSection
+EndGlobal

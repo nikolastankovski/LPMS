@@ -1,0 +1,2 @@
+# site modeli
+Scaffold-DbContext -Connection "Data Source=UNKNOWN;Initial Catalog=Lawyer;Persist Security Info=True;User ID=lawyer;Password=123law321!;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir DbModels -ContextDir "..\LPMS.Infrastructure\DbContext" -ContextNamespace "LPMS.Infrastructure.DbContext" -Context "LawDbContext" -Tables Client, Department -Force

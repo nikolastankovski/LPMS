@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\LPMS.Web.props" />
+</Project>

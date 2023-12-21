@@ -1,0 +1,12 @@
+C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagementSystem\LPMS.Domain\bin\Debug\net8.0\LPMS.Domain.deps.json
+C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagementSystem\LPMS.Domain\bin\Debug\net8.0\LPMS.Domain.dll
+C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagementSystem\LPMS.Domain\bin\Debug\net8.0\LPMS.Domain.pdb
+C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagementSystem\LPMS.Domain\obj\Debug\net8.0\LPMS.Domain.csproj.AssemblyReference.cache
+C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagementSystem\LPMS.Domain\obj\Debug\net8.0\LPMS.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagementSystem\LPMS.Domain\obj\Debug\net8.0\LPMS.Domain.AssemblyInfoInputs.cache
+C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagementSystem\LPMS.Domain\obj\Debug\net8.0\LPMS.Domain.AssemblyInfo.cs
+C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagementSystem\LPMS.Domain\obj\Debug\net8.0\LPMS.Domain.csproj.CoreCompileInputs.cache
+C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagementSystem\LPMS.Domain\obj\Debug\net8.0\LPMS.Domain.dll
+C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagementSystem\LPMS.Domain\obj\Debug\net8.0\refint\LPMS.Domain.dll
+C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagementSystem\LPMS.Domain\obj\Debug\net8.0\LPMS.Domain.pdb
+C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagementSystem\LPMS.Domain\obj\Debug\net8.0\ref\LPMS.Domain.dll

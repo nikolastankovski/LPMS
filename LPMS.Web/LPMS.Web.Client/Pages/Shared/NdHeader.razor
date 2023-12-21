@@ -1,0 +1,41 @@
+﻿<RadzenHeader class="px-2">
+    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="0">
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
+            <RadzenSidebarToggle Click="@ToggleSideBar" />
+        </RadzenStack>
+        <RadzenProfileMenu class="p-0 text-white">
+            <Template>
+                <i class="fa-solid fa-circle-user" style="font-size: 2rem"></i>
+            </Template>
+            <ChildContent>
+                <RadzenProfileMenuItem Text="Buttons" Path="buttons" Icon="account_circle"></RadzenProfileMenuItem>
+                <RadzenProfileMenuItem Text="Menu" Path="menu" Icon="line_weight"></RadzenProfileMenuItem>
+                <RadzenProfileMenuItem Text="FileInput" Path="fileinput" Icon="attach_file"></RadzenProfileMenuItem>
+                <RadzenProfileMenuItem Text="Dialog" Path="dialog" Icon="perm_media"></RadzenProfileMenuItem>
+                <RadzenProfileMenuItem Text="Notification" Path="notification" Icon="announcement"></RadzenProfileMenuItem>
+            </ChildContent>
+        </RadzenProfileMenu>
+    </RadzenStack>
+</RadzenHeader>
+
+@code {
+    private bool _isExpandedSideBar = false;
+
+    [Parameter]
+    public EventCallback<bool> OnToggleSideBar { get; set; }
+
+    public bool IsExpandedSideBar
+    {
+        get => _isExpandedSideBar;
+        set
+        {
+            _isExpandedSideBar = value;
+            OnToggleSideBar.InvokeAsync(value);
+        }
+    }
+
+    private void ToggleSideBar()
+    {
+        IsExpandedSideBar = !IsExpandedSideBar;
+    }
+}
