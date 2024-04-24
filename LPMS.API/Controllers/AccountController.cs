@@ -1,4 +1,5 @@
 ﻿using LPMS.Infrastructure.Data;
+using LPMS.Infrastructure.DbContexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,15 +9,15 @@ namespace LPMS.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly UserIdentityDbContext _userDbContext;
+        private readonly LPMSDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
 
-        public AccountController(UserIdentityDbContext userDbContext, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public AccountController(LPMSDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
+            _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
-            _userDbContext = userDbContext;
         }
 
         [HttpPost]

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LPMS.Infrastructure;
+namespace LPMS.Domain.Models.Entities;
 
 public partial class Reference
 {
@@ -13,9 +13,9 @@ public partial class Reference
 
     public string Name_MK { get; set; } = null!;
 
-    public string Description_EN { get; set; } = null!;
+    public string? Description_EN { get; set; }
 
-    public string Description_MK { get; set; } = null!;
+    public string? Description_MK { get; set; }
 
     public string Code { get; set; } = null!;
 

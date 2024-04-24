@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LPMS.Infrastructure;
+namespace LPMS.Domain;
 
 public partial class Division
 {

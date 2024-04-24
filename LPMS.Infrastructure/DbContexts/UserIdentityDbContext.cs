@@ -31,7 +31,11 @@ namespace LPMS.Infrastructure.Data
             base.OnModelCreating(builder);
 
             builder.Entity<ApplicationUser>().ToTable("ApplicationUser");
-            builder.Entity<ApplicationRole>().ToTable("ApplicationRole");
+            builder.Entity<ApplicationRole>(entity =>
+            {
+                entity.Property(x => x.Name).HasColumnName("Name_EN");
+                entity.ToTable("ApplicationRole");
+            });
             builder.Entity<ApplicationUserRole>().ToTable("ApplicationUserRole");
             builder.Entity<IdentityUserClaim<Guid>>().ToTable("ApplicationUserClaim");
             builder.Entity<IdentityUserLogin<Guid>>().ToTable("ApplicationUserLogin");

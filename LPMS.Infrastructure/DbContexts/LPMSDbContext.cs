@@ -128,6 +128,8 @@ public partial class LPMSDbContext : DbContext
 
             entity.ToTable("Reference");
 
+            entity.HasIndex(e => e.Code, "IX_Reference_Code");
+
             entity.Property(e => e.Code).HasMaxLength(50);
             entity.Property(e => e.CreatedOn)
                 .HasPrecision(3)
@@ -150,6 +152,8 @@ public partial class LPMSDbContext : DbContext
             entity.HasKey(e => e.ReferenceTypeID).HasName("PK_ReferenceType_ReferenceID");
 
             entity.ToTable("ReferenceType");
+
+            entity.HasIndex(e => e.Code, "IX_ReferenceType_Code").IsUnique();
 
             entity.Property(e => e.Code).HasMaxLength(50);
             entity.Property(e => e.CreatedOn)
