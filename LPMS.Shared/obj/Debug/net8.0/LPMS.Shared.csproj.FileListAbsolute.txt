@@ -9,3 +9,15 @@ C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagemen
 C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagementSystem\LPMS.Shared\obj\Debug\net8.0\refint\LPMS.Shared.dll
 C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagementSystem\LPMS.Shared\obj\Debug\net8.0\LPMS.Shared.pdb
 C:\Nikola\Programming\Local Projects\Active Projects\LegalProfessionalsManagementSystem\LPMS.Shared\obj\Debug\net8.0\ref\LPMS.Shared.dll
+C:\Nikola\Programming\Local Projects\Active Projects\LPMS\LPMS.Shared\bin\Debug\net8.0\LPMS.Shared.deps.json
+C:\Nikola\Programming\Local Projects\Active Projects\LPMS\LPMS.Shared\bin\Debug\net8.0\LPMS.Shared.dll
+C:\Nikola\Programming\Local Projects\Active Projects\LPMS\LPMS.Shared\bin\Debug\net8.0\LPMS.Shared.pdb
+C:\Nikola\Programming\Local Projects\Active Projects\LPMS\LPMS.Shared\obj\Debug\net8.0\LPMS.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Nikola\Programming\Local Projects\Active Projects\LPMS\LPMS.Shared\obj\Debug\net8.0\LPMS.Shared.AssemblyInfoInputs.cache
+C:\Nikola\Programming\Local Projects\Active Projects\LPMS\LPMS.Shared\obj\Debug\net8.0\LPMS.Shared.AssemblyInfo.cs
+C:\Nikola\Programming\Local Projects\Active Projects\LPMS\LPMS.Shared\obj\Debug\net8.0\LPMS.Shared.csproj.CoreCompileInputs.cache
+C:\Nikola\Programming\Local Projects\Active Projects\LPMS\LPMS.Shared\obj\Debug\net8.0\LPMS.Shared.sourcelink.json
+C:\Nikola\Programming\Local Projects\Active Projects\LPMS\LPMS.Shared\obj\Debug\net8.0\LPMS.Shared.dll
+C:\Nikola\Programming\Local Projects\Active Projects\LPMS\LPMS.Shared\obj\Debug\net8.0\refint\LPMS.Shared.dll
+C:\Nikola\Programming\Local Projects\Active Projects\LPMS\LPMS.Shared\obj\Debug\net8.0\LPMS.Shared.pdb
+C:\Nikola\Programming\Local Projects\Active Projects\LPMS\LPMS.Shared\obj\Debug\net8.0\ref\LPMS.Shared.dll

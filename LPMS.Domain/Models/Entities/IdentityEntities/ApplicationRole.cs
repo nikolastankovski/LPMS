@@ -1,0 +1,20 @@
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
+
+namespace LPMS.Domain.Models.Entities.IdentityEntities
+{
+    public class ApplicationRole : IdentityRole<Guid>
+    {
+        public Guid CreatedBy { get; set; }
+
+        [Column(TypeName = "datetime2(3)"), DataType(DataType.DateTime)]
+        public DateTime CreatedOn { get; set; }
+        public Guid? ModifiedBy { get; set; }
+
+        [Column(TypeName = "datetime2(3)"), DataType(DataType.DateTime)]
+        public DateTime? ModifiedOn { get; set; }
+        [Column(TypeName = "bit")]
+        public bool IsActive { get; set; }
+    }
+}

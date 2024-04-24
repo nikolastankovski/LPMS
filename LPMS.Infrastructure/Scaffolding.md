@@ -1,0 +1,5 @@
+## All tables
+Scaffold-DbContext -Connection "Data Source=UNKNOWN;Initial Catalog=LPMS;Persist Security Info=True;User ID=admin;Password=admin;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -UseDatabaseNames -ContextDir DbContexts -Context LPMSDbContext -OutputDir ../LPMS.Domain/Models/Entities -Tables Account,Client,Department,Division,Reference,ReferenceType -Force
+
+## Single table
+Scaffold-DbContext -Connection "Data Source=UNKNOWN;Initial Catalog=LPMS;Persist Security Info=True;User ID=admin;Password=admin;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -UseDatabaseNames -ContextDir DbContexts -Context LPMSDbContextSingle -OutputDir ../LPMS.Domain/Models/Entities -Tables Account -Force

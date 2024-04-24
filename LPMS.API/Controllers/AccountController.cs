@@ -1,6 +1,4 @@
-﻿using LPMS.Domain.DbModels.UserManagementModels;
-using LPMS.Infrastructure.Data;
-using Microsoft.AspNetCore.Http;
+﻿using LPMS.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,11 +8,11 @@ namespace LPMS.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly UserManagementDbContext _userDbContext;
+        private readonly UserIdentityDbContext _userDbContext;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
 
-        public AccountController(UserManagementDbContext userDbContext, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public AccountController(UserIdentityDbContext userDbContext, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -30,8 +28,7 @@ namespace LPMS.API.Controllers
                 Email = "stankovski.n@hotmail.com",
                 PhoneNumber = "1234567890",
                 EmailConfirmed = true,
-                PhoneNumberConfirmed = true,
-                CreatedOn = DateTime.Now
+                PhoneNumberConfirmed = true
             };
 
             await _userManager.CreateAsync(user);

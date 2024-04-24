@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "N771B3oudRsDB6KivBRqcQfK1QbpXk9he3f813kaYUWEONLHqgH5ojMzazhRZ1eKGHR7O1sOWPmhGRGKKr0PsQ==",
+  "dgSpecHash": "PCHUnaqe18btzQTrqcMYZSBze5wkEkm/01+Wd+mlizYrQhw2z9CN7nFp2vg6Hm2Wq5nFwnOEeLrDr+6o05dS+Q==",
   "success": true,
-  "projectFilePath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LegalProfessionalsManagementSystem\\LPMS.API\\LPMS.API.csproj",
+  "projectFilePath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LPMS\\LPMS.API\\LPMS.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nikola\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Nikola\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

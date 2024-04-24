@@ -4519,11 +4519,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LegalProfessionalsManagementSystem\\LPMS.Infrastructure\\LPMS.Infrastructure.csproj",
+      "projectUniqueName": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LPMS\\LPMS.Infrastructure\\LPMS.Infrastructure.csproj",
       "projectName": "LPMS.Infrastructure",
-      "projectPath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LegalProfessionalsManagementSystem\\LPMS.Infrastructure\\LPMS.Infrastructure.csproj",
+      "projectPath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LPMS\\LPMS.Infrastructure\\LPMS.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\Nikola\\.nuget\\packages\\",
-      "outputPath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LegalProfessionalsManagementSystem\\LPMS.Infrastructure\\obj\\",
+      "outputPath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LPMS\\LPMS.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Nikola\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -4540,8 +4540,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LegalProfessionalsManagementSystem\\LPMS.Domain\\LPMS.Domain.csproj": {
-              "projectPath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LegalProfessionalsManagementSystem\\LPMS.Domain\\LPMS.Domain.csproj"
+            "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LPMS\\LPMS.Domain\\LPMS.Domain.csproj": {
+              "projectPath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LPMS\\LPMS.Domain\\LPMS.Domain.csproj"
             }
           }
         }

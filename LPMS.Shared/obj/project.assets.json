@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LegalProfessionalsManagementSystem\\LPMS.Shared\\LPMS.Shared.csproj",
+      "projectUniqueName": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LPMS\\LPMS.Shared\\LPMS.Shared.csproj",
       "projectName": "LPMS.Shared",
-      "projectPath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LegalProfessionalsManagementSystem\\LPMS.Shared\\LPMS.Shared.csproj",
+      "projectPath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LPMS\\LPMS.Shared\\LPMS.Shared.csproj",
       "packagesPath": "C:\\Users\\Nikola\\.nuget\\packages\\",
-      "outputPath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LegalProfessionalsManagementSystem\\LPMS.Shared\\obj\\",
+      "outputPath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LPMS\\LPMS.Shared\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Nikola\\AppData\\Roaming\\NuGet\\NuGet.Config",

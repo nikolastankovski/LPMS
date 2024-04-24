@@ -1,12 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using LPMS.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
-using LPMS.Domain.DbModels.UserManagementModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<UserManagementDbContext>(options => options.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<UserIdentityDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<UserIdentityDbContext>(options => options.UseSqlServer(connectionString));
 
 // Add services to the container.
 /*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -28,7 +28,7 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
     options.Password.RequireLowercase = true;
     options.Password.RequireNonAlphanumeric = true;
 })
-.AddEntityFrameworkStores<UserManagementDbContext>()
+.AddEntityFrameworkStores<UserIdentityDbContext>()
 .AddDefaultTokenProviders();
 
 builder.Services.AddControllers();

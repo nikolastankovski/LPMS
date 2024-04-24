@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9x0kLP39LdHgwYIU3KPSqPyNiHcG01SHRFEuRTHMg8yQm6UyB7nEk+M09xWXJOzPTbDlRIFeAhuAq8aY0k75Xg==",
+  "dgSpecHash": "obamnSBnxjNf3yxJVp/kKgfueDSIwf2Z94qnxF7ECEdWHIRGJZ+yVDznJZC+vbT7ZXCe4ig1GM30dTP8minKVg==",
   "success": true,
-  "projectFilePath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LegalProfessionalsManagementSystem\\LPMS.Shared\\LPMS.Shared.csproj",
+  "projectFilePath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LPMS\\LPMS.Shared\\LPMS.Shared.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

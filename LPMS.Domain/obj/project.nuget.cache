@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yy+/WQC3vHu3ii0qYLAa9H22+mflRF7PLsRTcMg2viu7L5RPDpRRDKEwN4JUmdoK9oZCywPVv8i74TBKP7DFdw==",
+  "dgSpecHash": "XCsbkGySU4Q6DeBin5Utv7Nbz2Kzm9LxtKukuSo+6AUEPjQBYzwYODp961BktdkMNBX22D4pTOCtdXGPWPq6dA==",
   "success": true,
-  "projectFilePath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LegalProfessionalsManagementSystem\\LPMS.Domain\\LPMS.Domain.csproj",
+  "projectFilePath": "C:\\Nikola\\Programming\\Local Projects\\Active Projects\\LPMS\\LPMS.Domain\\LPMS.Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nikola\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\8.0.0\\microsoft.aspnetcore.cryptography.internal.8.0.0.nupkg.sha512",
     "C:\\Users\\Nikola\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\8.0.0\\microsoft.aspnetcore.cryptography.keyderivation.8.0.0.nupkg.sha512",
