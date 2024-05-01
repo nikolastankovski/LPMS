@@ -1,20 +1,23 @@
 using Microsoft.EntityFrameworkCore;
-using LPMS.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
-using LPMS.Domain.Interfaces.RepositoryInterfaces;
-using LPMS.Infrastructure.Repositories;
-using LPMS.Infrastructure.DbContexts;
 using System.Text.Json.Serialization;
+using LPMS.Infrastructure;
+using LPMS.Infrastructure.Data;
+using LPMS.Infrastructure.DbContexts;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using LPMS.Domain.Models.ConfigModels;
+using LPMS.API;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region DBCONTEXT & IDENTITY
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<LPMSDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddDbContext<UserIdentityDbContext>(options => options.UseSqlServer(connectionString));
-
-// Add services to the container.
-/*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));*/
 
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 {
@@ -34,16 +37,86 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 })
 .AddEntityFrameworkStores<UserIdentityDbContext>()
 .AddDefaultTokenProviders();
+#endregion
 
+#region JWT
+JWTConfig jwtConfig = builder.Configuration.GetSection("JWTConfig").Get<JWTConfig>() ?? new JWTConfig();
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.SaveToken = true;
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidateIssuerSigningKey = jwtConfig.ValidateIssuerSigningKey,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.IssuerSigningKey)),
+            ValidateIssuer = jwtConfig.ValidateIssuer,
+            ValidIssuer = jwtConfig.ValidIssuer,
+            ValidAudience = jwtConfig.ValidAudience,
+            ValidateAudience = jwtConfig.ValidateAudience,
+            RequireExpirationTime = jwtConfig.RequireExpirationTime,
+            ValidateLifetime = jwtConfig.ValidateLifetime,
+            ClockSkew = TimeSpan.FromSeconds(5)
+        };
+    });
+#endregion
+
+#region CUSTOM CONFIGS
+builder.Services.Configure<JWTConfig>(builder.Configuration.GetSection("JWTConfig"));
+builder.Services.AddScoped<JWTConfig>();
+
+builder.Services
+        .AddAPI()
+        .AddInfrastructure();
+#endregion
 
 builder.Services
     .AddControllers()
-    .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve); 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+    .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
-builder.Services.AddScoped<IReferenceRepository, ReferenceRepository>();
+
+builder.Services.AddEndpointsApiExplorer();
+#region SWAGGER
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "LPMS API", Version = "v1" });
+    //c.EnableAnnotations();
+    //c.SchemaFilter<CustomSchemaFilters>();
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Description = "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token in the text input below. Example: 'Bearer 123456abcdef'",
+        Scheme = "Bearer",
+        Type = SecuritySchemeType.ApiKey,
+        In = ParameterLocation.Header
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    },
+                    Scheme = "oauth2",
+                    Name = "Bearer",
+                    In = ParameterLocation.Header
+                },
+                new List<string>()
+            }
+        }
+    );
+});
+#endregion
 
 var app = builder.Build();
 
@@ -59,6 +132,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,7 +1,10 @@
-﻿using LPMS.Infrastructure.Data;
+﻿using LPMS.Domain.Interfaces.ServiceInterfaces;
+using LPMS.Domain.Models.ConfigModels;
+using LPMS.Infrastructure.Data;
 using LPMS.Infrastructure.DbContexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace LPMS.API.Controllers
 {
@@ -9,34 +12,19 @@ namespace LPMS.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly LPMSDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly IAccountService _accountService;
 
-        public AccountController(LPMSDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public AccountController(IAccountService accountService)
         {
-            _context = context;
-            _userManager = userManager;
-            _roleManager = roleManager;
+            _accountService = accountService;
         }
 
-        [HttpPost]
-        public async Task<bool> InsertAdminUser()
+        [HttpPost(nameof(GetToken))]
+
+        public async Task<string> GetToken(string email, string password)
         {
-            ApplicationUser user = new ApplicationUser()
-            {
-                UserName = "admin",
-                Email = "stankovski.n@hotmail.com",
-                PhoneNumber = "1234567890",
-                EmailConfirmed = true,
-                PhoneNumberConfirmed = true
-            };
-
-            await _userManager.CreateAsync(user);
-
-            await _userManager.AddToRoleAsync(user, "Administrator");
-
-            return true;
+            return await _accountService.LoginAsync(email, password);
         }
+
     }
 }

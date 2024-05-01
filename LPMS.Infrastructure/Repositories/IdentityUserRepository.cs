@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using LPMS.Infrastructure.Nomenclature;
+using Microsoft.AspNetCore.Identity;
 
 namespace LPMS.Infrastructure.Repositories
 {
-    public class IdentityUserRepository
+    public class IdentityUserRepository : IIdentityUserRepository
     {
         private readonly LPMSDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -35,20 +36,72 @@ namespace LPMS.Infrastructure.Repositories
             return await _roleManager.Roles.ToListAsync();
         }
 
-        public async Task<List<ApplicationRole>> GetUserRoles(ApplicationUser user)
+        public async Task<List<ApplicationRole>> GetUserRolesAsync(string userId)
         {
-            var roles = await _roleManager.Roles.ToListAsync();
-            return roles.ToList();
+            var user = await GetUserByIdAsync(userId);
+
+            if (user == null) return new List<ApplicationRole>();
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            if(!roles.Any()) return new List<ApplicationRole>();
+
+            var userRoles = await _roleManager.Roles.Where(x => roles.Contains(x.Name)).ToListAsync();
+
+            return userRoles;
         }
 
-        public async Task<ApplicationUser?> GetUserById(string id)
+        public async Task<List<ApplicationRole>> GetUserRolesAsync(ApplicationUser user)
+        {
+            if (user == null) return new List<ApplicationRole>();
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            if (!roles.Any()) return new List<ApplicationRole>();
+
+            var userRoles = await _roleManager.Roles.Where(x => roles.Contains(x.Name)).ToListAsync();
+
+            return userRoles;
+        }
+
+        public async Task<ApplicationUser?> GetUserByIdAsync(string id)
         {
             return await _userManager.FindByIdAsync(id);
         }
 
-        public async Task<ApplicationUser?> GetUserByEmail(string email)
+        public async Task<ApplicationUser?> GetUserByIdAsync(Guid id)
+        {
+            return await _userManager.FindByIdAsync(id.ToString());
+        }
+
+        public async Task<ApplicationUser?> GetUserByEmailAsync(string email)
         {
             return await _userManager.FindByEmailAsync(email);
+        }
+
+        public async Task<bool> IsUserInRoleAsync(string userId, string role) 
+        {
+            var user = await GetUserByIdAsync(userId);
+
+            return await _userManager.IsInRoleAsync(user, role);
+        }
+
+        public async Task<bool> IsUserInRolesAsync(string userId, List<string> roles)
+        {
+            var user = await GetUserByIdAsync(userId);
+
+            foreach(var role in roles)
+            {
+                if (await _userManager.IsInRoleAsync(user, role) == false)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public async Task<bool> IsCorrectPassword(ApplicationUser user, string password)
+        {
+            return await _userManager.CheckPasswordAsync(user, password);
         }
     }
 }
