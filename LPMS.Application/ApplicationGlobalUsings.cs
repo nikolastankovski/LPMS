@@ -8,6 +8,4 @@ global using LPMS.Domain.Models.Entities.IdentityEntities;
 global using LPMS.Domain.Interfaces.RepositoryInterfaces;
 global using LPMS.Domain.Interfaces.RepositoryInterfaces.BaseInterfaces;
 
-global using LPMS.Infrastructure.DbContexts;
-
 global using LPMS.Shared.Resources;

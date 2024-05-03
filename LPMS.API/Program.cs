@@ -1,16 +1,16 @@
+using System.Text;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using LPMS.API;
+using LPMS.Application;
 using LPMS.Infrastructure;
 using LPMS.Infrastructure.Data;
 using LPMS.Infrastructure.DbContexts;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using LPMS.Domain.Models.ConfigModels;
-using LPMS.API;
-using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -72,8 +72,9 @@ builder.Services.Configure<JWTConfig>(builder.Configuration.GetSection("JWTConfi
 builder.Services.AddScoped<JWTConfig>();
 
 builder.Services
-        .AddAPI()
-        .AddInfrastructure();
+        .AddApplication()
+        .AddInfrastructure()
+        .AddAPI();
 #endregion
 
 builder.Services

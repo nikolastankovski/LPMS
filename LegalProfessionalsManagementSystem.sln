@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LPMS.Domain", "LPMS.Domain\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LPMS.Shared", "LPMS.Shared\LPMS.Shared.csproj", "{933782F6-9664-4543-8A3A-D9E34DA4118F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LPMS.Application", "LPMS.Application\LPMS.Application.csproj", "{E099B86B-867F-4DF3-A39A-87543FD8EEAD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{933782F6-9664-4543-8A3A-D9E34DA4118F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{933782F6-9664-4543-8A3A-D9E34DA4118F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{933782F6-9664-4543-8A3A-D9E34DA4118F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E099B86B-867F-4DF3-A39A-87543FD8EEAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E099B86B-867F-4DF3-A39A-87543FD8EEAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E099B86B-867F-4DF3-A39A-87543FD8EEAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E099B86B-867F-4DF3-A39A-87543FD8EEAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
