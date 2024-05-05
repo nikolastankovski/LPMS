@@ -40,7 +40,7 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 #endregion
 
 #region JWT
-JWTConfig jwtConfig = builder.Configuration.GetSection("JWTConfig").Get<JWTConfig>() ?? new JWTConfig();
+JWTConfig jwtConfig = builder.Configuration.GetSection(JWTConfig.SectionName).Get<JWTConfig>() ?? new JWTConfig();
 builder.Services
     .AddAuthentication(options =>
     {
@@ -67,9 +67,11 @@ builder.Services
     });
 #endregion
 
-#region CUSTOM CONFIGS
-builder.Services.Configure<JWTConfig>(builder.Configuration.GetSection("JWTConfig"));
-builder.Services.AddScoped<JWTConfig>();
+#region CUSTOM SETTINGS
+builder.Services
+            .AddOptions<JWTConfig>()
+            .Bind(builder.Configuration.GetSection(JWTConfig.SectionName))
+            .ValidateOnStart();
 
 builder.Services
         .AddApplication()
@@ -80,7 +82,6 @@ builder.Services
 builder.Services
     .AddControllers()
     .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
-
 
 builder.Services.AddEndpointsApiExplorer();
 #region SWAGGER

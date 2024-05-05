@@ -20,7 +20,6 @@ public static class DependencyInjection
         services.AddScoped<ITokenService, TokenService>();
         #endregion
 
-
         return services;
     }
 }

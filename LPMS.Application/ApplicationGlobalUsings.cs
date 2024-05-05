@@ -1,5 +1,7 @@
 ﻿global using Microsoft.EntityFrameworkCore;
 
+global using FluentValidation;
+
 global using LPMS.Domain;
 global using LPMS.Domain.Models;
 global using LPMS.Domain.Models.CustomModels;

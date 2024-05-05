@@ -2,6 +2,7 @@
 {
     public class JWTConfig
     {
+        public const string SectionName = "JWTConfig";
         public bool ValidateIssuerSigningKey { get; init; }
         public string IssuerSigningKey { get; init; } = string.Empty;
         public bool ValidateIssuer { get; init; }

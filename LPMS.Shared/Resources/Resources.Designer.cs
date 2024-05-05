@@ -61,6 +61,15 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Code.
+        /// </summary>
+        public static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Successfully created!.
         /// </summary>
         public static string Create_Success {
@@ -79,6 +88,42 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description (English).
+        /// </summary>
+        public static string Description_EN {
+            get {
+                return ResourceManager.GetString("Description_EN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description (Macedonian).
+        /// </summary>
+        public static string Description_MK {
+            get {
+                return ResourceManager.GetString("Description_MK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name (English).
+        /// </summary>
+        public static string Name_EN {
+            get {
+                return ResourceManager.GetString("Name_EN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name (Macedonian).
+        /// </summary>
+        public static string Name_MK {
+            get {
+                return ResourceManager.GetString("Name_MK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unexpected error occured!.
         /// </summary>
         public static string Unexpected_Error {
@@ -93,6 +138,24 @@ namespace LPMS.Shared.Resources {
         public static string Update_Success {
             get {
                 return ResourceManager.GetString("Update_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {AttributeName} is a mandatory field!.
+        /// </summary>
+        public static string VLDMSG_Is_Required {
+            get {
+                return ResourceManager.GetString("VLDMSG_Is_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {AttributeName} can support up to {MaxChars} characters!.
+        /// </summary>
+        public static string VLDMSG_Max_Chars {
+            get {
+                return ResourceManager.GetString("VLDMSG_Max_Chars", resourceCulture);
             }
         }
     }

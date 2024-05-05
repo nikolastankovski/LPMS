@@ -117,16 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
   <data name="Create_Success" xml:space="preserve">
     <value>Successfully created!</value>
   </data>
   <data name="Delete_Success" xml:space="preserve">
     <value>Successfully deleted!</value>
   </data>
+  <data name="Description_EN" xml:space="preserve">
+    <value>Description (English)</value>
+  </data>
+  <data name="Description_MK" xml:space="preserve">
+    <value>Description (Macedonian)</value>
+  </data>
+  <data name="Name_EN" xml:space="preserve">
+    <value>Name (English)</value>
+  </data>
+  <data name="Name_MK" xml:space="preserve">
+    <value>Name (Macedonian)</value>
+  </data>
   <data name="Unexpected_Error" xml:space="preserve">
     <value>Unexpected error occured!</value>
   </data>
   <data name="Update_Success" xml:space="preserve">
     <value>Successfully updated!</value>
+  </data>
+  <data name="VLDMSG_Is_Required" xml:space="preserve">
+    <value>{AttributeName} is a mandatory field!</value>
+  </data>
+  <data name="VLDMSG_Max_Chars" xml:space="preserve">
+    <value>{AttributeName} can support up to {MaxChars} characters!</value>
   </data>
 </root>
