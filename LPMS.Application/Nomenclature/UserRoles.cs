@@ -2,8 +2,8 @@
 {
     public static class UserRoles
     {
-        public const string SuperAdministrator = "SUPERADMIN";
-        public const string Administrator = "ADMIN";
-        public const string BasicUser = "BASICUSER";
+        public const string SuperAdministrator = "SuperAdmin";
+        public const string Administrator = "Admin";
+        public const string BasicUser = "BasicUser";
     }
 }

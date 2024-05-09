@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Identity;
 
 namespace LPMS.Infrastructure.Repositories
 {
-    public class IdentityUserRepository : IIdentityUserRepository
+    public class SystemUserRepository : ISystemUserRepository
     {
         private readonly LPMSDbContext _context;
         private readonly UserManager<SystemUser> _userManager;
         private readonly RoleManager<SystemRole> _roleManager;
 
-        public IdentityUserRepository(LPMSDbContext context, UserManager<SystemUser> userManager, RoleManager<SystemRole> roleManager)
+        public SystemUserRepository(LPMSDbContext context, UserManager<SystemUser> userManager, RoleManager<SystemRole> roleManager)
         {
             _context = context;
             _userManager = userManager;

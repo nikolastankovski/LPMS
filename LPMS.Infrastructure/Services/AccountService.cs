@@ -7,10 +7,10 @@ namespace LPMS.Infrastructure.Services
     public class AccountService : IAccountService
     {
         private readonly IAccountRepository _accountRepository;
-        private readonly IIdentityUserRepository _identityUserRepository;
+        private readonly ISystemUserRepository _identityUserRepository;
         private readonly ITokenService _tokenService;
 
-        public AccountService(IAccountRepository accountRepository, IIdentityUserRepository identityUserRepository, ITokenService tokenService)
+        public AccountService(IAccountRepository accountRepository, ISystemUserRepository identityUserRepository, ITokenService tokenService)
         {
             _accountRepository = accountRepository;
             _identityUserRepository = identityUserRepository;

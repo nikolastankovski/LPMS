@@ -2,7 +2,7 @@
 
 namespace LPMS.Domain.Interfaces.RepositoryInterfaces
 {
-    public interface IIdentityUserRepository
+    public interface ISystemUserRepository
     {
         List<SystemUser> GetAllUsers();
         Task<List<SystemUser>> GetAllUsersAsync();

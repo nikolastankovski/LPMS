@@ -9,9 +9,9 @@ namespace LPMS.Infrastructure.Services
 {
     public class TokenService : ITokenService
     {
-        private readonly IIdentityUserRepository _identityUserRepository;
+        private readonly ISystemUserRepository _identityUserRepository;
         private readonly JWTConfig _jwtConfig;
-        public TokenService(IIdentityUserRepository identityUserRepository, IOptions<JWTConfig> jwtConfig)
+        public TokenService(ISystemUserRepository identityUserRepository, IOptions<JWTConfig> jwtConfig)
         {
             _identityUserRepository = identityUserRepository;
             _jwtConfig = jwtConfig.Value;
