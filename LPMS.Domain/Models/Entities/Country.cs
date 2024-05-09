@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace LPMS.Domain.Models.Entities;
 
-public partial class Account
+public partial class Country
 {
-    public Guid AccountID { get; set; }
+    public int CountryID { get; set; }
 
-    public Guid SystemUserId { get; set; }
+    public string? Name_EN { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string? Name_MK { get; set; }
 
     public Guid CreatedBy { get; set; }
 
@@ -19,5 +19,7 @@ public partial class Account
 
     public DateTime? ModifiedOn { get; set; }
 
-    public bool IsActive { get; set; }
+    public bool? IsActive { get; set; }
+
+    public virtual ICollection<City> Cities { get; set; } = new List<City>();
 }

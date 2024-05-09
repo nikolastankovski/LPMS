@@ -1,20 +1,20 @@
 ﻿using System.Globalization;
-using System.Text.RegularExpressions;
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
 
 namespace LPMS.Application.Validators
 {
     public class ReferenceValidator : AbstractValidator<Reference>
     {
-        private CultureInfo _clt = CultureInfo.GetCultureInfo("en-GB");
-        public ReferenceValidator() 
+        public ReferenceValidator(CultureInfo ci) 
         {
             var rm = Resources.ResourceManager;
             string vldMsgIsReq = nameof(Resources.VLDMSG_Is_Required);
-            string vldMsgMaxChars = nameof(Resources.VLDMSG_Max_Chars);
+            //string vldMsgMaxChars = nameof(Resources.VLDMSG_Max_Chars);
 
             RuleFor(x => x.Name_EN)
                         .NotEmpty()
-                        .WithMessage(rm.GetString(vldMsgIsReq, _clt).Replace("{AttributeName}", rm.GetString(nameof(Resources.Name_EN), _clt)))
+                        .WithMessage(rm.GetString(vldMsgIsReq, ci).Replace("{AttributeName}", rm.GetString(nameof(Resources.Name_EN), ci)))
                         .MaximumLength(256)
                         .WithMessage(Resources.VLDMSG_Max_Chars.Replace("{AttributeName}", Resources.Name_EN).Replace("{MaxChars}", "256"));
 
@@ -42,11 +42,6 @@ namespace LPMS.Application.Validators
                         .WithMessage(Resources.VLDMSG_Is_Required.Replace("{AttributeName}", Resources.Code))
                         .MaximumLength(50)
                         .WithMessage(Resources.VLDMSG_Max_Chars.Replace("{AttributeName}", Resources.Code).Replace("{MaxChars}", "50"));
-        }
-
-        public void SetCulture(string culture = "en-GB")
-        {
-            _clt = CultureInfo.GetCultureInfo(culture);
         }
     }
 }

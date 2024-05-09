@@ -6,32 +6,39 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LPMS.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class IdentityMigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "dbo");
+
             migrationBuilder.CreateTable(
-                name: "ApplicationRole",
+                name: "SystemRole",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DisplayName_EN = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    DisplayName_MK = table.Column<string>(type: "nvarchar(256)", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2(3)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2(3)", nullable: false, defaultValueSql: "GETDATE()"),
                     ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2(3)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValueSql: "1"),
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplicationRole", x => x.Id);
+                    table.PrimaryKey("PK_SystemRole", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ApplicationUser",
+                name: "SystemUser",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -49,17 +56,18 @@ namespace LPMS.Infrastructure.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
                     AccessFailedCount = table.Column<int>(type: "int", nullable: false),
-                    PasswordChangePeriodInMonths = table.Column<int>(type: "int", nullable: false),
-                    LastPasswordChange = table.Column<DateTime>(type: "datetime2(3)", nullable: false),
-                    LastLogin = table.Column<DateTime>(type: "datetime2(3)", nullable: false)
+                    PasswordChangePeriodInMonths = table.Column<int>(type: "int", nullable: false, defaultValueSql: "12"),
+                    LastPasswordChange = table.Column<DateTime>(type: "datetime2(3)", nullable: false, defaultValueSql: "GETDATE()"),
+                    LastLogin = table.Column<DateTime>(type: "datetime2(3)", nullable: false, defaultValueSql: "GETDATE()"),
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplicationUser", x => x.Id);
+                    table.PrimaryKey("PK_SystemUser", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ApplicationRoleClaim",
+                name: "SystemRoleClaim",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -70,17 +78,19 @@ namespace LPMS.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplicationRoleClaim", x => x.Id);
+                    table.PrimaryKey("PK_SystemRoleClaim", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ApplicationRoleClaim_ApplicationRole_RoleId",
+                        name: "FK_SystemRoleClaim_SystemRole_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "ApplicationRole",
+                        principalSchema: "dbo",
+                        principalTable: "SystemRole",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ApplicationUserClaim",
+                name: "SystemUserClaim",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -91,17 +101,19 @@ namespace LPMS.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplicationUserClaim", x => x.Id);
+                    table.PrimaryKey("PK_SystemUserClaim", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ApplicationUserClaim_ApplicationUser_UserId",
+                        name: "FK_SystemUserClaim_SystemUser_UserId",
                         column: x => x.UserId,
-                        principalTable: "ApplicationUser",
+                        principalSchema: "dbo",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ApplicationUserLogin",
+                name: "SystemUserLogin",
+                schema: "dbo",
                 columns: table => new
                 {
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -111,43 +123,48 @@ namespace LPMS.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplicationUserLogin", x => new { x.LoginProvider, x.ProviderKey });
+                    table.PrimaryKey("PK_SystemUserLogin", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_ApplicationUserLogin_ApplicationUser_UserId",
+                        name: "FK_SystemUserLogin_SystemUser_UserId",
                         column: x => x.UserId,
-                        principalTable: "ApplicationUser",
+                        principalSchema: "dbo",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ApplicationUserRole",
+                name: "SystemUserRole",
+                schema: "dbo",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2(3)", nullable: false, defaultValueSql: "getdate()")
+                    CreatedOn = table.Column<DateTime>(type: "datetime2(3)", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplicationUserRole", x => new { x.UserId, x.RoleId });
+                    table.PrimaryKey("PK_SystemUserRole", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_ApplicationUserRole_ApplicationRole_RoleId",
+                        name: "FK_SystemUserRole_SystemRole_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "ApplicationRole",
+                        principalSchema: "dbo",
+                        principalTable: "SystemRole",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ApplicationUserRole_ApplicationUser_UserId",
+                        name: "FK_SystemUserRole_SystemUser_UserId",
                         column: x => x.UserId,
-                        principalTable: "ApplicationUser",
+                        principalSchema: "dbo",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ApplicationUserToken",
+                name: "SystemUserToken",
+                schema: "dbo",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -157,52 +174,60 @@ namespace LPMS.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplicationUserToken", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.PrimaryKey("PK_SystemUserToken", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
-                        name: "FK_ApplicationUserToken_ApplicationUser_UserId",
+                        name: "FK_SystemUserToken_SystemUser_UserId",
                         column: x => x.UserId,
-                        principalTable: "ApplicationUser",
+                        principalSchema: "dbo",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
-                table: "ApplicationRole",
+                schema: "dbo",
+                table: "SystemRole",
                 column: "NormalizedName",
                 unique: true,
                 filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ApplicationRoleClaim_RoleId",
-                table: "ApplicationRoleClaim",
+                name: "IX_SystemRoleClaim_RoleId",
+                schema: "dbo",
+                table: "SystemRoleClaim",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
-                table: "ApplicationUser",
+                schema: "dbo",
+                table: "SystemUser",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
-                table: "ApplicationUser",
+                schema: "dbo",
+                table: "SystemUser",
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ApplicationUserClaim_UserId",
-                table: "ApplicationUserClaim",
+                name: "IX_SystemUserClaim_UserId",
+                schema: "dbo",
+                table: "SystemUserClaim",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ApplicationUserLogin_UserId",
-                table: "ApplicationUserLogin",
+                name: "IX_SystemUserLogin_UserId",
+                schema: "dbo",
+                table: "SystemUserLogin",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ApplicationUserRole_RoleId",
-                table: "ApplicationUserRole",
+                name: "IX_SystemUserRole_RoleId",
+                schema: "dbo",
+                table: "SystemUserRole",
                 column: "RoleId");
         }
 
@@ -210,25 +235,32 @@ namespace LPMS.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ApplicationRoleClaim");
+                name: "SystemRoleClaim",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "ApplicationUserClaim");
+                name: "SystemUserClaim",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "ApplicationUserLogin");
+                name: "SystemUserLogin",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "ApplicationUserRole");
+                name: "SystemUserRole",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "ApplicationUserToken");
+                name: "SystemUserToken",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "ApplicationRole");
+                name: "SystemRole",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "ApplicationUser");
+                name: "SystemUser",
+                schema: "dbo");
         }
     }
 }

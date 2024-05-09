@@ -3,15 +3,17 @@ using System.Collections.Generic;
 
 namespace LPMS.Domain.Models.Entities;
 
-public partial class Department
+public partial class City
 {
-    public int DepartmentID { get; set; }
+    public int CityID { get; set; }
 
-    public string Name_EN { get; set; } = null!;
+    public int CountryId { get; set; }
+
+    public string? Name_EN { get; set; }
 
     public string Name_MK { get; set; } = null!;
 
-    public string Code { get; set; } = null!;
+    public string PostalCode { get; set; } = null!;
 
     public Guid CreatedBy { get; set; }
 
@@ -21,7 +23,7 @@ public partial class Department
 
     public DateTime? ModifiedOn { get; set; }
 
-    public bool IsActive { get; set; }
+    public bool? IsActive { get; set; }
 
-    public virtual ICollection<Division> Divisions { get; set; } = new List<Division>();
+    public virtual Country Country { get; set; } = null!;
 }

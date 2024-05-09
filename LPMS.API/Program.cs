@@ -17,9 +17,9 @@ var builder = WebApplication.CreateBuilder(args);
 #region DBCONTEXT & IDENTITY
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<LPMSDbContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddDbContext<UserIdentityDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<SystemUserDbContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+builder.Services.AddIdentity<SystemUser, SystemRole>(options =>
 {
     options.User.RequireUniqueEmail = true;
 
@@ -35,7 +35,7 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
     options.Password.RequireLowercase = true;
     options.Password.RequireNonAlphanumeric = true;
 })
-.AddEntityFrameworkStores<UserIdentityDbContext>()
+.AddEntityFrameworkStores<SystemUserDbContext>()
 .AddDefaultTokenProviders();
 #endregion
 

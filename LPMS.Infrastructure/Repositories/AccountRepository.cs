@@ -1,4 +1,8 @@
-﻿using LPMS.Infrastructure.Services.SharedServices;
+﻿using FluentValidation;
+using LanguageExt.Common;
+using LPMS.Application.Validators;
+using LPMS.Infrastructure.Services.SharedServices;
+using System.Globalization;
 using System.Linq.Expressions;
 
 namespace LPMS.Infrastructure.Repositories
@@ -11,127 +15,83 @@ namespace LPMS.Infrastructure.Repositories
             _context = context;
         }
 
-        public CRUDResponse Create(Account entity)
+        public Result<Account> Create(Account entity, string culture)
         {
+            var validator = new AccountValidator(CultureInfo.GetCultureInfo(culture));
+            var validationResult = validator.Validate(entity);
+
+            if (!validationResult.IsValid)
+            {
+                var errors = new ValidationException(validationResult.Errors);
+                return new Result<Account>(errors);
+            }
+
             try
             {
                 _context.Accounts.Add(entity);
                 _context.SaveChanges();
 
-                return new CRUDResponse { IsSuccess = true, Message = Resources.Create_Success };
+                return entity;
             }
             catch (Exception e)
             {
                 Logger.Log(e);
-                return new CRUDResponse { IsSuccess = false, Message = Resources.Unexpected_Error };
+                return new Result<Account>(e);
             }
         }
 
-        public CRUDResponse Create(List<Account> entities)
+        public async Task<Result<Account>> CreateAsync(Account entity, string culture)
         {
-            try
-            {
-                _context.Accounts.AddRange(entities);
-                _context.SaveChanges();
+            var validator = new AccountValidator(CultureInfo.GetCultureInfo(culture));
+            var validationResult = await validator.ValidateAsync(entity);
 
-                return new CRUDResponse { IsSuccess = true, Message = Resources.Create_Success };
-            }
-            catch (Exception e)
+            if (!validationResult.IsValid)
             {
-                Logger.Log(e);
-                return new CRUDResponse { IsSuccess = false, Message = Resources.Unexpected_Error };
+                var errors = new ValidationException(validationResult.Errors);
+                return new Result<Account>(errors);
             }
-        }
 
-        public async Task<CRUDResponse> CreateAsync(Account entity)
-        {
             try
             {
                 await _context.Accounts.AddAsync(entity);
                 await _context.SaveChangesAsync();
 
-                return new CRUDResponse { IsSuccess = true, Message = Resources.Create_Success };
+                return entity;
             }
             catch (Exception e)
             {
                 Logger.Log(e);
-                return new CRUDResponse { IsSuccess = false, Message = Resources.Unexpected_Error };
+                return new Result<Account>(e);
             }
         }
 
-        public async Task<CRUDResponse> CreateAsync(List<Account> entities)
-        {
-            try
-            {
-                await _context.Accounts.AddRangeAsync(entities);
-                await _context.SaveChangesAsync();
-
-                return new CRUDResponse { IsSuccess = true, Message = Resources.Create_Success };
-            }
-            catch (Exception e)
-            {
-                Logger.Log(e);
-                return new CRUDResponse { IsSuccess = false, Message = Resources.Unexpected_Error };
-            }
-        }
-
-        public CRUDResponse Delete(object id)
+        public Result<bool> Delete(object id)
         {
             try
             {
                 _context.Accounts.Where(x => x.AccountID == (Guid)id).ExecuteDelete();
 
-                return new CRUDResponse { IsSuccess = true, Message = Resources.Delete_Success };
+                return true;
             }
             catch (Exception e)
             {
                 Logger.Log(e);
-                return new CRUDResponse { IsSuccess = false, Message = Resources.Unexpected_Error };
+                return new Result<bool>(e);
             }
         }
 
-        public CRUDResponse Delete(List<object> ids)
-        {
-            try
-            {
-                _context.Accounts.Where(x => ids.Contains(x.AccountID)).ExecuteDelete();
-
-                return new CRUDResponse { IsSuccess = true, Message = Resources.Delete_Success };
-            }
-            catch (Exception e)
-            {
-                Logger.Log(e);
-                return new CRUDResponse { IsSuccess = false, Message = Resources.Unexpected_Error };
-            }
-        }
-
-        public async Task<CRUDResponse> DeleteAsync(object id)
+        public async Task<Result<bool>> DeleteAsync(object id)
         {
             try
             {
                 await _context.Accounts.Where(x => x.AccountID == (Guid)id).ExecuteDeleteAsync();
 
-                return new CRUDResponse { IsSuccess = true, Message = Resources.Delete_Success };
+                return true;
             }
             catch (Exception e)
             {
                 Logger.Log(e);
-                return new CRUDResponse { IsSuccess = false, Message = Resources.Unexpected_Error };
-            }
-        }
-
-        public async Task<CRUDResponse> DeleteAsync(List<object> ids)
-        {
-            try
-            {
-                await _context.Accounts.Where(x => ids.Contains(x.AccountID)).ExecuteDeleteAsync();
-
-                return new CRUDResponse { IsSuccess = true, Message = Resources.Delete_Success };
-            }
-            catch (Exception e)
-            {
-                Logger.Log(e);
-                return new CRUDResponse { IsSuccess = false, Message = Resources.Unexpected_Error };
+                return new Result<bool>(e);
             }
         }
 
@@ -209,8 +169,17 @@ namespace LPMS.Infrastructure.Repositories
             return await _context.Accounts.FindAsync(id);
         }
 
-        public CRUDResponse Update(Account entity, Guid modifiedBy)
+        public Result<bool> Update(Account entity, Guid modifiedBy, string culture)
         {
+            var validator = new AccountValidator(CultureInfo.GetCultureInfo(culture));
+            var validationResult = validator.Validate(entity);
+
+            if (!validationResult.IsValid)
+            {
+                var errors = new ValidationException(validationResult.Errors);
+                return new Result<bool>(errors);
+            }
+
             try
             {
                 _context.Accounts
@@ -221,34 +190,26 @@ namespace LPMS.Infrastructure.Repositories
                         .SetProperty(x => x.ModifiedOn, DateTime.Now)
                     );
 
-                return new CRUDResponse { IsSuccess = true, Message = Resources.Update_Success };
-            }
-            catch (Exception)
-            {
-                return new CRUDResponse { IsSuccess = false, Message = Resources.Unexpected_Error };
-            }
-        }
-
-        public CRUDResponse Update(List<Account> entities, Guid modifiedBy)
-        {
-            try
-            {
-                foreach (var entity in entities)
-                {
-                    Update(entity, modifiedBy);
-                }
-
-                return new CRUDResponse { IsSuccess = true, Message = Resources.Update_Success };
+                return true;
             }
             catch (Exception e)
             {
                 Logger.Log(e);
-                return new CRUDResponse { IsSuccess = false, Message = Resources.Unexpected_Error };
+                return new Result<bool>(e);
             }
         }
 
-        public async Task<CRUDResponse> UpdateAsync(Account entity, Guid modifiedBy)
+        public async Task<Result<bool>> UpdateAsync(Account entity, Guid modifiedBy, string culture)
         {
+            var validator = new AccountValidator(CultureInfo.GetCultureInfo(culture));
+            var validationResult = validator.Validate(entity);
+
+            if (!validationResult.IsValid)
+            {
+                var errors = new ValidationException(validationResult.Errors);
+                return new Result<bool>(errors);
+            }
+
             try
             {
                 await _context.Accounts
@@ -259,30 +220,12 @@ namespace LPMS.Infrastructure.Repositories
                             .SetProperty(x => x.ModifiedOn, DateTime.Now)
                         );
 
-                return new CRUDResponse { IsSuccess = true, Message = Resources.Update_Success };
+                return true;
             }
             catch (Exception e)
             {
                 Logger.Log(e);
-                return new CRUDResponse { IsSuccess = false, Message = Resources.Unexpected_Error };
-            }
-        }
-
-        public async Task<CRUDResponse> UpdateAsync(List<Account> entities, Guid modifiedBy)
-        {
-            try
-            {
-                foreach (var entity in entities)
-                {
-                    await UpdateAsync(entity, modifiedBy);
-                }
-
-                return new CRUDResponse { IsSuccess = true, Message = Resources.Update_Success };
-            }
-            catch (Exception e)
-            {
-                Logger.Log(e);
-                return new CRUDResponse { IsSuccess = false, Message = Resources.Unexpected_Error };
+                return new Result<bool>(e);
             }
         }
     }

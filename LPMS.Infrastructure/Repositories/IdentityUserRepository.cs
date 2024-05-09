@@ -6,75 +6,75 @@ namespace LPMS.Infrastructure.Repositories
     public class IdentityUserRepository : IIdentityUserRepository
     {
         private readonly LPMSDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly UserManager<SystemUser> _userManager;
+        private readonly RoleManager<SystemRole> _roleManager;
 
-        public IdentityUserRepository(LPMSDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public IdentityUserRepository(LPMSDbContext context, UserManager<SystemUser> userManager, RoleManager<SystemRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
         }
 
-        public List<ApplicationUser> GetAllUsers()
+        public List<SystemUser> GetAllUsers()
         {
             return _userManager.Users.ToList();
         }
 
-        public async Task<List<ApplicationUser>> GetAllUsersAsync()
+        public async Task<List<SystemUser>> GetAllUsersAsync()
         {
             return await _userManager.Users.ToListAsync();
         }
 
-        public List<ApplicationRole> GetAllRoles()
+        public List<SystemRole> GetAllRoles()
         {
             return _roleManager.Roles.ToList();
         }
 
-        public async Task<List<ApplicationRole>> GetAllRolesAsync()
+        public async Task<List<SystemRole>> GetAllRolesAsync()
         {
             return await _roleManager.Roles.ToListAsync();
         }
 
-        public async Task<List<ApplicationRole>> GetUserRolesAsync(string userId)
+        public async Task<List<SystemRole>> GetUserRolesAsync(string userId)
         {
             var user = await GetUserByIdAsync(userId);
 
-            if (user == null) return new List<ApplicationRole>();
+            if (user == null) return new List<SystemRole>();
 
             var roles = await _userManager.GetRolesAsync(user);
 
-            if(!roles.Any()) return new List<ApplicationRole>();
+            if(!roles.Any()) return new List<SystemRole>();
 
             var userRoles = await _roleManager.Roles.Where(x => roles.Contains(x.Name)).ToListAsync();
 
             return userRoles;
         }
 
-        public async Task<List<ApplicationRole>> GetUserRolesAsync(ApplicationUser user)
+        public async Task<List<SystemRole>> GetUserRolesAsync(SystemUser user)
         {
-            if (user == null) return new List<ApplicationRole>();
+            if (user == null) return new List<SystemRole>();
 
             var roles = await _userManager.GetRolesAsync(user);
 
-            if (!roles.Any()) return new List<ApplicationRole>();
+            if (!roles.Any()) return new List<SystemRole>();
 
             var userRoles = await _roleManager.Roles.Where(x => roles.Contains(x.Name)).ToListAsync();
 
             return userRoles;
         }
 
-        public async Task<ApplicationUser?> GetUserByIdAsync(string id)
+        public async Task<SystemUser?> GetUserByIdAsync(string id)
         {
             return await _userManager.FindByIdAsync(id);
         }
 
-        public async Task<ApplicationUser?> GetUserByIdAsync(Guid id)
+        public async Task<SystemUser?> GetUserByIdAsync(Guid id)
         {
             return await _userManager.FindByIdAsync(id.ToString());
         }
 
-        public async Task<ApplicationUser?> GetUserByEmailAsync(string email)
+        public async Task<SystemUser?> GetUserByEmailAsync(string email)
         {
             return await _userManager.FindByEmailAsync(email);
         }
@@ -99,7 +99,7 @@ namespace LPMS.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<bool> IsCorrectPassword(ApplicationUser user, string password)
+        public async Task<bool> IsCorrectPassword(SystemUser user, string password)
         {
             return await _userManager.CheckPasswordAsync(user, password);
         }

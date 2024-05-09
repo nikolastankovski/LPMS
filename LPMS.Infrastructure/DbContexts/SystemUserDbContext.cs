@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using LanguageExt;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
+using System.Reflection.Emit;
 
 namespace LPMS.Infrastructure.Data
 {
-    public partial class UserIdentityDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid, IdentityUserClaim<Guid>, ApplicationUserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
+    public partial class SystemUserDbContext : IdentityDbContext<SystemUser, SystemRole, Guid, IdentityUserClaim<Guid>, SystemUserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
     {
-        public UserIdentityDbContext() { }
-        public UserIdentityDbContext(DbContextOptions<UserIdentityDbContext> options)
+        public SystemUserDbContext() { }
+        public SystemUserDbContext(DbContextOptions<SystemUserDbContext> options)
             : base(options)
         {
         }
@@ -30,17 +32,30 @@ namespace LPMS.Infrastructure.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<ApplicationUser>().ToTable("ApplicationUser");
-            builder.Entity<ApplicationRole>(entity =>
+            builder.HasDefaultSchema("dbo");
+
+            builder.Entity<SystemUser>(entity =>
             {
-                entity.Property(x => x.Name).HasColumnName("Name_EN");
-                entity.ToTable("ApplicationRole");
+                entity.ToTable(nameof(SystemUser));
+                entity.Property(x => x.PasswordChangePeriodInMonths).HasDefaultValueSql("12");
+                entity.Property(x => x.LastLogin).HasDefaultValueSql("GETDATE()");
+                entity.Property(x => x.LastPasswordChange).HasDefaultValueSql("GETDATE()");
             });
-            builder.Entity<ApplicationUserRole>().ToTable("ApplicationUserRole");
-            builder.Entity<IdentityUserClaim<Guid>>().ToTable("ApplicationUserClaim");
-            builder.Entity<IdentityUserLogin<Guid>>().ToTable("ApplicationUserLogin");
-            builder.Entity<IdentityUserToken<Guid>>().ToTable("ApplicationUserToken");
-            builder.Entity<IdentityRoleClaim<Guid>>().ToTable("ApplicationRoleClaim");
+            builder.Entity<SystemRole>(entity =>
+            {
+                entity.ToTable(nameof(SystemRole));
+                entity.Property(x => x.CreatedOn).HasDefaultValueSql("GETDATE()");
+                entity.Property(x => x.IsActive).HasDefaultValueSql("1");
+            });
+            builder.Entity<SystemUserRole>(entity =>
+            {
+                entity.ToTable(nameof(SystemUserRole));
+                entity.Property(x => x.CreatedOn).HasDefaultValueSql("GETDATE()");
+            });
+            builder.Entity<IdentityUserClaim<Guid>>().ToTable("SystemUserClaim");
+            builder.Entity<IdentityUserLogin<Guid>>().ToTable("SystemUserLogin");
+            builder.Entity<IdentityUserToken<Guid>>().ToTable("SystemUserToken");
+            builder.Entity<IdentityRoleClaim<Guid>>().ToTable("SystemRoleClaim");
 
             OnModelCreatingPartial(builder);
         }

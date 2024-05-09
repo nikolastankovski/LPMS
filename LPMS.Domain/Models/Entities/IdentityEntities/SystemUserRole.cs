@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace LPMS.Domain.Models.Entities.IdentityEntities
 {
-    public class ApplicationUserRole : IdentityUserRole<Guid>
+    public class SystemUserRole : IdentityUserRole<Guid>
     {
         public Guid CreatedBy { get; set; }
 

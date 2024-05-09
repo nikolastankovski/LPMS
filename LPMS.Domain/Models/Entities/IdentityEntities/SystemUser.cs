@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace LPMS.Domain.Models.Entities.IdentityEntities
 {
-    public class ApplicationUser : IdentityUser<Guid>
+    public class SystemUser : IdentityUser<Guid>
     {
         public int PasswordChangePeriodInMonths { get; set; }
 

@@ -1,14 +1,9 @@
 ﻿using LPMS.Domain.Interfaces.ServiceInterfaces;
-using LPMS.Domain.Models.ConfigModels;
-using LPMS.Infrastructure.Data;
-using LPMS.Infrastructure.DbContexts;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace LPMS.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/{culture}/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -20,9 +15,9 @@ namespace LPMS.API.Controllers
         }
 
         [HttpPost(nameof(GetToken))]
-
-        public async Task<string> GetToken(string email, string password)
+        public async Task<string> GetToken(string culture, string email, string password)
         {
+            _accountService.Test();
             return await _accountService.LoginAsync(email, password);
         }
 

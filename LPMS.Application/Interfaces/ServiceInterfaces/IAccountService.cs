@@ -9,5 +9,6 @@ namespace LPMS.Domain.Interfaces.ServiceInterfaces
     public interface IAccountService
     {
         Task<string> LoginAsync(string email, string password);
+        void Test();
     }
 }

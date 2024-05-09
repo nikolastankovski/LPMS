@@ -4,28 +4,26 @@ using LPMS.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace LPMS.Infrastructure.Migrations
 {
-    [DbContext(typeof(UserIdentityDbContext))]
-    [Migration("20240424135326_Identity2Migration")]
-    partial class Identity2Migration
+    [DbContext(typeof(SystemUserDbContext))]
+    partial class SystemUserDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasDefaultSchema("dbo")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("LPMS.Domain.Models.Entities.IdentityEntities.ApplicationRole", b =>
+            modelBuilder.Entity("LPMS.Domain.Models.Entities.IdentityEntities.SystemRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,10 +37,22 @@ namespace LPMS.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2(3)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2(3)")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("DisplayName_EN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("DisplayName_MK")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("1");
 
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
@@ -52,11 +62,6 @@ namespace LPMS.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("Name_EN");
-
-                    b.Property<string>("Name_MK")
-                        .IsRequired()
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
@@ -70,10 +75,10 @@ namespace LPMS.Infrastructure.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("ApplicationRole", (string)null);
+                    b.ToTable("SystemRole", "dbo");
                 });
 
-            modelBuilder.Entity("LPMS.Domain.Models.Entities.IdentityEntities.ApplicationUser", b =>
+            modelBuilder.Entity("LPMS.Domain.Models.Entities.IdentityEntities.SystemUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,10 +99,14 @@ namespace LPMS.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("LastLogin")
-                        .HasColumnType("datetime2(3)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2(3)")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<DateTime>("LastPasswordChange")
-                        .HasColumnType("datetime2(3)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2(3)")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -114,7 +123,9 @@ namespace LPMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<int>("PasswordChangePeriodInMonths")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("12");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -145,10 +156,10 @@ namespace LPMS.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("ApplicationUser", (string)null);
+                    b.ToTable("SystemUser", "dbo");
                 });
 
-            modelBuilder.Entity("LPMS.Domain.Models.Entities.IdentityEntities.ApplicationUserRole", b =>
+            modelBuilder.Entity("LPMS.Domain.Models.Entities.IdentityEntities.SystemUserRole", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -160,13 +171,15 @@ namespace LPMS.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2(3)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2(3)")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("ApplicationUserRole", (string)null);
+                    b.ToTable("SystemUserRole", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -190,7 +203,7 @@ namespace LPMS.Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("ApplicationRoleClaim", (string)null);
+                    b.ToTable("SystemRoleClaim", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
@@ -214,7 +227,7 @@ namespace LPMS.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ApplicationUserClaim", (string)null);
+                    b.ToTable("SystemUserClaim", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
@@ -235,7 +248,7 @@ namespace LPMS.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ApplicationUserLogin", (string)null);
+                    b.ToTable("SystemUserLogin", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -254,18 +267,18 @@ namespace LPMS.Infrastructure.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("ApplicationUserToken", (string)null);
+                    b.ToTable("SystemUserToken", "dbo");
                 });
 
-            modelBuilder.Entity("LPMS.Domain.Models.Entities.IdentityEntities.ApplicationUserRole", b =>
+            modelBuilder.Entity("LPMS.Domain.Models.Entities.IdentityEntities.SystemUserRole", b =>
                 {
-                    b.HasOne("LPMS.Domain.Models.Entities.IdentityEntities.ApplicationRole", null)
+                    b.HasOne("LPMS.Domain.Models.Entities.IdentityEntities.SystemRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LPMS.Domain.Models.Entities.IdentityEntities.ApplicationUser", null)
+                    b.HasOne("LPMS.Domain.Models.Entities.IdentityEntities.SystemUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -274,7 +287,7 @@ namespace LPMS.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("LPMS.Domain.Models.Entities.IdentityEntities.ApplicationRole", null)
+                    b.HasOne("LPMS.Domain.Models.Entities.IdentityEntities.SystemRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -283,7 +296,7 @@ namespace LPMS.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("LPMS.Domain.Models.Entities.IdentityEntities.ApplicationUser", null)
+                    b.HasOne("LPMS.Domain.Models.Entities.IdentityEntities.SystemUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -292,7 +305,7 @@ namespace LPMS.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("LPMS.Domain.Models.Entities.IdentityEntities.ApplicationUser", null)
+                    b.HasOne("LPMS.Domain.Models.Entities.IdentityEntities.SystemUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -301,7 +314,7 @@ namespace LPMS.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("LPMS.Domain.Models.Entities.IdentityEntities.ApplicationUser", null)
+                    b.HasOne("LPMS.Domain.Models.Entities.IdentityEntities.SystemUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

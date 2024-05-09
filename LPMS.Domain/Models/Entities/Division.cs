@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LPMS.Domain;
+namespace LPMS.Domain.Models.Entities;
 
 public partial class Division
 {

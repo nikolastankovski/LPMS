@@ -4,16 +4,16 @@ namespace LPMS.Domain.Interfaces.RepositoryInterfaces
 {
     public interface IIdentityUserRepository
     {
-        List<ApplicationUser> GetAllUsers();
-        Task<List<ApplicationUser>> GetAllUsersAsync();
-        Task<List<ApplicationRole>> GetAllRolesAsync();
-        Task<List<ApplicationRole>> GetUserRolesAsync(string userId);
-        Task<List<ApplicationRole>> GetUserRolesAsync(ApplicationUser user);
-        Task<ApplicationUser?> GetUserByIdAsync(string id);
-        Task<ApplicationUser?> GetUserByIdAsync(Guid id);
-        Task<ApplicationUser?> GetUserByEmailAsync(string email);
+        List<SystemUser> GetAllUsers();
+        Task<List<SystemUser>> GetAllUsersAsync();
+        Task<List<SystemRole>> GetAllRolesAsync();
+        Task<List<SystemRole>> GetUserRolesAsync(string userId);
+        Task<List<SystemRole>> GetUserRolesAsync(SystemUser user);
+        Task<SystemUser?> GetUserByIdAsync(string id);
+        Task<SystemUser?> GetUserByIdAsync(Guid id);
+        Task<SystemUser?> GetUserByEmailAsync(string email);
         Task<bool> IsUserInRoleAsync(string userId, string role);
         Task<bool> IsUserInRolesAsync(string userId, List<string> roles);
-        Task<bool> IsCorrectPassword(ApplicationUser user, string password);
+        Task<bool> IsCorrectPassword(SystemUser user, string password);
     }
 }

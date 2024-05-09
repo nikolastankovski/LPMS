@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using LPMS.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace LPMS.Infrastructure.DbContexts;
 
@@ -19,7 +15,11 @@ public partial class LPMSDbContext : DbContext
 
     public virtual DbSet<Account> Accounts { get; set; }
 
+    public virtual DbSet<City> Cities { get; set; }
+
     public virtual DbSet<Client> Clients { get; set; }
+
+    public virtual DbSet<Country> Countries { get; set; }
 
     public virtual DbSet<Department> Departments { get; set; }
 
@@ -49,7 +49,7 @@ public partial class LPMSDbContext : DbContext
         {
             entity.HasKey(e => e.AccountID).HasName("PK_Account_AccountID");
 
-            entity.ToTable("Account");
+            entity.ToTable("Account", "core");
 
             entity.Property(e => e.AccountID).HasDefaultValueSql("(newid())");
             entity.Property(e => e.CreatedOn)
@@ -60,11 +60,32 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.Name).HasMaxLength(256);
         });
 
+        modelBuilder.Entity<City>(entity =>
+        {
+            entity.HasKey(e => e.CityID).HasName("PK_City_CityID");
+
+            entity.ToTable("City", "core");
+
+            entity.Property(e => e.CreatedOn)
+                .HasPrecision(3)
+                .HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.ModifiedOn).HasPrecision(3);
+            entity.Property(e => e.Name_EN).HasMaxLength(500);
+            entity.Property(e => e.Name_MK).HasMaxLength(500);
+            entity.Property(e => e.PostalCode).HasMaxLength(50);
+
+            entity.HasOne(d => d.Country).WithMany(p => p.Cities)
+                .HasForeignKey(d => d.CountryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_City_Country");
+        });
+
         modelBuilder.Entity<Client>(entity =>
         {
             entity.HasKey(e => e.ClientID).HasName("PK_Client_ClientID");
 
-            entity.ToTable("Client");
+            entity.ToTable("Client", "core");
 
             entity.Property(e => e.Address).HasMaxLength(500);
             entity.Property(e => e.Address2).HasMaxLength(500);
@@ -85,11 +106,26 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.UniqueIdentificationNumber).HasMaxLength(13);
         });
 
+        modelBuilder.Entity<Country>(entity =>
+        {
+            entity.HasKey(e => e.CountryID).HasName("PK_Country_CountryID");
+
+            entity.ToTable("Country", "core");
+
+            entity.Property(e => e.CreatedOn)
+                .HasPrecision(3)
+                .HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.ModifiedOn).HasPrecision(3);
+            entity.Property(e => e.Name_EN).HasMaxLength(500);
+            entity.Property(e => e.Name_MK).HasMaxLength(500);
+        });
+
         modelBuilder.Entity<Department>(entity =>
         {
             entity.HasKey(e => e.DepartmentID).HasName("PK_Department_DeparmentID");
 
-            entity.ToTable("Department");
+            entity.ToTable("Department", "core");
 
             entity.Property(e => e.Code).HasMaxLength(50);
             entity.Property(e => e.CreatedOn)
@@ -105,7 +141,7 @@ public partial class LPMSDbContext : DbContext
         {
             entity.HasKey(e => e.DivisionID).HasName("PK_Division_DivisionID");
 
-            entity.ToTable("Division");
+            entity.ToTable("Division", "core");
 
             entity.Property(e => e.Code).HasMaxLength(50);
             entity.Property(e => e.CreatedOn)
@@ -126,7 +162,7 @@ public partial class LPMSDbContext : DbContext
         {
             entity.HasKey(e => e.ReferenceID).HasName("PK_Reference_ReferenceID");
 
-            entity.ToTable("Reference");
+            entity.ToTable("Reference", "core");
 
             entity.HasIndex(e => e.Code, "IX_Reference_Code");
 
@@ -151,7 +187,7 @@ public partial class LPMSDbContext : DbContext
         {
             entity.HasKey(e => e.ReferenceTypeID).HasName("PK_ReferenceType_ReferenceID");
 
-            entity.ToTable("ReferenceType");
+            entity.ToTable("ReferenceType", "core");
 
             entity.HasIndex(e => e.Code, "IX_ReferenceType_Code").IsUnique();
 

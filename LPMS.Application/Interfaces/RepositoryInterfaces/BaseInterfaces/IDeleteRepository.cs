@@ -1,12 +1,13 @@
-﻿using LPMS.Domain.Models.CustomModels;
+﻿using LanguageExt.Common;
+using LPMS.Domain.Models.CustomModels;
 
 namespace LPMS.Domain.Interfaces.RepositoryInterfaces.BaseInterfaces
 {
     public interface IDeleteRepository<TModel> where TModel : class
     {
-        CRUDResponse Delete(object id);
-        CRUDResponse Delete(List<object> ids);
-        Task<CRUDResponse> DeleteAsync(object id);
-        Task<CRUDResponse> DeleteAsync(List<object> ids);
+        Result<bool> Delete(object id);
+        //Result<TModel> Delete(List<object> ids, string culture);
+        Task<Result<bool>> DeleteAsync(object id);
+        //Task<Result<TModel>> DeleteAsync(List<object> ids, string culture);
     }
 }
