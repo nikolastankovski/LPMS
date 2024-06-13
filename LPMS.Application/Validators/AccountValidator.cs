@@ -17,6 +17,6 @@ namespace LPMS.Application.Validators
                         .MaximumLength(256)
                         .WithMessage(Resources.VLDMSG_Max_Chars.Replace("{AttributeName}", Resources.Name_EN).Replace("{MaxChars}", "256"));
 
-        }
+        }   
     }
 }

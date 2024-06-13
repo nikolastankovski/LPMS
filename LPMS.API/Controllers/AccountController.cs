@@ -1,5 +1,7 @@
 ﻿using LPMS.Domain.Interfaces.ServiceInterfaces;
+using LPMS.Domain.Models.RnRModels.Login;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace LPMS.API.Controllers
 {
@@ -14,11 +16,10 @@ namespace LPMS.API.Controllers
             _accountService = accountService;
         }
 
-        [HttpPost(nameof(GetToken))]
-        public async Task<string> GetToken(string culture, string email, string password)
+        [HttpPost(nameof(Login))]
+        public async Task<string> Login(string culture, LoginRequest request)
         {
-            _accountService.Test();
-            return await _accountService.LoginAsync(email, password);
+            return await _accountService.LoginAsync(request, CultureInfo.GetCultureInfo(culture));
         }
 
     }

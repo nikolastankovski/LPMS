@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LPMS.Domain.Models.RnRModels.Login;
+using System.Globalization;
 
 namespace LPMS.Domain.Interfaces.ServiceInterfaces
 {
     public interface IAccountService
     {
-        Task<string> LoginAsync(string email, string password);
+        Task<string> LoginAsync(LoginRequest request, CultureInfo ci);
         void Test();
     }
 }

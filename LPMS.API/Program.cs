@@ -11,6 +11,7 @@ using LPMS.Infrastructure;
 using LPMS.Infrastructure.Data;
 using LPMS.Infrastructure.DbContexts;
 using LPMS.Domain.Models.ConfigModels;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,11 +80,15 @@ builder.Services
         .AddAPI();
 #endregion
 
+Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
+builder.Host.UseSerilog();
+
 builder.Services
     .AddControllers()
     .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
 builder.Services.AddEndpointsApiExplorer();
+
 #region SWAGGER
 builder.Services.AddSwaggerGen(c =>
 {
@@ -131,6 +136,8 @@ if (app.Environment.IsDevelopment())
         opt.DefaultModelsExpandDepth(-1);
     });
 }
+
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 

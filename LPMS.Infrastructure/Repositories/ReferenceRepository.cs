@@ -1,15 +1,16 @@
-﻿using LPMS.Infrastructure.Services.SharedServices;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace LPMS.Infrastructure.Repositories
 {
     public class ReferenceRepository : IReferenceRepository
     {
         private readonly LPMSDbContext _context;
+
         public ReferenceRepository(LPMSDbContext context) 
         {
             _context = context;
         }
+
         public List<Reference> Get(Expression<Func<Reference, bool>>? filter = null, Expression<Func<Reference, int, Reference>>? select = null, Func<IQueryable<Reference>, IOrderedQueryable<Reference>>? orderBy = null, string includeProperties = "")
         {
             IQueryable<Reference> query = _context.References;

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using LanguageExt.Common;
+using LPMS.Application.ExtensionMethods;
 using LPMS.Application.Validators;
-using LPMS.Infrastructure.Services.SharedServices;
 using System.Globalization;
 using System.Linq.Expressions;
 
@@ -15,28 +15,26 @@ namespace LPMS.Infrastructure.Repositories
             _context = context;
         }
 
-        public Result<Account> Create(Account entity, string culture)
+        public CRUDResult Create(Account entity, CultureInfo culture)
         {
-            var validator = new AccountValidator(CultureInfo.GetCultureInfo(culture));
-            var validationResult = validator.Validate(entity);
+            var validation = entity.Validate(culture);
 
-            if (!validationResult.IsValid)
-            {
-                var errors = new ValidationException(validationResult.Errors);
-                return new Result<Account>(errors);
-            }
+            if (!validation.IsValid)
+                return new CRUDResult(Errors: validation.GetErrors(), IsSuccess: false);
 
             try
             {
                 _context.Accounts.Add(entity);
                 _context.SaveChanges();
 
-                return entity;
+                return new CRUDResult(IsSuccess: true);
             }
             catch (Exception e)
             {
-                Logger.Log(e);
-                return new Result<Account>(e);
+                Log.Error(exception: e, e.Message);
+
+                string? unexpectedError = Resources.ResourceManager.GetString(nameof(Resources.Unexpected_Error), culture);
+                return new CRUDResult(Errors: [unexpectedError], IsSuccess: false);
             }
         }
 
@@ -60,7 +58,6 @@ namespace LPMS.Infrastructure.Repositories
             }
             catch (Exception e)
             {
-                Logger.Log(e);
                 return new Result<Account>(e);
             }
         }
@@ -75,7 +72,6 @@ namespace LPMS.Infrastructure.Repositories
             }
             catch (Exception e)
             {
-                Logger.Log(e);
                 return new Result<bool>(e);
             }
         }
@@ -90,7 +86,6 @@ namespace LPMS.Infrastructure.Repositories
             }
             catch (Exception e)
             {
-                Logger.Log(e);
                 return new Result<bool>(e);
             }
         }
@@ -194,7 +189,6 @@ namespace LPMS.Infrastructure.Repositories
             }
             catch (Exception e)
             {
-                Logger.Log(e);
                 return new Result<bool>(e);
             }
         }
@@ -224,7 +218,6 @@ namespace LPMS.Infrastructure.Repositories
             }
             catch (Exception e)
             {
-                Logger.Log(e);
                 return new Result<bool>(e);
             }
         }

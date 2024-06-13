@@ -2,7 +2,7 @@
 
 namespace LPMS.Infrastructure.Services.SharedServices
 {
-    public static class Logger
+    /*public static class Logger
     {
         public enum LogLevel { Debug, Info, Critical }
 
@@ -54,5 +54,5 @@ namespace LPMS.Infrastructure.Services.SharedServices
 
             return filePath;
         }
-    }
+    }*/
 }
