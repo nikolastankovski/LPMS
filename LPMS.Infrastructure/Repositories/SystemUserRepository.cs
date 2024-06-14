@@ -1,5 +1,4 @@
-﻿using LPMS.Infrastructure.Nomenclature;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace LPMS.Infrastructure.Repositories
 {

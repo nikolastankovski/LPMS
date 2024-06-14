@@ -106,6 +106,15 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to dd/MM/yyyy HH:mm.
+        /// </summary>
+        public static string DT_FullDateFormat {
+            get {
+                return ResourceManager.GetString("DT_FullDateFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name (English).
         /// </summary>
         public static string Name_EN {

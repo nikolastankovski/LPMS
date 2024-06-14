@@ -1,7 +1,5 @@
-﻿using FluentValidation;
-using LanguageExt.Common;
+﻿using LanguageExt.Common;
 using LPMS.Application.ExtensionMethods;
-using LPMS.Application.Validators;
 using System.Globalization;
 using System.Linq.Expressions;
 
@@ -31,34 +29,33 @@ namespace LPMS.Infrastructure.Repositories
             }
             catch (Exception e)
             {
-                Log.Error(exception: e, e.Message);
+                Log.Error(exception: e, messageTemplate: e.Message);
 
                 string? unexpectedError = Resources.ResourceManager.GetString(nameof(Resources.Unexpected_Error), culture);
                 return new CRUDResult(Errors: [unexpectedError], IsSuccess: false);
             }
         }
 
-        public async Task<Result<Account>> CreateAsync(Account entity, string culture)
+        public async Task<CRUDResult> CreateAsync(Account entity, CultureInfo culture)
         {
-            var validator = new AccountValidator(CultureInfo.GetCultureInfo(culture));
-            var validationResult = await validator.ValidateAsync(entity);
+            var validation = entity.Validate(culture);
 
-            if (!validationResult.IsValid)
-            {
-                var errors = new ValidationException(validationResult.Errors);
-                return new Result<Account>(errors);
-            }
+            if (!validation.IsValid)
+                return new CRUDResult(Errors: validation.GetErrors(), IsSuccess: false);
 
             try
             {
                 await _context.Accounts.AddAsync(entity);
                 await _context.SaveChangesAsync();
 
-                return entity;
+                return new CRUDResult(IsSuccess: true);
             }
             catch (Exception e)
             {
-                return new Result<Account>(e);
+                Log.Error(exception: e, messageTemplate: e.Message);
+
+                string? unexpectedError = Resources.ResourceManager.GetString(nameof(Resources.Unexpected_Error), culture);
+                return new CRUDResult(Errors: [unexpectedError], IsSuccess: false);
             }
         }
 
@@ -164,16 +161,12 @@ namespace LPMS.Infrastructure.Repositories
             return await _context.Accounts.FindAsync(id);
         }
 
-        public Result<bool> Update(Account entity, Guid modifiedBy, string culture)
+        public CRUDResult Update(Account entity, Guid modifiedBy, CultureInfo culture)
         {
-            var validator = new AccountValidator(CultureInfo.GetCultureInfo(culture));
-            var validationResult = validator.Validate(entity);
+            var validation = entity.Validate(culture);
 
-            if (!validationResult.IsValid)
-            {
-                var errors = new ValidationException(validationResult.Errors);
-                return new Result<bool>(errors);
-            }
+            if (!validation.IsValid)
+                return new CRUDResult(Errors: validation.GetErrors(), IsSuccess: false);
 
             try
             {
@@ -183,26 +176,26 @@ namespace LPMS.Infrastructure.Repositories
                         .SetProperty(x => x.Name, entity.Name)
                         .SetProperty(x => x.ModifiedBy, modifiedBy)
                         .SetProperty(x => x.ModifiedOn, DateTime.Now)
+                        .SetProperty(x => x.IsActive, entity.IsActive)
                     );
 
-                return true;
+                return new CRUDResult(IsSuccess: true);
             }
             catch (Exception e)
             {
-                return new Result<bool>(e);
+                Log.Error(exception: e, messageTemplate: e.Message);
+
+                string? unexpectedError = Resources.ResourceManager.GetString(nameof(Resources.Unexpected_Error), culture);
+                return new CRUDResult(Errors: [unexpectedError], IsSuccess: false);
             }
         }
 
-        public async Task<Result<bool>> UpdateAsync(Account entity, Guid modifiedBy, string culture)
+        public async Task<CRUDResult> UpdateAsync(Account entity, Guid modifiedBy, CultureInfo culture)
         {
-            var validator = new AccountValidator(CultureInfo.GetCultureInfo(culture));
-            var validationResult = validator.Validate(entity);
+            var validation = entity.Validate(culture);
 
-            if (!validationResult.IsValid)
-            {
-                var errors = new ValidationException(validationResult.Errors);
-                return new Result<bool>(errors);
-            }
+            if (!validation.IsValid)
+                return new CRUDResult(Errors: validation.GetErrors(), IsSuccess: false);
 
             try
             {
@@ -212,13 +205,17 @@ namespace LPMS.Infrastructure.Repositories
                             .SetProperty(x => x.Name, entity.Name)
                             .SetProperty(x => x.ModifiedBy, modifiedBy)
                             .SetProperty(x => x.ModifiedOn, DateTime.Now)
+                            .SetProperty(x => x.IsActive, entity.IsActive)
                         );
 
-                return true;
+                return new CRUDResult(IsSuccess: true);
             }
             catch (Exception e)
             {
-                return new Result<bool>(e);
+                Log.Error(exception: e, messageTemplate: e.Message);
+
+                string? unexpectedError = Resources.ResourceManager.GetString(nameof(Resources.Unexpected_Error), culture);
+                return new CRUDResult(Errors: [unexpectedError], IsSuccess: false);
             }
         }
     }

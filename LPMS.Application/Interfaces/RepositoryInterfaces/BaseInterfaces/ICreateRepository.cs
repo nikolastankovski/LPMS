@@ -8,7 +8,7 @@ namespace LPMS.Domain.Interfaces.RepositoryInterfaces.BaseInterfaces
     {
         CRUDResult Create(TModel entity, CultureInfo culture);
         //Result<TModel> Create(List<TModel> entities, string culture);
-        Task<Result<TModel>> CreateAsync(TModel entity, string culture);
+        Task<CRUDResult> CreateAsync(TModel entity, CultureInfo culture);
         //Task<Result<TModel>> CreateAsync(List<TModel> entities, string culture);
     }
 }

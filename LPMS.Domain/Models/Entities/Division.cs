@@ -7,8 +7,6 @@ public partial class Division
 {
     public int DivisionID { get; set; }
 
-    public int DepartmentId { get; set; }
-
     public string Name_EN { get; set; } = null!;
 
     public string Name_MK { get; set; } = null!;
@@ -23,7 +21,9 @@ public partial class Division
 
     public DateTime? ModifiedOn { get; set; }
 
-    public bool IsActive { get; set; }
+    public bool? IsActive { get; set; }
 
-    public virtual Department Department { get; set; } = null!;
+    public virtual ICollection<AccountxDepartmentxDivision> AccountxDepartmentxDivisions { get; set; } = new List<AccountxDepartmentxDivision>();
+
+    public virtual ICollection<DepartmentxDivision> DepartmentxDivisions { get; set; } = new List<DepartmentxDivision>();
 }

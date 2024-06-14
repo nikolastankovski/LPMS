@@ -132,6 +132,9 @@
   <data name="Description_MK" xml:space="preserve">
     <value>Description (Macedonian)</value>
   </data>
+  <data name="DT_FullDateFormat" xml:space="preserve">
+    <value>dd/MM/yyyy HH:mm</value>
+  </data>
   <data name="Name_EN" xml:space="preserve">
     <value>Name (English)</value>
   </data>

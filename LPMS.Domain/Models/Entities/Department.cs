@@ -21,7 +21,9 @@ public partial class Department
 
     public DateTime? ModifiedOn { get; set; }
 
-    public bool IsActive { get; set; }
+    public bool? IsActive { get; set; }
 
-    public virtual ICollection<Division> Divisions { get; set; } = new List<Division>();
+    public virtual ICollection<AccountxDepartmentxDivision> AccountxDepartmentxDivisions { get; set; } = new List<AccountxDepartmentxDivision>();
+
+    public virtual ICollection<DepartmentxDivision> DepartmentxDivisions { get; set; } = new List<DepartmentxDivision>();
 }

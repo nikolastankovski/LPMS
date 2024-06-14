@@ -20,4 +20,6 @@ public partial class Account
     public DateTime? ModifiedOn { get; set; }
 
     public bool? IsActive { get; set; }
+
+    public virtual ICollection<AccountxDepartmentxDivision> AccountxDepartmentxDivisions { get; set; } = new List<AccountxDepartmentxDivision>();
 }

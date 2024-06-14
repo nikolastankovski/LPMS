@@ -27,7 +27,7 @@ public partial class Reference
 
     public DateTime? ModifiedOn { get; set; }
 
-    public bool IsActive { get; set; }
+    public bool? IsActive { get; set; }
 
     public virtual ReferenceType ReferenceType { get; set; } = null!;
 }
