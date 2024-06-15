@@ -61,7 +61,7 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Code.
+        ///   Looks up a localized string similar to Код.
         /// </summary>
         public static string Code {
             get {
@@ -70,7 +70,7 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Successfully created!.
+        ///   Looks up a localized string similar to Успешно креирано!.
         /// </summary>
         public static string Create_Success {
             get {
@@ -79,7 +79,7 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Successfully deleted!.
+        ///   Looks up a localized string similar to Успешно избришано!.
         /// </summary>
         public static string Delete_Success {
             get {
@@ -88,7 +88,7 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description (English).
+        ///   Looks up a localized string similar to Опис (англиски).
         /// </summary>
         public static string Description_EN {
             get {
@@ -97,7 +97,7 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description (Macedonian).
+        ///   Looks up a localized string similar to Опис (македонски).
         /// </summary>
         public static string Description_MK {
             get {
@@ -115,7 +115,16 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name (English).
+        ///   Looks up a localized string similar to Погрешен емаил или лозинка!.
+        /// </summary>
+        public static string Incorrect_credentials {
+            get {
+                return ResourceManager.GetString("Incorrect_credentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Назив (англиски).
         /// </summary>
         public static string Name_EN {
             get {
@@ -124,7 +133,7 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name (Macedonian).
+        ///   Looks up a localized string similar to Назив (македонски).
         /// </summary>
         public static string Name_MK {
             get {
@@ -133,7 +142,7 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unexpected error occured!.
+        ///   Looks up a localized string similar to Се случи неочекувана грешка!.
         /// </summary>
         public static string Unexpected_Error {
             get {
@@ -142,7 +151,7 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Successfully updated!.
+        ///   Looks up a localized string similar to Успешно променето!.
         /// </summary>
         public static string Update_Success {
             get {
@@ -151,7 +160,16 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {AttributeName} is a mandatory field!.
+        ///   Looks up a localized string similar to Корисникот не е пронајден!.
+        /// </summary>
+        public static string User_not_found {
+            get {
+                return ResourceManager.GetString("User_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {AttributeName} е задолжително поле!.
         /// </summary>
         public static string VLDMSG_Is_Required {
             get {
@@ -160,7 +178,7 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {AttributeName} can support up to {MaxChars} characters!.
+        ///   Looks up a localized string similar to {AttributeName} поддружува до {MaxChars} карактери!.
         /// </summary>
         public static string VLDMSG_Max_Chars {
             get {

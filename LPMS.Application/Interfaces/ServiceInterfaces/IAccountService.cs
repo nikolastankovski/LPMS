@@ -1,11 +1,12 @@
-﻿using LPMS.Domain.Models.RnRModels.Login;
+﻿using FluentResults;
+using LPMS.Application.Models.RnRModels.Login;
 using System.Globalization;
 
-namespace LPMS.Domain.Interfaces.ServiceInterfaces
+namespace LPMS.Application.Interfaces.ServiceInterfaces
 {
     public interface IAccountService
     {
-        Task<string> LoginAsync(LoginRequest request, CultureInfo ci);
+        Task<Result<LoginResponse>> LoginAsync(LoginRequest request, CultureInfo culture);
         void Test();
     }
 }

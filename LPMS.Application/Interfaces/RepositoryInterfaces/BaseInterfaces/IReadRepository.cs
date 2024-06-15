@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace LPMS.Domain.Interfaces.RepositoryInterfaces.BaseInterfaces
+namespace LPMS.Application.Interfaces.RepositoryInterfaces.BaseInterfaces
 {
     public interface IReadRepository<TModel> where TModel : class
     {

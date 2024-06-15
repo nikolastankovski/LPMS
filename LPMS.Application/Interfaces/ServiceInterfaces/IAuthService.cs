@@ -1,11 +1,12 @@
-﻿using LanguageExt.Common;
-using LPMS.Domain.Models.RnRModels.Auth;
+﻿using FluentResults;
+using LPMS.Application.Models.RnRModels.Auth;
+using System.Globalization;
 
-namespace LPMS.Domain.Interfaces.ServiceInterfaces
+namespace LPMS.Application.Interfaces.ServiceInterfaces
 {
     public interface IAuthService
     {
-        Task<Result<AuthTokenResponse>> GenerateAuthTokenAsync(Guid userId);
+        Task<Result<AuthTokenResponse>> GenerateAuthTokenAsync(Guid userId, CultureInfo culture);
         /*Task<Result<AuthTokenResponse>> GenerateTokenAsync(string email);*/
     }
 }

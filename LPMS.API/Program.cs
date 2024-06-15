@@ -10,7 +10,7 @@ using LPMS.Application;
 using LPMS.Infrastructure;
 using LPMS.Infrastructure.Data;
 using LPMS.Infrastructure.DbContexts;
-using LPMS.Domain.Models.ConfigModels;
+using LPMS.Application.Models.ConfigModels;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);

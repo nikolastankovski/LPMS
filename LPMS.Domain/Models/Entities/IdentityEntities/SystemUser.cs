@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
-namespace LPMS.Domain.Models.Entities.IdentityEntities
+namespace LPMS.Application.Models.Entities.IdentityEntities
 {
     public class SystemUser : IdentityUser<Guid>
     {

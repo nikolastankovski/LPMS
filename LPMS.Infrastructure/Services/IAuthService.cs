@@ -1,8 +1,10 @@
-﻿using LanguageExt.Common;
-using LPMS.Domain.Models.ConfigModels;
-using LPMS.Domain.Models.RnRModels.Auth;
+﻿using FluentResults;
+using FluentValidation;
+using LPMS.Application.Models.ConfigModels;
+using LPMS.Application.Models.RnRModels.Auth;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -18,18 +20,19 @@ namespace LPMS.Infrastructure.Services
             _identityUserRepository = identityUserRepository;
             _jwtConfig = jwtConfig.Value;
         }
-        public async Task<Result<AuthTokenResponse>> GenerateAuthTokenAsync(Guid userId)
+        public async Task<Result<AuthTokenResponse>> GenerateAuthTokenAsync(Guid userId, CultureInfo culture)
         {
             try
             {
-                var user = await _identityUserRepository.GetUserByIdAsync(userId);
+                var sysUser = await _identityUserRepository.GetUserByIdAsync(userId);
+
+                if (sysUser == null)
+                    return Result.Fail(culture.GetResource(nameof(Resources.User_not_found)));
 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var signingKey = Encoding.ASCII.GetBytes(_jwtConfig.IssuerSigningKey);
 
-                if (user == null) throw new Exception("User doesnt exist");
-
-                var claims = await GetUserClaimsAsync(user);
+                var claims = await GetUserClaimsAsync(sysUser);
 
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
@@ -43,16 +46,17 @@ namespace LPMS.Infrastructure.Services
 
                 var token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
 
-                return new AuthTokenResponse()
+                return Result.Ok(new AuthTokenResponse()
                 {
                     Token = token,
                     Expires = tokenDescriptor.Expires,
-                    RefreshToken = string.Empty
-                };
+                });
             }
             catch (Exception e)
             {
-                return new Result<AuthTokenResponse>(e);
+                Log.Error(exception: e, messageTemplate: $"Exception occured: {e.Message}");
+
+                return Result.Fail(culture.GetResource(nameof(Resources.Unexpected_Error)));
             }
         }
 
@@ -68,6 +72,10 @@ namespace LPMS.Infrastructure.Services
         private async Task<List<Claim>> AddRoleClaimsAsync(SystemUser user, List<Claim> claims)
         {
             var userRoles = await _identityUserRepository.GetUserRolesAsync(user);
+
+            if(userRoles == null || !userRoles.Any())
+                return claims;
+
             foreach (var r in userRoles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, r.Name));

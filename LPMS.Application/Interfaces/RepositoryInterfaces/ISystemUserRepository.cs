@@ -1,6 +1,4 @@
-﻿using LPMS.Domain.Models.Entities.IdentityEntities;
-
-namespace LPMS.Domain.Interfaces.RepositoryInterfaces
+﻿namespace LPMS.Application.Interfaces.RepositoryInterfaces
 {
     public interface ISystemUserRepository
     {

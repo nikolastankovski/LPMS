@@ -17,7 +17,7 @@ namespace LPMS.Application.ExtensionMethods
 
         public static string ToFullDateTime(this DateTime? dateTime, CultureInfo ci)
         {
-            string dateTimeFormat = Resources.ResourceManager.GetString(nameof(Resources.DT_FullDateFormat), ci) ?? string.Empty;
+            string dateTimeFormat = ci.GetResource(nameof(Resources.DT_FullDateFormat));
             
             try
             {
@@ -35,7 +35,7 @@ namespace LPMS.Application.ExtensionMethods
 
         public static string ToFullDateTime(this DateTime dateTime, CultureInfo ci)
         {
-            string dateTimeFormat = Resources.ResourceManager.GetString(nameof(Resources.DT_FullDateFormat), ci) ?? string.Empty;
+            string dateTimeFormat = ci.GetResource(nameof(Resources.DT_FullDateFormat));
 
             try
             {

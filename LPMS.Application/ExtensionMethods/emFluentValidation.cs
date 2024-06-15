@@ -1,15 +1,20 @@
 ﻿using FluentValidation.Results;
-using LanguageExt.Common;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace LPMS.Application.ExtensionMethods
 {
     public static class emFluentValidation
     {
-        public static List<string> GetErrors(this ValidationResult? valResult)
+        public static List<string> GetErrors(this ValidationResult validationResult)
         {
-            if (valResult == null) return new List<string>();
+            if (validationResult.IsValid)
+                return new List<string>();
 
-            return valResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return validationResult.Errors.Select(x => x.ErrorMessage).ToList();
         }
     }
 }

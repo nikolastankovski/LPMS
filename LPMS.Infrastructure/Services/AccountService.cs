@@ -1,9 +1,8 @@
 ﻿using FluentValidation;
-using LanguageExt.Common;
 using LPMS.Application.Validators;
-using LPMS.Domain.Models.RnRModels.Login;
+using LPMS.Application.Models.RnRModels.Login;
 using System.Globalization;
-using System.Reflection.Metadata.Ecma335;
+using FluentResults;
 
 namespace LPMS.Infrastructure.Services
 {
@@ -20,24 +19,36 @@ namespace LPMS.Infrastructure.Services
             _tokenService = tokenService;
         }
 
-        public async Task<string> LoginAsync(LoginRequest request, CultureInfo ci)
+        public async Task<Result<LoginResponse>> LoginAsync(LoginRequest request, CultureInfo culture)
         {
-            var user = await _identityUserRepository.GetUserByEmailAsync(request.Email);
+            try
+            {
+                var sysUser = await _identityUserRepository.GetUserByEmailAsync(request.Email);
 
-            if (user == null)
-                return string.Empty;
+                if (sysUser == null)
+                    return Result.Fail(culture.GetResource(nameof(Resources.User_not_found)));
 
-            var login = await _identityUserRepository.IsCorrectPassword(user, request.Password);
+                var login = await _identityUserRepository.IsCorrectPassword(sysUser, request.Password);
 
-            if (!login)
-                return string.Empty;
+                if (!login)
+                    return Result.Fail(culture.GetResource(nameof(Resources.Incorrect_credentials)));
 
-            var genTokenResult = await _tokenService.GenerateAuthTokenAsync(user.Id);
+                var genTokenResult = await _tokenService.GenerateAuthTokenAsync(sysUser.Id, culture);
 
-            return genTokenResult.Match(
-                s => s.Token,
-                e => e.Message
-            );
+                if(genTokenResult.IsSuccess)
+                    return Result.Ok(new LoginResponse() { Token = genTokenResult.Value.Token, Expires = genTokenResult.Value.Expires });   
+    
+                return Result.Fail(genTokenResult.Errors);
+            }
+            catch (Exception e)
+            {
+                if (e is ValidationException)
+                    return Result.Fail(e.Message);
+
+                Log.Error(exception: e, $"Exception occured: {e.Message}");
+
+                return Result.Fail(culture.GetResource(nameof(Resources.Unexpected_Error)));
+            }
         }
 
         public Task<string> LoginAsync(string email, string password)

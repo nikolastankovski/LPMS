@@ -80,18 +80,24 @@ namespace LPMS.Infrastructure.Repositories
 
         public async Task<bool> IsUserInRoleAsync(string userId, string role) 
         {
-            var user = await GetUserByIdAsync(userId);
+            var sysUser = await GetUserByIdAsync(userId);
 
-            return await _userManager.IsInRoleAsync(user, role);
+            if(sysUser == null)
+                return false;
+
+            return await _userManager.IsInRoleAsync(sysUser, role);
         }
 
         public async Task<bool> IsUserInRolesAsync(string userId, List<string> roles)
         {
-            var user = await GetUserByIdAsync(userId);
+            var sysUser = await GetUserByIdAsync(userId);
+
+            if (sysUser == null) 
+                return false;
 
             foreach(var role in roles)
             {
-                if (await _userManager.IsInRoleAsync(user, role) == false)
+                if (await _userManager.IsInRoleAsync(sysUser, role) == false)
                     return false;
             }
 

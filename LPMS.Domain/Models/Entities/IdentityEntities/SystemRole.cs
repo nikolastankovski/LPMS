@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
-namespace LPMS.Domain.Models.Entities.IdentityEntities
+namespace LPMS.Application.Models.Entities.IdentityEntities
 {
     public class SystemRole : IdentityRole<Guid>
     {
@@ -20,6 +20,6 @@ namespace LPMS.Domain.Models.Entities.IdentityEntities
         [Column(TypeName = "datetime2(3)"), DataType(DataType.DateTime)]
         public DateTime? ModifiedOn { get; set; }
         [Column(TypeName = "bit")]
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace LPMS.Infrastructure.DbContexts;
+﻿using Microsoft.Extensions.Configuration;
+
+namespace LPMS.Infrastructure.DbContexts;
 
 public partial class LPMSDbContext : DbContext
 {

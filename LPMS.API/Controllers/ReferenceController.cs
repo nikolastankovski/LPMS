@@ -1,4 +1,4 @@
-﻿using LPMS.Domain.Interfaces.RepositoryInterfaces;
+﻿using LPMS.Application.Interfaces.RepositoryInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LPMS.API.Controllers

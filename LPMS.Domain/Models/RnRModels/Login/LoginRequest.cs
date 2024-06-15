@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LPMS.Domain.Models.RnRModels.Login
+namespace LPMS.Application.Models.RnRModels.Login
 {
     public class LoginRequest
     {

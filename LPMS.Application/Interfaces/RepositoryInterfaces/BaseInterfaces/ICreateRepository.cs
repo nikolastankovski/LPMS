@@ -1,14 +1,12 @@
-﻿using LanguageExt.Common;
-using LPMS.Domain.Models.CustomModels;
-using System.Globalization;
+﻿using System.Globalization;
 
-namespace LPMS.Domain.Interfaces.RepositoryInterfaces.BaseInterfaces
+namespace LPMS.Application.Interfaces.RepositoryInterfaces.BaseInterfaces
 {
     public interface ICreateRepository<TModel> where TModel : class
     {
-        CRUDResult Create(TModel entity, CultureInfo culture);
+        TModel Create(TModel entity);
         //Result<TModel> Create(List<TModel> entities, string culture);
-        Task<CRUDResult> CreateAsync(TModel entity, CultureInfo culture);
+        Task<TModel> CreateAsync(TModel entity, CultureInfo culture);
         //Task<Result<TModel>> CreateAsync(List<TModel> entities, string culture);
     }
 }

@@ -1,5 +1,4 @@
-﻿using LPMS.Domain.Interfaces.ServiceInterfaces;
-using LPMS.Domain.Models.RnRModels.Login;
+﻿using LPMS.Application.Models.RnRModels.Login;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
@@ -17,9 +16,13 @@ namespace LPMS.API.Controllers
         }
 
         [HttpPost(nameof(Login))]
-        public async Task<string> Login(string culture, LoginRequest request)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestModel))]
+        public async Task<IResult> Login(string culture, LoginRequest request)
         {
-            return await _accountService.LoginAsync(request, CultureInfo.GetCultureInfo(culture));
+            var login = await _accountService.LoginAsync(request, CultureInfo.GetCultureInfo(culture));
+
+            return login.IsSuccess ? login.ToOkResponse() : login.ToBadRequest();
         }
 
     }
