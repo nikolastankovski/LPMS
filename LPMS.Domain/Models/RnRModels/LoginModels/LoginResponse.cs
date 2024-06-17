@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LPMS.Application.Models.RnRModels.Login
+﻿namespace LPMS.Domain.Models.RnRModels.LoginModels
 {
     public record LoginResponse
     {

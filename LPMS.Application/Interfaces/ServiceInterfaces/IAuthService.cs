@@ -1,5 +1,5 @@
 ﻿using FluentResults;
-using LPMS.Application.Models.RnRModels.Auth;
+using LPMS.Domain.Models.RnRModels.AuthModels;
 using System.Globalization;
 
 namespace LPMS.Application.Interfaces.ServiceInterfaces

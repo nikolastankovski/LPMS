@@ -15,6 +15,21 @@ namespace LPMS.Infrastructure.Repositories
             _roleManager = roleManager;
         }
 
+        public async Task<SystemUser> CreateAsync(SystemUser systemUser)
+        {
+            var createResult = await _userManager.CreateAsync(systemUser, Helper.GeneratePassword());
+
+            if (!createResult.Succeeded)
+                throw new Exception(createResult.Errors.Select(x => x.Description).FirstOrDefault());
+
+            return await GetUserByEmailAsync(systemUser.Email);
+        }
+
+        public async Task AddToRoleAsync(SystemUser systemUser, string role)
+        {
+            await _userManager.AddToRoleAsync(systemUser, role);
+        }
+
         public List<SystemUser> GetAllUsers()
         {
             return _userManager.Users.ToList();

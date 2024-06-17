@@ -1,7 +1,6 @@
 ﻿using FluentResults;
-using FluentValidation;
-using LPMS.Application.Models.ConfigModels;
-using LPMS.Application.Models.RnRModels.Auth;
+using LPMS.Domain.Models.ConfigModels;
+using LPMS.Domain.Models.RnRModels.AuthModels;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Globalization;

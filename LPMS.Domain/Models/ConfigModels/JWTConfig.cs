@@ -1,4 +1,4 @@
-﻿namespace LPMS.Application.Models.ConfigModels
+﻿namespace LPMS.Domain.Models.ConfigModels
 {
     public class JWTConfig
     {

@@ -10,6 +10,7 @@ public static class DependencyInjection
     {
         #region REPOSITORIES
         services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddScoped<IAccountxDepartmentxDivisionRepository, AccountxDepartmentxDivisionRepository>();
         services.AddScoped<ISystemUserRepository, SystemUserRepository>();
         services.AddScoped<IReferenceRepository, ReferenceRepository>();
         services.AddScoped<IReferenceTypeRepository, ReferenceTypeRepository>();

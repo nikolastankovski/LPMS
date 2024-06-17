@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LPMS.Application.Models.Entities;
+namespace LPMS.Domain.Models.Entities;
 
 public partial class AccountxDepartmentxDivision
 {

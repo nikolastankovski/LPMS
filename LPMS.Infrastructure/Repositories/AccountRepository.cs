@@ -20,17 +20,28 @@ namespace LPMS.Infrastructure.Repositories
             return entity;
         }
 
-        public async Task<Account> CreateAsync(Account entity, CultureInfo culture)
+        public async Task<Account> CreateAsync(Account entity)
         {
-            var validation = entity.Validate(culture);
-
-            if (!validation.IsValid)
-                throw new ValidationException(validation.Errors);
-
             await _context.Accounts.AddAsync(entity);
             await _context.SaveChangesAsync();
 
             return entity;
+        }
+
+        public List<Account> Create(List<Account> entities)
+        {
+            _context.Accounts.AddRange(entities);
+            _context.SaveChanges();
+
+            return entities;
+        }
+
+        public async Task<List<Account>> CreateAsync(List<Account> entities)
+        {
+            await _context.Accounts.AddRangeAsync(entities);
+            await _context.SaveChangesAsync();
+
+            return entities;
         }
 
         public bool Delete(object id)
@@ -135,13 +146,8 @@ namespace LPMS.Infrastructure.Repositories
             return await _context.Accounts.FindAsync(id);
         }
 
-        public void Update(Account entity, Guid modifiedBy, CultureInfo culture)
+        public void Update(Account entity, Guid modifiedBy)
         {
-            var validation = entity.Validate(culture);
-
-            if (!validation.IsValid)
-                throw new ValidationException(validation.Errors);
-
             _context.Accounts
                     .Where(x => x.AccountID == entity.AccountID)
                     .ExecuteUpdate(setters => setters
@@ -152,13 +158,8 @@ namespace LPMS.Infrastructure.Repositories
                     );
         }
 
-        public async Task UpdateAsync(Account entity, Guid modifiedBy, CultureInfo culture)
+        public async Task UpdateAsync(Account entity, Guid modifiedBy)
         {
-            var validation = entity.Validate(culture);
-
-            if (!validation.IsValid)
-                throw new ValidationException(validation.Errors);
-
             await _context.Accounts
                         .Where(x => x.AccountID == entity.AccountID)
                         .ExecuteUpdateAsync(setters => setters

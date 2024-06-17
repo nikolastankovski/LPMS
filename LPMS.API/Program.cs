@@ -10,8 +10,9 @@ using LPMS.Application;
 using LPMS.Infrastructure;
 using LPMS.Infrastructure.Data;
 using LPMS.Infrastructure.DbContexts;
-using LPMS.Application.Models.ConfigModels;
+using LPMS.Domain.Models.ConfigModels;
 using Serilog;
+using LPMS.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -143,6 +144,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 
