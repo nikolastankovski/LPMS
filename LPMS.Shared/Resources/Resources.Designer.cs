@@ -79,6 +79,15 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Креирано од.
+        /// </summary>
+        public static string CreatedBy {
+            get {
+                return ResourceManager.GetString("CreatedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Успешно избришано!.
         /// </summary>
         public static string Delete_Success {
@@ -115,11 +124,38 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Емаил.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Невалиден формат на емаил!.
+        /// </summary>
+        public static string Email_InvalidFormat {
+            get {
+                return ResourceManager.GetString("Email_InvalidFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Погрешен емаил или лозинка!.
         /// </summary>
         public static string Incorrect_credentials {
             get {
                 return ResourceManager.GetString("Incorrect_credentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Име.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
             }
         }
         
@@ -138,6 +174,15 @@ namespace LPMS.Shared.Resources {
         public static string Name_MK {
             get {
                 return ResourceManager.GetString("Name_MK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Телефонски број.
+        /// </summary>
+        public static string PhoneNumber {
+            get {
+                return ResourceManager.GetString("PhoneNumber", resourceCulture);
             }
         }
         
@@ -169,7 +214,16 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {AttributeName} е задолжително поле!.
+        ///   Looks up a localized string similar to Корисничко име.
+        /// </summary>
+        public static string Username {
+            get {
+                return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{PropertyName}&apos; е задолжително поле!.
         /// </summary>
         public static string VLDMSG_Is_Required {
             get {
@@ -178,7 +232,7 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {AttributeName} поддружува до {MaxChars} карактери!.
+        ///   Looks up a localized string similar to &apos;{PropertyName}&apos; поддружува до {MaxChars} карактери!.
         /// </summary>
         public static string VLDMSG_Max_Chars {
             get {

@@ -120,6 +120,9 @@
   <data name="Code" xml:space="preserve">
     <value>Код</value>
   </data>
+  <data name="CreatedBy" xml:space="preserve">
+    <value>Креирано од</value>
+  </data>
   <data name="Create_Success" xml:space="preserve">
     <value>Успешно креирано!</value>
   </data>
@@ -135,8 +138,17 @@
   <data name="DT_FullDateFormat" xml:space="preserve">
     <value>dd/MM/yyyy HH:mm</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Емаил</value>
+  </data>
+  <data name="Email_InvalidFormat" xml:space="preserve">
+    <value>Невалиден формат на емаил!</value>
+  </data>
   <data name="Incorrect_credentials" xml:space="preserve">
     <value>Погрешен емаил или лозинка!</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Име</value>
   </data>
   <data name="Name_EN" xml:space="preserve">
     <value>Назив (англиски)</value>
@@ -144,19 +156,25 @@
   <data name="Name_MK" xml:space="preserve">
     <value>Назив (македонски)</value>
   </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Телефонски број</value>
+  </data>
   <data name="Unexpected_Error" xml:space="preserve">
     <value>Се случи неочекувана грешка!</value>
   </data>
   <data name="Update_Success" xml:space="preserve">
     <value>Успешно променето!</value>
   </data>
+  <data name="Username" xml:space="preserve">
+    <value>Корисничко име</value>
+  </data>
   <data name="User_not_found" xml:space="preserve">
     <value>Корисникот не е пронајден!</value>
   </data>
   <data name="VLDMSG_Is_Required" xml:space="preserve">
-    <value>{AttributeName} е задолжително поле!</value>
+    <value>'{PropertyName}' е задолжително поле!</value>
   </data>
   <data name="VLDMSG_Max_Chars" xml:space="preserve">
-    <value>{AttributeName} поддружува до {MaxChars} карактери!</value>
+    <value>'{PropertyName}' поддружува до {MaxChars} карактери!</value>
   </data>
 </root>

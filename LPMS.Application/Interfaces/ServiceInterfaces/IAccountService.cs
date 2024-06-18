@@ -9,6 +9,5 @@ namespace LPMS.Application.Interfaces.ServiceInterfaces
     {
         Task<Result<LoginResponse>> LoginAsync(LoginRequest request, CultureInfo culture);
         Task<Result<CreateUserResponse>> CreateApplicationUserAsync(CreateUserRequest request, CultureInfo culture);
-        void Test();
     }
 }

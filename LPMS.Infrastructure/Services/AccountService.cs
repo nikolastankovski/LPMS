@@ -30,7 +30,7 @@ namespace LPMS.Infrastructure.Services
                 if (sysUser == null)
                     return Result.Fail(culture.GetResource(nameof(Resources.User_not_found)));
 
-                var login = await _identityUserRepository.IsCorrectPassword(sysUser, request.Password);
+                var login = await _identityUserRepository.IsCorrectPasswordAsync(sysUser, request.Password);
 
                 if (!login)
                     return Result.Fail(culture.GetResource(nameof(Resources.Incorrect_credentials)));
@@ -87,30 +87,6 @@ namespace LPMS.Infrastructure.Services
 
                     return Result.Fail(culture.GetResource(nameof(Resources.Unexpected_Error)));
                 }
-            }
-        }
-
-        public void Test()
-        {
-            var reference = new Reference()
-            {
-                Name_EN = "Test",
-                Description_EN = "Test",
-            };
-
-            ReferenceValidator val = new ReferenceValidator(CultureInfo.GetCultureInfo("en"));
-
-            var valResult = val.Validate(reference);
-            var test1 = new ValidationException(valResult.Errors);
-
-            try
-            {
-                val.ValidateAndThrow(reference);
-
-            }
-            catch (Exception e)
-            {
-                var test = e;
             }
         }
     }

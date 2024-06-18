@@ -14,6 +14,7 @@
         Task<SystemUser?> GetUserByEmailAsync(string email);
         Task<bool> IsUserInRoleAsync(string userId, string role);
         Task<bool> IsUserInRolesAsync(string userId, List<string> roles);
-        Task<bool> IsCorrectPassword(SystemUser user, string password);
+        Task<bool> IsCorrectPasswordAsync(SystemUser user, string password);
+        Task<bool> IsEmailUsedAsync(string? email);
     }
 }

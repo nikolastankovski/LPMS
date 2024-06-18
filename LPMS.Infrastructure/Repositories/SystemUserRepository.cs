@@ -119,9 +119,22 @@ namespace LPMS.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<bool> IsCorrectPassword(SystemUser user, string password)
+        public async Task<bool> IsCorrectPasswordAsync(SystemUser user, string password)
         {
             return await _userManager.CheckPasswordAsync(user, password);
+        }
+
+        public async Task<bool> IsEmailUsedAsync(string? email)
+        {
+            if(string.IsNullOrEmpty(email))
+                return false;
+
+            var sysUser = await GetUserByEmailAsync(email);
+
+            if(sysUser == null)
+                return false;
+
+            return true;
         }
     }
 }

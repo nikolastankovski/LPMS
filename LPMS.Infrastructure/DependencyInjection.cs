@@ -19,6 +19,7 @@ public static class DependencyInjection
         #region SERVICES
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<TestService>();
         #endregion
 
         return services;
