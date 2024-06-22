@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
@@ -14,10 +15,12 @@ namespace LPMS.Infrastructure.Services
     {
         private readonly ISystemUserRepository _identityUserRepository;
         private readonly JWTConfig _jwtConfig;
-        public AuthService(ISystemUserRepository identityUserRepository, IOptions<JWTConfig> jwtConfig)
+        private readonly IAccountxDepartmentxDivisionRepository _accxDeptxDivRepository;
+        public AuthService(ISystemUserRepository identityUserRepository, IOptions<JWTConfig> jwtConfig, IAccountxDepartmentxDivisionRepository accxDeptxDivRepository)
         {
             _identityUserRepository = identityUserRepository;
             _jwtConfig = jwtConfig.Value;
+            _accxDeptxDivRepository = accxDeptxDivRepository;
         }
         public async Task<Result<AuthTokenResponse>> GenerateAuthTokenAsync(Guid userId, CultureInfo culture)
         {
@@ -63,7 +66,7 @@ namespace LPMS.Infrastructure.Services
         {
             var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.Email) };
             claims = await AddRoleClaimsAsync(user, claims);
-            claims = await AddDepartmentClaimsAsync(user, claims);
+            claims = await AddDepartmentAndDivisionClaimsAsync(user, claims);
 
             return claims;
         }
@@ -75,22 +78,36 @@ namespace LPMS.Infrastructure.Services
             if(userRoles == null || !userRoles.Any())
                 return claims;
 
-            foreach (var r in userRoles)
+            foreach (var role in userRoles)
             {
-                claims.Add(new Claim(ClaimTypes.Role, r.Name));
+                if(!string.IsNullOrEmpty(role.Name))
+                    claims.Add(new Claim(ClaimTypes.Role, role.Name));
             }
 
             return claims;
         }
 
-        private async Task<List<Claim>> AddDepartmentClaimsAsync(SystemUser user, List<Claim> claims)
+        private async Task<List<Claim>> AddDepartmentAndDivisionClaimsAsync(SystemUser user, List<Claim> claims)
         {
-            var userDepartments = new List<string>() { Departments.Finance, Departments.IT };
+            var userDepartmentAndDivisions = await _accxDeptxDivRepository.GetBySystemUserIdAsync(user.Id);
 
-            foreach (var d in userDepartments)
-            {
-                claims.Add(new Claim("Department", d));
-            }
+            List<string> departmentCodes = userDepartmentAndDivisions
+                                                .Where(x => x.Department != null)
+                                                .Select(x => x.Department.Code)
+                                                .Distinct()
+                                                .ToList();
+
+            foreach (var code in departmentCodes)
+                claims.Add(new Claim(CustomClaims.Department, code));
+
+            List<string> divisionCodes = userDepartmentAndDivisions
+                                                .Where(x => x.Division != null)
+                                                .Select(x => x.Division.Code)
+                                                .Distinct()
+                                                .ToList();
+
+            foreach (var code in divisionCodes)
+                claims.Add(new Claim(CustomClaims.Division, code));
 
             return claims;
         }

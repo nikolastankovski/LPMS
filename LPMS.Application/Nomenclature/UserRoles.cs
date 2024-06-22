@@ -1,4 +1,4 @@
-﻿namespace LPMS.Infrastructure.Nomenclature
+﻿namespace LPMS.Application.Nomenclature
 {
     public static class UserRoles
     {

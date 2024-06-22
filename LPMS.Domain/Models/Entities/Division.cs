@@ -11,7 +11,7 @@ public partial class Division
 
     public string Name_MK { get; set; } = null!;
 
-    public string? Code { get; set; }
+    public string Code { get; set; } = null!;
 
     public Guid CreatedBy { get; set; }
 

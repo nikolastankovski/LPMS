@@ -19,6 +19,12 @@ namespace LPMS.API.Controllers
         [HttpGet(nameof(Test))]
         public IActionResult Test(string culture)
         {
+            string[] test1 = ["DPT1", "Test2"];
+            List<string> test2 = new List<string>() { "DPT1", "DPT2" };
+
+            var test = test2.Intersect(test1).Any();
+
+
             return Ok(_test.Test(CultureInfo.GetCultureInfo(culture)));
         }
     }
