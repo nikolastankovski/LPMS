@@ -14,8 +14,4 @@
     <ProjectReference Include="..\LPMS.Shared\LPMS.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\RnRModels\ReferenceModels\" />
-  </ItemGroup>
-
 </Project>

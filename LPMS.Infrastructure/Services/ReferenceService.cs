@@ -1,4 +1,4 @@
-﻿using LPMS.Domain.Models.DTO;
+﻿using LPMS.Domain.Models.RnRModels.ReferenceModels;
 using System.Globalization;
 
 namespace LPMS.Infrastructure.Services
@@ -12,11 +12,11 @@ namespace LPMS.Infrastructure.Services
             _referenceRepository = referenceRepository;
         }
 
-        public async Task<List<DTOReference>> GetByReferenceTypeCodeAsync(string referenceTypeCode, CultureInfo ci)
+        public async Task<ReferenceWReferenceTypeResponse> GetByReferenceTypeCodeAsync(string referenceTypeCode, CultureInfo ci)
         {
             var references = await _referenceRepository.GetByReferenceTypeCodeAsync(referenceTypeCode);
 
-            return references.ToDTO(ci);
+            return references.ToRefWRefTypeResponse(ci);
         }
     }
 }

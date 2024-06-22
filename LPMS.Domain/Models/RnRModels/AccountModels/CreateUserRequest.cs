@@ -1,6 +1,6 @@
-﻿using LPMS.Domain.Models.DTO;
-using LPMS.Domain.Models.Entities;
+﻿using LPMS.Domain.Models.Entities;
 using LPMS.Domain.Models.Entities.IdentityEntities;
+using LPMS.Domain.Models.RnRModels.NewFolder;
 
 namespace LPMS.Domain.Models.RnRModels.AccountModels
 {
@@ -10,7 +10,7 @@ namespace LPMS.Domain.Models.RnRModels.AccountModels
         public string Name { get; set; } = string.Empty;
         public string Role { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
-        public List<DTODepartmentxDivisions> DepartmentsWithDivisions { get; set; } = new List<DTODepartmentxDivisions>();
+        public List<DepartmentxDivisionRequest> DepartmentsWithDivisions { get; set; } = new List<DepartmentxDivisionRequest>();
 
 
         public SystemUser MapToSystemUser()

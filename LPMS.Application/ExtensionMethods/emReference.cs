@@ -1,23 +1,36 @@
-﻿using LPMS.Domain.Models.DTO;
-using System.Linq;
+﻿using LPMS.Domain.Models.RnRModels.ReferenceModels;
 
 namespace LPMS.Application.ExtensionMethods
 {
     public static class emReference
     {
-        public static List<DTOReference> ToDTO(this List<Reference> references, CultureInfo ci)
+        public static ReferenceWReferenceTypeResponse ToRefWRefTypeResponse(this List<Reference> references, CultureInfo ci)
         {
             string nameAttribute = $"Name_{ci.TwoLetterISOLanguageName.ToUpper()}";
             string descriptionAttribute = $"Description_{ci.TwoLetterISOLanguageName.ToUpper()}";
 
-            return references.Select(x => 
-                new DTOReference(
-                    x.ReferenceID,
-                    x.GetAttribute(nameAttribute),
-                    x.GetAttribute(descriptionAttribute),
-                    x.Code
-                )
-            ).ToList();
+
+            var model = new ReferenceWReferenceTypeResponse();
+
+            var referenceType = references.Select(x => x.ReferenceType).First();
+
+            model.ReferenceType = new ReferenceResponse()
+            {
+                Id = referenceType.ReferenceTypeID,
+                Name = referenceType.GetAttribute(nameAttribute),
+                Description = referenceType.GetAttribute(descriptionAttribute),
+                Code = referenceType.Code
+            };
+
+            model.References = references.Select(x => new ReferenceResponse()
+            {
+                Id = x.ReferenceID,
+                Name = x.GetAttribute(nameAttribute),
+                Description = x.GetAttribute(descriptionAttribute),
+                Code = x.Code
+            }).ToList();
+
+            return model;
         }
     }
 }

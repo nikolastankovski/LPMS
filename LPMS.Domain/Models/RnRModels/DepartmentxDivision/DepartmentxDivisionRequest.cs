@@ -1,6 +1,6 @@
-﻿namespace LPMS.Domain.Models.DTO
+﻿namespace LPMS.Domain.Models.RnRModels.NewFolder
 {
-    public class DTODepartmentxDivisions
+    public class DepartmentxDivisionRequest
     {
         public int Department { get; set; }
         public List<int> Divisions { get; set; } = null!;

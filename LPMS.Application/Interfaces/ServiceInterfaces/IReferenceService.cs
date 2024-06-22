@@ -1,9 +1,9 @@
-﻿using LPMS.Domain.Models.DTO;
+﻿using LPMS.Domain.Models.RnRModels.ReferenceModels;
 
 namespace LPMS.Application.Interfaces.ServiceInterfaces
 {
     public interface IReferenceService
     {
-        Task<List<DTOReference>> GetByReferenceTypeCodeAsync(string referenceTypeCode, CultureInfo ci);
+        Task<ReferenceWReferenceTypeResponse> GetByReferenceTypeCodeAsync(string referenceTypeCode, CultureInfo ci);
     }
 }
