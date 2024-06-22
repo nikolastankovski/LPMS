@@ -1,5 +1,6 @@
 ﻿using Serilog;
 using System.Globalization;
+using System.Runtime.InteropServices;
 
 namespace LPMS.Application.ExtensionMethods
 {
@@ -48,6 +49,11 @@ namespace LPMS.Application.ExtensionMethods
             }
 
             return string.Empty;
+        }
+
+        public static string GetAttribute(this object obj, string name)
+        {
+            return Convert.ToString(obj?.GetType()?.GetProperty(name)?.GetValue(obj)) ?? string.Empty;
         }
     }
 }

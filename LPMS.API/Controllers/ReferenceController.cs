@@ -1,5 +1,6 @@
-﻿using LPMS.Application.Interfaces.RepositoryInterfaces;
+﻿using LPMS.Domain.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace LPMS.API.Controllers
 {
@@ -7,28 +8,20 @@ namespace LPMS.API.Controllers
     [ApiController]
     public class ReferenceController : ControllerBase
     {
-        private readonly IReferenceRepository _referenceRepository;
+        private readonly IReferenceService _referenceService;
 
-        public ReferenceController(IReferenceRepository referenceRepository)
+        public ReferenceController(IReferenceService referenceService)
         {
-            _referenceRepository = referenceRepository;
-        }
-
-        // GET: api/<ReferenceController>
-        [HttpGet(nameof(GetById) + "/{referenceId}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Reference))]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-        public Reference? GetById(string culture, int referenceId)
-        {
-            return _referenceRepository.GetById(referenceId);
+            _referenceService = referenceService;
         }
 
         [HttpGet(nameof(GetByReferenceTypeCode) + "/{referenceTypeCode}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Reference>))]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-        public List<Reference> GetByReferenceTypeCode(string referenceTypeCode)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<DTOReference>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerErrorModel))]
+        public async Task<IResult> GetByReferenceTypeCode(string culture, string referenceTypeCode)
         {
-            return _referenceRepository.GetByReferenceTypeCode(referenceTypeCode);
+            var references = await _referenceService.GetByReferenceTypeCodeAsync(referenceTypeCode, CultureInfo.GetCultureInfo(culture));
+            return Results.Ok(references);
         }
     }
 }
