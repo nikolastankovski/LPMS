@@ -61,6 +61,15 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Профил.
+        /// </summary>
+        public static string Account {
+            get {
+                return ResourceManager.GetString("Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Код.
         /// </summary>
         public static string Code {
@@ -97,6 +106,15 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Оддел.
+        /// </summary>
+        public static string Department {
+            get {
+                return ResourceManager.GetString("Department", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Опис (англиски).
         /// </summary>
         public static string Description_EN {
@@ -111,6 +129,15 @@ namespace LPMS.Shared.Resources {
         public static string Description_MK {
             get {
                 return ResourceManager.GetString("Description_MK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Одделение.
+        /// </summary>
+        public static string Division {
+            get {
+                return ResourceManager.GetString("Division", resourceCulture);
             }
         }
         

@@ -2,7 +2,7 @@
 {
     public class SystemUserValidator : AbstractValidator<SystemUser>
     {
-        public SystemUserValidator(CultureInfo ci)
+        public SystemUserValidator(CultureInfo ci, ISystemUserRepository systemUserRepository)
         {
             string isRequired = ci.GetResource(nameof(Resources.VLDMSG_Is_Required));
             string maxChars = ci.GetResource(nameof(Resources.VLDMSG_Max_Chars));
@@ -11,7 +11,7 @@
                 .NotEmpty()
                 .WithName(ci.GetResource(nameof(Resources.Email)))
                 .WithMessage(isRequired)
-                //.MustAsync(async (email, c) => await _systemUserRepository.IsEmailUsedAsync(email))
+                .MustAsync(async (email, c) => await systemUserRepository.IsEmailUsedAsync(email))
                 .EmailAddress()
                 .WithMessage(ci.GetResource(nameof(Resources.Email_InvalidFormat)))
                 .MaximumLength(256)

@@ -4,13 +4,11 @@ namespace LPMS.Infrastructure.Repositories
 {
     public class SystemUserRepository : ISystemUserRepository
     {
-        private readonly LPMSDbContext _context;
         private readonly UserManager<SystemUser> _userManager;
         private readonly RoleManager<SystemRole> _roleManager;
 
-        public SystemUserRepository(LPMSDbContext context, UserManager<SystemUser> userManager, RoleManager<SystemRole> roleManager)
+        public SystemUserRepository(UserManager<SystemUser> userManager, RoleManager<SystemRole> roleManager)
         {
-            _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
         }
@@ -23,6 +21,16 @@ namespace LPMS.Infrastructure.Repositories
                 throw new Exception(createResult.Errors.Select(x => x.Description).FirstOrDefault());
 
             return await GetUserByEmailAsync(systemUser.Email);
+        }
+
+        public async Task<SystemUser> UpdateAsync(SystemUser systemUser)
+        {
+            var updateResult = await _userManager.UpdateAsync(systemUser);
+
+            if (!updateResult.Succeeded)
+                throw new Exception(updateResult.Errors.Select(x => x.Description).FirstOrDefault());
+
+            return systemUser;
         }
 
         public async Task AddToRoleAsync(SystemUser systemUser, string role)

@@ -10,14 +10,13 @@ public static class DependencyInjection
     {
         #region REPOSITORIES
         services.AddScoped<IAccountRepository, AccountRepository>();
-        services.AddScoped<IAccountxDepartmentxDivisionRepository, AccountxDepartmentxDivisionRepository>();
         services.AddScoped<ISystemUserRepository, SystemUserRepository>();
         services.AddScoped<IReferenceRepository, ReferenceRepository>();
         services.AddScoped<IReferenceTypeRepository, ReferenceTypeRepository>();
         #endregion
 
         #region SERVICES
-        services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IReferenceService, ReferenceService>();
         services.AddScoped<TestService>();

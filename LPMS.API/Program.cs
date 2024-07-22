@@ -39,6 +39,8 @@ builder.Services.AddIdentity<SystemUser, SystemRole>(options =>
 })
 .AddEntityFrameworkStores<SystemUserDbContext>()
 .AddDefaultTokenProviders();
+
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>options.TokenLifespan = TimeSpan.FromHours(2));
 #endregion
 
 #region JWT

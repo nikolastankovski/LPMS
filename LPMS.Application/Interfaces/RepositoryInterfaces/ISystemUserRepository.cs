@@ -3,6 +3,7 @@
     public interface ISystemUserRepository
     {
         Task<SystemUser> CreateAsync(SystemUser systemUser);
+        Task<SystemUser> UpdateAsync(SystemUser systemUser);
         Task AddToRoleAsync(SystemUser systemUser, string role);
         List<SystemUser> GetAllUsers();
         Task<List<SystemUser>> GetAllUsersAsync();

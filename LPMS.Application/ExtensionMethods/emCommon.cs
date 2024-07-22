@@ -28,7 +28,7 @@ namespace LPMS.Application.ExtensionMethods
             }
             catch (Exception e)
             {
-                Log.Error(e, e.Message);
+                Log.Error(exception: e, messageTemplate: e.ToMessageTemplate());
             }
 
             return string.Empty;
@@ -45,7 +45,7 @@ namespace LPMS.Application.ExtensionMethods
             }
             catch (Exception e)
             {
-                Log.Error(e, e.Message);
+                Log.Error(exception: e, messageTemplate: e.ToMessageTemplate());
             }
 
             return string.Empty;

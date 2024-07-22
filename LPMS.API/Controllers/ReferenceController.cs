@@ -15,9 +15,6 @@ namespace LPMS.API.Controllers
             _referenceService = referenceService;
         }
 
-        [CustomAuthorize(
-            Departments = [Departments.IT]
-        )]
         [HttpGet(nameof(GetByReferenceTypeCode) + "/{referenceTypeCode}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ReferenceWReferenceTypeResponse>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerErrorModel))]

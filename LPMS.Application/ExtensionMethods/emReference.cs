@@ -9,7 +9,6 @@ namespace LPMS.Application.ExtensionMethods
             string nameAttribute = $"Name_{ci.TwoLetterISOLanguageName.ToUpper()}";
             string descriptionAttribute = $"Description_{ci.TwoLetterISOLanguageName.ToUpper()}";
 
-
             var model = new ReferenceWReferenceTypeResponse();
 
             var referenceType = references.Select(x => x.ReferenceType).First();

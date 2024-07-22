@@ -13,5 +13,11 @@ namespace LPMS.Domain.Models.Entities.IdentityEntities
 
         [Column(TypeName = "datetime2(3)"), DataType(DataType.DateTime)]
         public DateTime LastLogin { get; set; }
+
+        [Column(TypeName = "nvarchar(256)"), DataType(DataType.Text)]
+        public string? RefreshToken { get; set; }
+
+        [Column(TypeName = "datetime2(3)"), DataType(DataType.DateTime)]
+        public DateTime? RefreshTokenExpires { get; set; }
     }
 }

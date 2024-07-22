@@ -12,5 +12,6 @@
         public bool RequireExpirationTime { get; init; }
         public bool ValidateLifetime { get; init; }
         public int ExpirationTimeInMin { get; init; }
+        public int RefreshTokenExpirationTimeInHours { get; init; }
     }
 }

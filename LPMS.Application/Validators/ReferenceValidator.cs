@@ -9,7 +9,6 @@ namespace LPMS.Application.Validators
             string isRequired = ci.GetResource(nameof(Resources.VLDMSG_Is_Required));
             string maxChars = ci.GetResource(nameof(Resources.VLDMSG_Max_Chars));
 
-
             RuleFor(x => x.Name_EN)
                         .NotEmpty()
                         .WithName(ci.GetResource(nameof(Resources.Name_EN)))

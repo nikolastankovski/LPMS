@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using LPMS.Domain.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace LPMS.Infrastructure.DbContexts;
 
@@ -15,8 +18,6 @@ public partial class LPMSDbContext : DbContext
 
     public virtual DbSet<Account> Accounts { get; set; }
 
-    public virtual DbSet<AccountxDepartmentxDivision> AccountxDepartmentxDivisions { get; set; }
-
     public virtual DbSet<City> Cities { get; set; }
 
     public virtual DbSet<Client> Clients { get; set; }
@@ -25,27 +26,21 @@ public partial class LPMSDbContext : DbContext
 
     public virtual DbSet<Department> Departments { get; set; }
 
-    public virtual DbSet<DepartmentxDivision> DepartmentxDivisions { get; set; }
-
     public virtual DbSet<Division> Divisions { get; set; }
+
+    public virtual DbSet<Endpoint> Endpoints { get; set; }
+
+    public virtual DbSet<EndpointOperation> EndpointOperations { get; set; }
+
+    public virtual DbSet<EndpointxSystemRole> EndpointxSystemRoles { get; set; }
 
     public virtual DbSet<Reference> References { get; set; }
 
     public virtual DbSet<ReferenceType> ReferenceTypes { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            //Get connection string from appsettings.json
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("appsettings.json")
-            .Build();
-
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-        }
-    }
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=UNKNOWN;Initial Catalog=LPMS;Persist Security Info=True;User ID=admin;Password=admin;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -62,32 +57,6 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.ModifiedOn).HasPrecision(3);
             entity.Property(e => e.Name).HasMaxLength(256);
-        });
-
-        modelBuilder.Entity<AccountxDepartmentxDivision>(entity =>
-        {
-            entity.HasKey(e => e.AccountxDepartmentxDivisionID).HasName("PK_AccountxDepartmentxDivision_AccountxDepartmentxDivisionID");
-
-            entity.ToTable("AccountxDepartmentxDivision", "core");
-
-            entity.Property(e => e.CreatedOn)
-                .HasPrecision(3)
-                .HasDefaultValueSql("(getdate())");
-
-            entity.HasOne(d => d.Account).WithMany(p => p.AccountxDepartmentxDivisions)
-                .HasForeignKey(d => d.AccountId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AccountxDepartmentxDivision_Account");
-
-            entity.HasOne(d => d.Department).WithMany(p => p.AccountxDepartmentxDivisions)
-                .HasForeignKey(d => d.DepartmentId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AccountxDepartmentxDivision_Department");
-
-            entity.HasOne(d => d.Division).WithMany(p => p.AccountxDepartmentxDivisions)
-                .HasForeignKey(d => d.DivisionId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AccountxDepartmentxDivision_Division");
         });
 
         modelBuilder.Entity<City>(entity =>
@@ -167,27 +136,6 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.Name_MK).HasMaxLength(256);
         });
 
-        modelBuilder.Entity<DepartmentxDivision>(entity =>
-        {
-            entity.HasKey(e => e.DepartmentxDivisionID).HasName("PK_DepartmentxDivision_DepartmentxDivisionID");
-
-            entity.ToTable("DepartmentxDivision", "core");
-
-            entity.Property(e => e.CreatedOn)
-                .HasPrecision(3)
-                .HasDefaultValueSql("(getdate())");
-
-            entity.HasOne(d => d.Department).WithMany(p => p.DepartmentxDivisions)
-                .HasForeignKey(d => d.DepartmentId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DepartmentxDivision_Department");
-
-            entity.HasOne(d => d.Division).WithMany(p => p.DepartmentxDivisions)
-                .HasForeignKey(d => d.DivisionId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DepartmentxDivision_Division");
-        });
-
         modelBuilder.Entity<Division>(entity =>
         {
             entity.HasKey(e => e.DivisionID).HasName("PK_Division_DivisionID");
@@ -202,6 +150,56 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.ModifiedOn).HasPrecision(3);
             entity.Property(e => e.Name_EN).HasMaxLength(256);
             entity.Property(e => e.Name_MK).HasMaxLength(256);
+        });
+
+        modelBuilder.Entity<Endpoint>(entity =>
+        {
+            entity.HasKey(e => e.EndpointID).HasName("PK_Endpoint_EndpointID");
+
+            entity.ToTable("Endpoint");
+
+            entity.Property(e => e.Action).HasMaxLength(256);
+            entity.Property(e => e.Controller).HasMaxLength(256);
+            entity.Property(e => e.CreatedOn)
+                .HasPrecision(3)
+                .HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.FullPath).HasMaxLength(500);
+            entity.Property(e => e.Method).HasMaxLength(10);
+            entity.Property(e => e.ModifiedOn).HasPrecision(3);
+            entity.Property(e => e.Route).HasMaxLength(256);
+        });
+
+        modelBuilder.Entity<EndpointOperation>(entity =>
+        {
+            entity.HasKey(e => e.EndpointOperationID).HasName("PK_EndpointOperation_EndpointOperationID");
+
+            entity.ToTable("EndpointOperation");
+
+            entity.Property(e => e.CreatedOn)
+                .HasPrecision(3)
+                .HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.Read).HasDefaultValue(true);
+
+            entity.HasOne(d => d.Endpoint).WithMany(p => p.EndpointOperations)
+                .HasForeignKey(d => d.EndpointId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_EndpointOperation_Endpoint");
+        });
+
+        modelBuilder.Entity<EndpointxSystemRole>(entity =>
+        {
+            entity.HasKey(e => e.EndpointxSystemRoleID).HasName("PK_EndpointxSystemRole_EndpointxSystemRoleID");
+
+            entity.ToTable("EndpointxSystemRole");
+
+            entity.Property(e => e.CreatedOn)
+                .HasPrecision(3)
+                .HasDefaultValueSql("(getdate())");
+
+            entity.HasOne(d => d.Endpoint).WithMany(p => p.EndpointxSystemRoles)
+                .HasForeignKey(d => d.EndpointId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_EndpointxSystemRole_Endpoint");
         });
 
         modelBuilder.Entity<Reference>(entity =>

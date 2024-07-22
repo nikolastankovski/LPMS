@@ -1,4 +1,4 @@
-﻿namespace LPMS.Application.Nomenclature
+﻿namespace LPMS.Domain.Nomenclature
 {
     public class Departments
     {

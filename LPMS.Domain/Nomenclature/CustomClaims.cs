@@ -1,4 +1,4 @@
-﻿namespace LPMS.Application.Nomenclature
+﻿namespace LPMS.Domain.Nomenclature
 {
     public static class CustomClaims
     {
