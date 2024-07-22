@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using LPMS.Domain.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace LPMS.Infrastructure.DbContexts;
 
@@ -39,8 +40,18 @@ public partial class LPMSDbContext : DbContext
     public virtual DbSet<ReferenceType> ReferenceTypes { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=UNKNOWN;Initial Catalog=LPMS;Persist Security Info=True;User ID=admin;Password=admin;TrustServerCertificate=True");
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            //Get connection string from appsettings.json
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json")
+            .Build();
+
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -134,6 +145,11 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.ModifiedOn).HasPrecision(3);
             entity.Property(e => e.Name_EN).HasMaxLength(256);
             entity.Property(e => e.Name_MK).HasMaxLength(256);
+
+            entity.HasOne(d => d.Division).WithMany(p => p.Departments)
+                .HasForeignKey(d => d.DivisionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Department_Division");
         });
 
         modelBuilder.Entity<Division>(entity =>

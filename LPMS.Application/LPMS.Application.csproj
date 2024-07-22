@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EmailService\EmailService.csproj" />
     <ProjectReference Include="..\LPMS.Domain\LPMS.Domain.csproj" />
   </ItemGroup>
 

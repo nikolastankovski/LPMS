@@ -7,6 +7,8 @@ public partial class Department
 {
     public int DepartmentID { get; set; }
 
+    public int DivisionId { get; set; }
+
     public string Name_EN { get; set; } = null!;
 
     public string Name_MK { get; set; } = null!;
@@ -22,4 +24,6 @@ public partial class Department
     public DateTime? ModifiedOn { get; set; }
 
     public bool? IsActive { get; set; }
+
+    public virtual Division Division { get; set; } = null!;
 }

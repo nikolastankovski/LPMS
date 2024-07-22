@@ -13,6 +13,7 @@ using LPMS.Infrastructure.DbContexts;
 using LPMS.Domain.Models.ConfigModels;
 using Serilog;
 using LPMS.API.Middleware;
+using EmailService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,6 +82,8 @@ builder.Services
         .AddApplication()
         .AddInfrastructure()
         .AddAPI();
+
+builder.AddEmailService();
 #endregion
 
 Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();

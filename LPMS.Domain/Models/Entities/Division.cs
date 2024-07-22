@@ -22,4 +22,6 @@ public partial class Division
     public DateTime? ModifiedOn { get; set; }
 
     public bool? IsActive { get; set; }
+
+    public virtual ICollection<Department> Departments { get; set; } = new List<Department>();
 }
