@@ -4,7 +4,8 @@ namespace LPMS.EmailService.EmailTemplates
 {
     public static class EmailTemplates
     {
-        public static readonly string TemplatePath = DirectoryPaths.EmailTemplatesPath;
+        private static readonly string TemplatePath = DirectoryPaths.EmailTemplatesPath;
+        public const string Layout = "_EmailTemplateLayout.cshtml";
 
         public static readonly string Account_ForgotPassword = Path.Combine(TemplatePath, "Account_ForgotPassword.cshtml");
     }

@@ -1,6 +1,6 @@
 ﻿using FluentEmail.Core;
-using FluentEmail.Core.Models;
-using LPMS.Domain.Models.Entities;
+using LPMS.Application.ExtensionMethods;
+using Serilog;
 
 namespace LPMS.EmailService.EmailService;
 
@@ -13,26 +13,39 @@ public class EmailService : IEmailService
         _email = email;
     }
 
-    public async Task<SendResponse> SendEmailAsync(EmailSetUp es)
+    public async Task<bool> SendEmailAsync(EmailSetUp es)
     {
-        _email.Subject(es.Subject);
+        try
+        {
+            _email.Subject(es.Subject);
 
-        if (es.From is not null)
-            _email.SetFrom(es.From.EmailAddress, es.From.Name);
+            if (es.From is not null)
+                _email.SetFrom(es.From.EmailAddress, es.From.Name);
 
-        _email.To(es.To.EmailAddress);
+            _email.To(es.To.EmailAddress);
 
-        if (es.CC.Any())
-            _email.CC(es.CC);
+            if (es.CC.Any())
+                _email.CC(es.CC);
 
-        if (es.BCC.Any())
-            _email.BCC(es.BCC);
+            if (es.BCC.Any())
+                _email.BCC(es.BCC);
 
-        _email.UsingCultureTemplateFromFile(es.EmailTemplate, es.Tokens, es.Culture);
+            _email.UsingCultureTemplateFromFile(es.EmailTemplate, es.Tokens, es.Culture);
 
-        if (es.Attachments.Any())
-            _email.Attach(es.Attachments);
+            if (es.Attachments.Any())
+                _email.Attach(es.Attachments);
 
-        return await _email.SendAsync();
+            var result = await _email.SendAsync();
+
+            if (!result.Successful)
+                Log.Error("Error while sending e-mail! Errors: " + string.Join("; ", result.ErrorMessages));
+
+            return result.Successful;
+        }
+        catch (Exception e)
+        {
+            Log.Error(exception: e, messageTemplate: e.ToMessageTemplate());
+            return false;
+        }
     }
 }

@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using LPMS.API;
 using LPMS.Application;
 using LPMS.Infrastructure;
 using LPMS.Infrastructure.Data;
 using LPMS.Infrastructure.DbContexts;
 using LPMS.Domain.Models.ConfigModels;
-using Serilog;
 using LPMS.API.Middleware;
 using LPMS.EmailService.EmailService;
 

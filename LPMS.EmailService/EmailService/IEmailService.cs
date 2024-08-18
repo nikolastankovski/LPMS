@@ -4,5 +4,5 @@ namespace LPMS.EmailService.EmailService;
 
 public interface IEmailService
 {
-    Task<SendResponse> SendEmailAsync(EmailSetUp emailSetUp);
+    Task<bool> SendEmailAsync(EmailSetUp emailSetUp);
 }

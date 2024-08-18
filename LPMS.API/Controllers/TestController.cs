@@ -1,11 +1,9 @@
-﻿using FluentEmail.Core;
-using FluentEmail.Core.Models;
+﻿using FluentEmail.Core.Models;
 using LPMS.EmailService.EmailService;
 using LPMS.EmailService.EmailTemplates;
 using LPMS.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
-using System.Net.Mail;
 
 namespace LPMS.API.Controllers
 {
@@ -32,7 +30,7 @@ namespace LPMS.API.Controllers
                 Subject = "Test",
                 EmailTemplate = EmailTemplates.Account_ForgotPassword,
                 Culture = CultureInfo.GetCultureInfo(culture),
-                Tokens = new object()
+                Tokens = new { Name = "Nikola" }
             };
 
             var test123 = await _emailService.SendEmailAsync(emailSetUp);
@@ -45,7 +43,8 @@ namespace LPMS.API.Controllers
              var test = test2.Intersect(test1).Any();
 
 
-             return Ok(_test.Test(CultureInfo.GetCultureInfo(culture)));*/
+             return Ok(_test.Test(CultureInfo.GetCultureInfo(culture)));
+            */
         }
     }
 }

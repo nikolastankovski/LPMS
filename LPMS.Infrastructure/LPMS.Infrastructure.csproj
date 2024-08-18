@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LPMS.Application\LPMS.Application.csproj" />
+    <ProjectReference Include="..\LPMS.EmailService\LPMS.EmailService.csproj" />
   </ItemGroup>
 
 </Project>
