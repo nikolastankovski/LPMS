@@ -13,7 +13,7 @@ using LPMS.Infrastructure.DbContexts;
 using LPMS.Domain.Models.ConfigModels;
 using Serilog;
 using LPMS.API.Middleware;
-using EmailService;
+using LPMS.EmailService.EmailService;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using FluentEmail.Core;
+using FluentEmail.MailKitSmtp;
+using FluentEmail.Razor;
 
-namespace EmailService;
+namespace LPMS.EmailService.EmailService;
 
 public static class DependencyInjection
 {
@@ -19,6 +19,9 @@ public static class DependencyInjection
                 .AddFluentEmail(emailConfig.From, emailConfig.DisplayName)
                 .AddRazorRenderer()
                 .AddMailKitSender(emailConfig.SmtpClientOptions);
+
+        Email.DefaultRenderer = new RazorRenderer();
+        Email.DefaultSender = new MailKitSender(emailConfig.SmtpClientOptions);
 
         builder.Services.AddScoped<IEmailService, EmailService>();
 

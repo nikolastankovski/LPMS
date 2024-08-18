@@ -20,7 +20,7 @@ namespace LPMS.API.Middleware
             }
             catch (Exception e)
             {
-                Log.Error(exception: e, messageTemplate: e.ToMessageTemplate());
+                Log.Fatal(exception: e, messageTemplate: e.ToMessageTemplate());
 
                 var problemDetails = new ProblemDetails
                 {
