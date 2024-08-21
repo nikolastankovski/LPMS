@@ -29,6 +29,8 @@ public partial class LPMSDbContext : DbContext
 
     public virtual DbSet<Division> Divisions { get; set; }
 
+    public virtual DbSet<EmailHistory> EmailHistories { get; set; }
+
     public virtual DbSet<Endpoint> Endpoints { get; set; }
 
     public virtual DbSet<EndpointOperation> EndpointOperations { get; set; }
@@ -166,6 +168,20 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.ModifiedOn).HasPrecision(3);
             entity.Property(e => e.Name_EN).HasMaxLength(256);
             entity.Property(e => e.Name_MK).HasMaxLength(256);
+        });
+
+        modelBuilder.Entity<EmailHistory>(entity =>
+        {
+            entity.HasKey(e => e.EmailHistoryID).HasName("PK_EmailHistory_EmailHistoryID");
+
+            entity.ToTable("EmailHistory");
+
+            entity.Property(e => e.CreatedOn)
+                .HasPrecision(3)
+                .HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.From).HasMaxLength(500);
+            entity.Property(e => e.IsSent).HasDefaultValue(false);
+            entity.Property(e => e.Template).HasMaxLength(256);
         });
 
         modelBuilder.Entity<Endpoint>(entity =>

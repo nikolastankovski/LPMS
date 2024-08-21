@@ -24,6 +24,8 @@ namespace LPMS.API.Controllers
         public async Task<IActionResult> Test(string culture)
         {
 
+            var test = EmailTemplates.Account_ForgotPassword.IndexOf("\\EmailTemplates\\");
+
             var emailSetUp = new EmailSetUp()
             {
                 To = new Address("stankovski.n@hotmail.com", "Nikola Stankovski"),

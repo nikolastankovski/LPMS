@@ -13,6 +13,7 @@ public static class DependencyInjection
         services.AddScoped<ISystemUserRepository, SystemUserRepository>();
         services.AddScoped<IReferenceRepository, ReferenceRepository>();
         services.AddScoped<IReferenceTypeRepository, ReferenceTypeRepository>();
+        services.AddScoped<IEmailHistoryRepository, EmailHistoryRepository>();
         #endregion
 
         #region SERVICES
