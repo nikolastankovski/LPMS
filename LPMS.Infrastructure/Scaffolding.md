@@ -3,3 +3,6 @@ Scaffold-DbContext -Connection "Data Source=UNKNOWN;Initial Catalog=LPMS;Persist
 
 ## Single table
 Scaffold-DbContext -Connection "Data Source=UNKNOWN;Initial Catalog=LPMS;Persist Security Info=True;User ID=admin;Password=admin;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -UseDatabaseNames -ContextDir DbContexts -Context LPMSDbContextSingle -ContextNamespace LPMS.Infrastructure.DbContexts -OutputDir ../LPMS.Domain/Models/Entities -Namespace LPMS.Domain.Models.Entities -Tables EmailHistory -Force
+
+## All views
+Scaffold-DbContext -Connection "Data Source=UNKNOWN;Initial Catalog=LPMS;Persist Security Info=True;User ID=admin;Password=admin;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -UseDatabaseNames -ContextDir DbContexts -Context LPMSViewsDbContext -ContextNamespace LPMS.Infrastructure.DbContexts -OutputDir ../LPMS.Domain/Models/Entities/Views -Namespace LPMS.Domain.Models.Entities -Tables vwApplicationUser -Force

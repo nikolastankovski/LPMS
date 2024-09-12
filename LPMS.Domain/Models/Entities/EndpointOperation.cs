@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace LPMS.Domain.Models.Entities;
 
-namespace LPMS.Domain.Models.Entities;
-
-public partial class EndpointOperation
+public partial class EndpointOperation : IAuditableEntity
 {
     public int EndpointOperationID { get; set; }
 
@@ -20,6 +17,10 @@ public partial class EndpointOperation
     public DateTime CreatedOn { get; set; }
 
     public Guid CreatedBy { get; set; }
+
+    public Guid? ModifiedBy { get; set; }
+
+    public DateTime? ModifiedOn { get; set; }
 
     public virtual Endpoint Endpoint { get; set; } = null!;
 }

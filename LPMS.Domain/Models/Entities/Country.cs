@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace LPMS.Domain.Models.Entities;
 
-namespace LPMS.Domain.Models.Entities;
-
-public partial class Country
+public partial class Country : IAuditableEntity
 {
     public int CountryID { get; set; }
 

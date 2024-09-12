@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace LPMS.Domain.Models.Entities;
 
-namespace LPMS.Domain.Models.Entities;
-
-public partial class EmailHistory
+public partial class EmailHistory : IAuditableEntity
 {
     public int EmailHistoryID { get; set; }
 
@@ -26,4 +23,8 @@ public partial class EmailHistory
     public Guid CreatedBy { get; set; }
 
     public DateTime CreatedOn { get; set; }
+
+    public Guid? ModifiedBy { get; set; }
+
+    public DateTime? ModifiedOn { get; set; }
 }

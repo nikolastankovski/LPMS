@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace LPMS.Domain.Models.Entities;
 
-namespace LPMS.Domain.Models.Entities;
-
-public partial class Client
+public partial class Client : IAuditableEntity
 {
     public int ClientID { get; set; }
 

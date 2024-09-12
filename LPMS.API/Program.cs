@@ -14,12 +14,24 @@ using LPMS.Infrastructure.DbContexts;
 using LPMS.Domain.Models.ConfigModels;
 using LPMS.API.Middleware;
 using LPMS.EmailService.EmailService;
+using LPMS.Infrastructure.Interceptors;
 
 var builder = WebApplication.CreateBuilder(args);
 
 #region DBCONTEXT & IDENTITY
+
+builder.Services.AddScoped<UpdateAuditableEntitiesInterceptor>();
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<LPMSDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<LPMSDbContext>((sp, options) =>
+{
+    var auditingInterceptor = sp.GetService<UpdateAuditableEntitiesInterceptor>()!;
+
+    options
+        .UseSqlServer(connectionString)
+        .AddInterceptors(auditingInterceptor);
+});
+builder.Services.AddDbContext<LPMSViewsDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddDbContext<SystemUserDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddIdentity<SystemUser, SystemRole>(options =>
@@ -41,7 +53,7 @@ builder.Services.AddIdentity<SystemUser, SystemRole>(options =>
 .AddEntityFrameworkStores<SystemUserDbContext>()
 .AddDefaultTokenProviders();
 
-builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>options.TokenLifespan = TimeSpan.FromHours(2));
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(2));
 #endregion
 
 #region JWT
@@ -92,6 +104,8 @@ builder.Host.UseSerilog();
 builder.Services
     .AddControllers()
     .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddEndpointsApiExplorer();
 

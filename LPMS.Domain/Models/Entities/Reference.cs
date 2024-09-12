@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace LPMS.Domain.Models.Entities;
 
-namespace LPMS.Domain.Models.Entities;
-
-public partial class Reference
+public partial class Reference : IAuditableEntity
 {
     public int ReferenceID { get; set; }
 

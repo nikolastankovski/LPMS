@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace LPMS.Domain.Models.Entities;
 
-namespace LPMS.Domain.Models.Entities;
-
-public partial class Department
+public partial class Department : IAuditableEntity
 {
     public int DepartmentID { get; set; }
 

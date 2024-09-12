@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace LPMS.Domain.Models.Entities;
 
-namespace LPMS.Domain.Models.Entities;
-
-public partial class Account
+public partial class Account : IAuditableEntity
 {
     public Guid AccountID { get; set; }
 

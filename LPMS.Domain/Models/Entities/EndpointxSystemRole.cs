@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace LPMS.Domain.Models.Entities;
 
-namespace LPMS.Domain.Models.Entities;
-
-public partial class EndpointxSystemRole
+public partial class EndpointxSystemRole : IAuditableEntity
 {
     public int EndpointxSystemRoleID { get; set; }
 
@@ -14,6 +11,10 @@ public partial class EndpointxSystemRole
     public DateTime CreatedOn { get; set; }
 
     public Guid CreatedBy { get; set; }
+
+    public Guid? ModifiedBy { get; set; }
+
+    public DateTime? ModifiedOn { get; set; }
 
     public virtual Endpoint Endpoint { get; set; } = null!;
 }
