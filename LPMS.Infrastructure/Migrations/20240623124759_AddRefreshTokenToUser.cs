@@ -19,7 +19,7 @@ namespace LPMS.Infrastructure.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<DateTime>(
-                name: "RefreshTokenExpires",
+                name: "RefreshTokenExpiresUTC",
                 schema: "dbo",
                 table: "SystemUser",
                 type: "datetime2(3)",
@@ -46,7 +46,7 @@ namespace LPMS.Infrastructure.Migrations
                 table: "SystemUser");
 
             migrationBuilder.DropColumn(
-                name: "RefreshTokenExpires",
+                name: "RefreshTokenExpiresUTC",
                 schema: "dbo",
                 table: "SystemUser");
 

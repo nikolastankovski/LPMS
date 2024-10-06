@@ -168,6 +168,9 @@
   <data name="PhoneNumber" xml:space="preserve">
     <value>Телефонски број</value>
   </data>
+  <data name="Token_Not_Valid" xml:space="preserve">
+    <value>Токенот не е валиден!</value>
+  </data>
   <data name="Unexpected_Error" xml:space="preserve">
     <value>Се случи неочекувана грешка!</value>
   </data>
@@ -177,8 +180,8 @@
   <data name="Username" xml:space="preserve">
     <value>Корисничко име</value>
   </data>
-  <data name="User_not_found" xml:space="preserve">
-    <value>Корисникот не е пронајден!</value>
+  <data name="User_Doesnt_Exist" xml:space="preserve">
+    <value>Корисникот не постои!</value>
   </data>
   <data name="VLDMSG_Is_Required" xml:space="preserve">
     <value>'{PropertyName}' е задолжително поле!</value>

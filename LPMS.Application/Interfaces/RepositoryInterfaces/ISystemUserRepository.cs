@@ -5,6 +5,7 @@
         Task<SystemUser> CreateAsync(SystemUser systemUser);
         Task<SystemUser> UpdateAsync(SystemUser systemUser);
         Task AddToRoleAsync(SystemUser systemUser, string role);
+        Task UpdateUserRoleAsync(SystemUser user, string role);
         List<SystemUser> GetAllUsers();
         Task<List<SystemUser>> GetAllUsersAsync();
         Task<List<SystemRole>> GetAllRolesAsync();

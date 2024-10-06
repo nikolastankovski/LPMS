@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace LPMS.API.Controllers
 {
-    [Route("api/{culture}/[controller]")]
+    [Route("api/{culture}/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -15,27 +15,26 @@ namespace LPMS.API.Controllers
             _authService = authService;
         }
 
-        [HttpGet(nameof(GetAuthenticationToken))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthenticationTokenResponse))]
+        [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthTokenResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestModel))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerErrorModel))]
-        public async Task<IResult> GetAuthenticationToken(string culture, AuthenticationTokenRequest request)
+        public async Task<IResult> Login(string culture, LoginRequest request)
         {
-            var getTokenResult = await _authService.GetAuthenticationToken(request, CultureInfo.GetCultureInfo(culture));
+            var getTokenResult = await _authService.GetAuthTokenAsync(request, CultureInfo.GetCultureInfo(culture));
 
             return getTokenResult.IsSuccess ? getTokenResult.ToOkResponse() : getTokenResult.ToBadRequest();
         }
 
-        [HttpGet(nameof(RefreshToken))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthenticationTokenResponse))]
+        [HttpPost("refresh-token")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthTokenResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestModel))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerErrorModel))]
         public async Task<IResult> RefreshToken(string culture, RefreshTokenRequest request)
         {
-            /*var getTokenResult = await _authService.GetAuthenticationToken(request, CultureInfo.GetCultureInfo(culture));*/
+            var refreshAuthToken = await _authService.RefreshAuthTokenAsync(request, CultureInfo.GetCultureInfo(culture));
 
-            return Results.Ok();
+            return refreshAuthToken.IsSuccess ? refreshAuthToken.ToOkResponse() : refreshAuthToken.ToBadRequest();
         }
-
     }
 }

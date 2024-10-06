@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using Azure.Core;
+using FluentResults;
 using LPMS.Domain.Models.ConfigModels;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -21,30 +22,65 @@ namespace LPMS.Infrastructure.Services
             _jwtConfig = jwtConfig.Value;
         }
 
-        public async Task<Result<AuthenticationTokenResponse>> GetAuthenticationToken(AuthenticationTokenRequest request, CultureInfo culture)
+        public async Task<Result<AuthTokenResponse>> GetAuthTokenAsync(LoginRequest request, CultureInfo culture)
         {
             try
             {
-                var sysUser = await _systemUserRepository.GetUserByEmailAsync(request.Email);
+                SystemUser? sysUser = await _systemUserRepository.GetUserByEmailAsync(request.Email);
 
                 if (sysUser == null)
-                    return Result.Fail(culture.GetResource(nameof(Resources.User_not_found)));
+                    return Result.Fail(culture.GetResource(nameof(Resources.User_Doesnt_Exist)));
 
-                var areCredentialsCorrect = await _systemUserRepository.IsCorrectPasswordAsync(sysUser, request.Password);
+                bool areCredentialsCorrect = await _systemUserRepository.IsCorrectPasswordAsync(sysUser, request.Password);
 
                 if (!areCredentialsCorrect)
                     return Result.Fail(culture.GetResource(nameof(Resources.Incorrect_credentials)));
 
-                var accessToken = await GenerateAccessToken(sysUser);
-                var refreshToken = await GenerateRefreshToken(sysUser);
+                TokenModel? accessToken = await GenerateAccessToken(sysUser);
+                TokenModel? refreshToken = await GenerateRefreshToken(sysUser);
 
-                return Result.Ok(new AuthenticationTokenResponse()
+                return Result.Ok(new AuthTokenResponse()
                 {
                     AccessToken = accessToken.Token,
-                    Expires = accessToken.Expires,
+                    Expires = accessToken.ExpiresUTC,
                     RefreshToken = refreshToken.Token
-
                 });
+            }
+            catch (Exception e)
+            {
+                Log.Error(exception: e, messageTemplate: e.ToMessageTemplate());
+
+                return Result.Fail(culture.GetResource(nameof(Resources.Unexpected_Error)));
+            }
+        }
+
+        public async Task<Result<AuthTokenResponse>> RefreshAuthTokenAsync(RefreshTokenRequest request, CultureInfo culture)
+        {
+            try
+            {
+                ClaimsPrincipal? expiredTokenPrincipal = GetPrincipalFromExpiredToken(request.AuthToken);
+
+                if(expiredTokenPrincipal?.Identity?.Name is null)
+                    return Result.Fail(culture.GetResource(nameof(Resources.Token_Not_Valid)));
+
+                SystemUser? sysUser = await _systemUserRepository.GetUserByEmailAsync(expiredTokenPrincipal.Identity.Name);
+
+                if(sysUser is null)
+                    return Result.Fail(culture.GetResource(nameof(Resources.User_Doesnt_Exist)));
+
+                if(DateTime.UtcNow > sysUser.RefreshTokenExpiresUTC || sysUser.RefreshToken != request.RefreshToken)
+                    return Result.Fail(culture.GetResource(nameof(Resources.Token_Not_Valid)));
+
+                TokenModel? accessToken = await GenerateAccessToken(sysUser);
+                TokenModel? refreshToken = await GenerateRefreshToken(sysUser);
+
+                return Result.Ok(new AuthTokenResponse()
+                {
+                    AccessToken = accessToken.Token,
+                    Expires = accessToken.ExpiresUTC,
+                    RefreshToken = refreshToken.Token
+                });
+
             }
             catch (Exception e)
             {
@@ -59,12 +95,12 @@ namespace LPMS.Infrastructure.Services
             var tokenHandler = new JwtSecurityTokenHandler();
             var claims = await GetUserClaimsAsync(sysUser);
 
-            var expires = DateTime.Now.AddMinutes(_jwtConfig.ExpirationTimeInMin);
+            var expiresUTC = DateTime.UtcNow.AddMinutes(_jwtConfig.ExpirationTimeInMin);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims.ToArray()),
-                Expires = expires,
+                Expires = expiresUTC,
                 Issuer = _jwtConfig.ValidIssuer,
                 IssuedAt = DateTime.Now,
                 Audience = _jwtConfig.ValidAudience,
@@ -73,7 +109,7 @@ namespace LPMS.Infrastructure.Services
 
             var token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
 
-            return new TokenModel() { Token = token, Expires = expires };
+            return new TokenModel() { Token = token, ExpiresUTC = expiresUTC };
         }
 
         private async Task<TokenModel> GenerateRefreshToken(SystemUser sysUser)
@@ -85,11 +121,11 @@ namespace LPMS.Infrastructure.Services
             var refreshToken = new TokenModel()
             {
                 Token = Convert.ToBase64String(randomNumber),
-                Expires = DateTime.Now.AddHours(_jwtConfig.RefreshTokenExpirationTimeInHours),
+                ExpiresUTC = DateTime.UtcNow.AddHours(_jwtConfig.RefreshTokenExpirationTimeInHours),
             };
 
             sysUser.RefreshToken = refreshToken.Token;
-            sysUser.RefreshTokenExpires = refreshToken.Expires;
+            sysUser.RefreshTokenExpiresUTC = refreshToken.ExpiresUTC;
 
             await _systemUserRepository.UpdateAsync(sysUser);
 
@@ -101,6 +137,7 @@ namespace LPMS.Infrastructure.Services
             var claims = new List<Claim>
             { 
                 new Claim(ClaimTypes.Name, user.Email),
+                new Claim(ClaimTypes.Email, user.Email)
             };
             claims = await AddRoleClaimsAsync(user, claims);
             //claims = await AddDepartmentAndDivisionClaimsAsync(user, claims);
@@ -149,7 +186,7 @@ namespace LPMS.Infrastructure.Services
             return claims;
         }*/
 
-        public async Task<bool> ValidateExpiredToken(string expiredToken)
+        public ClaimsPrincipal? GetPrincipalFromExpiredToken(string expiredToken)
         {
             var tokenParameters = new TokenValidationParameters
             {
@@ -159,9 +196,9 @@ namespace LPMS.Infrastructure.Services
                 ValidateLifetime = false
             };
 
-            var validate = await new JwtSecurityTokenHandler().ValidateTokenAsync(token: expiredToken, validationParameters: tokenParameters);
+            var principal = new JwtSecurityTokenHandler().ValidateToken(token: expiredToken, validationParameters: tokenParameters, out SecurityToken securityToken);
 
-            return validate.IsValid;
+            return principal;
         }
     }
 }

@@ -38,6 +38,11 @@ namespace LPMS.Infrastructure.Repositories
             await _userManager.AddToRoleAsync(systemUser, role);
         }
 
+        public async Task UpdateUserRoleAsync(SystemUser systemUser, string role)
+        {
+            await _userManager.RemoveFromRoleAsync(systemUser, role);
+            await _userManager.AddToRoleAsync(systemUser, role);
+        }
         public List<SystemUser> GetAllUsers()
         {
             return _userManager.Users.ToList();

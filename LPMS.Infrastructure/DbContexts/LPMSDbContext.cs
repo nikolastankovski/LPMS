@@ -41,6 +41,9 @@ public partial class LPMSDbContext : DbContext
 
     public virtual DbSet<ReferenceType> ReferenceTypes { get; set; }
 
+
+    public virtual DbSet<vwApplicationUser> vwApplicationUsers { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
@@ -277,6 +280,17 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.ModifiedOn).HasPrecision(3);
             entity.Property(e => e.Name_EN).HasMaxLength(256);
             entity.Property(e => e.Name_MK).HasMaxLength(256);
+        });
+
+        modelBuilder.Entity<vwApplicationUser>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("vwApplicationUser", "core");
+
+            entity.Property(e => e.Email).HasMaxLength(256);
+            entity.Property(e => e.Name).HasMaxLength(256);
+            entity.Property(e => e.Role).HasMaxLength(256);
         });
 
         OnModelCreatingPartial(modelBuilder);

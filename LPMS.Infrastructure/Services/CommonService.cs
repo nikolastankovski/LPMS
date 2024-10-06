@@ -5,12 +5,12 @@ namespace LPMS.Infrastructure.Services;
 public class CommonService : ICommonService
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly LPMSViewsDbContext _viewsContext;   
+    private readonly LPMSDbContext _context;   
 
-    public CommonService(IHttpContextAccessor httpContextAccessor, LPMSViewsDbContext viewsContext)
+    public CommonService(IHttpContextAccessor httpContextAccessor, LPMSDbContext context)
     {
         _httpContextAccessor = httpContextAccessor;
-        _viewsContext = viewsContext;
+        _context = context;
     }
 
     public LoggedInUser? GetLoggedInUser()
@@ -19,7 +19,7 @@ public class CommonService : ICommonService
 
         var email = _httpContextAccessor.HttpContext.User?.Identity?.Name ?? string.Empty;
 
-        var loggedInUser = _viewsContext.vwApplicationUsers
+        var loggedInUser = _context.vwApplicationUsers
                 .Where(x => x.Email == email)
                 .Select(x => new LoggedInUser()
                 {

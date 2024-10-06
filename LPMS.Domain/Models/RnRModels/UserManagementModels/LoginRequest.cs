@@ -2,7 +2,7 @@
 
 namespace LPMS.Domain.Models.RnRModels.UserManagementModels
 {
-    public class AuthenticationTokenRequest
+    public class LoginRequest
     {
         [DataType(DataType.EmailAddress)]
         public required string Email { get; set; }

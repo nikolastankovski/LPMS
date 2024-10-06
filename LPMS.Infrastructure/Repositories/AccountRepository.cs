@@ -146,28 +146,56 @@ namespace LPMS.Infrastructure.Repositories
             return await _context.Accounts.FindAsync(id);
         }
 
-        public void Update(Account entity, Guid modifiedBy)
+        public void Update(Account entity)
         {
             _context.Accounts
                     .Where(x => x.AccountID == entity.AccountID)
                     .ExecuteUpdate(setters => setters
                         .SetProperty(x => x.Name, entity.Name)
-                        .SetProperty(x => x.ModifiedBy, modifiedBy)
-                        .SetProperty(x => x.ModifiedOn, DateTime.Now)
                         .SetProperty(x => x.IsActive, entity.IsActive)
                     );
         }
 
-        public async Task UpdateAsync(Account entity, Guid modifiedBy)
+        public async Task UpdateAsync(Account entity)
         {
             await _context.Accounts
                         .Where(x => x.AccountID == entity.AccountID)
                         .ExecuteUpdateAsync(setters => setters
                             .SetProperty(x => x.Name, entity.Name)
-                            .SetProperty(x => x.ModifiedBy, modifiedBy)
-                            .SetProperty(x => x.ModifiedOn, DateTime.Now)
                             .SetProperty(x => x.IsActive, entity.IsActive)
                         );
+        }
+
+        public async Task<ApplicationUserResponse?> GetApplicationUserAsync(string email)
+        {
+            return await _context.vwApplicationUsers
+                                    .AsNoTracking()
+                                    .Where(x => x.Email == email)
+                                    .Select(x => new ApplicationUserResponse
+                                    {
+                                        AccountId = x.AccountId,
+                                        SystemUserId = x.SystemUserId,
+                                        Name = x.Name,
+                                        Email = x.Email,
+                                        Role = x.Role
+                                    })
+                                    .FirstOrDefaultAsync();
+        }
+
+        public async Task<ApplicationUserResponse?> GetApplicationUserAsync(Guid accountId)
+        {
+            return await _context.vwApplicationUsers
+                                    .AsNoTracking()
+                                    .Where(x => x.AccountId == accountId)
+                                    .Select(x => new ApplicationUserResponse
+                                    {
+                                        AccountId = x.AccountId,
+                                        SystemUserId = x.SystemUserId,
+                                        Name = x.Name,
+                                        Email = x.Email,
+                                        Role = x.Role
+                                    })
+                                    .FirstOrDefaultAsync();
         }
     }
 }

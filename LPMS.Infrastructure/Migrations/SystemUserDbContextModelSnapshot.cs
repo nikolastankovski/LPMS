@@ -139,7 +139,7 @@ namespace LPMS.Infrastructure.Migrations
                     b.Property<string>("RefreshToken")
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<DateTime?>("RefreshTokenExpires")
+                    b.Property<DateTime?>("RefreshTokenExpiresUTC")
                         .HasColumnType("datetime2(3)");
 
                     b.Property<string>("SecurityStamp")

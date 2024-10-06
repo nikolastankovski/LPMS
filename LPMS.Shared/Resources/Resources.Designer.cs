@@ -214,6 +214,15 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Токенот не е валиден!.
+        /// </summary>
+        public static string Token_Not_Valid {
+            get {
+                return ResourceManager.GetString("Token_Not_Valid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Се случи неочекувана грешка!.
         /// </summary>
         public static string Unexpected_Error {
@@ -232,11 +241,11 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Корисникот не е пронајден!.
+        ///   Looks up a localized string similar to Корисникот не постои!.
         /// </summary>
-        public static string User_not_found {
+        public static string User_Doesnt_Exist {
             get {
-                return ResourceManager.GetString("User_not_found", resourceCulture);
+                return ResourceManager.GetString("User_Doesnt_Exist", resourceCulture);
             }
         }
         

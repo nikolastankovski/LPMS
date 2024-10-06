@@ -1,6 +1,6 @@
 ﻿namespace LPMS.Domain.Models.RnRModels.UserManagementModels
 {
-    public class AuthenticationTokenResponse
+    public class AuthTokenResponse
     {
         public required string AccessToken { get; set; }
         public required DateTime Expires { get; set; }

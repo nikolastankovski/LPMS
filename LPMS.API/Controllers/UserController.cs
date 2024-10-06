@@ -4,45 +4,45 @@ using LPMS.Domain.Models.RnRModels.UserManagementModels;
 
 namespace LPMS.API.Controllers
 {
-    [Route("api/{culture}/[controller]")]
+    [Route("api/{culture}/user")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _accountService;
+        private readonly IUserService _userService;
 
-        public UserController(IUserService accountService)
+        public UserController(IUserService userService)
         {
-            _accountService = accountService;
+            _userService = userService;
         }
 
         [CustomAuthorize(Roles = [UserRoles.SystemAdministrator, UserRoles.Administrator])]
-        [HttpPost(nameof(Create))]
+        [HttpPost()]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateUserResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestModel))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerErrorModel))]
         public async Task<IResult> Create(string culture, CreateUserRequest request)
         {
-            var createUser = await _accountService.CreateApplicationUserAsync(request, CultureInfo.GetCultureInfo(culture));
+            var createUser = await _userService.CreateApplicationUserAsync(request, CultureInfo.GetCultureInfo(culture));
 
             return createUser.IsSuccess ? createUser.ToOkResponse() : createUser.ToBadRequest();
         }
 
         [CustomAuthorize(Roles = [UserRoles.SystemAdministrator, UserRoles.Administrator])]
-        [HttpPut(nameof(Modify))]
+        [HttpPut()]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateUserResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestModel))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerErrorModel))]
         public async Task<IResult> Modify(string culture, CreateUserRequest request)
         {
-            var createUser = await _accountService.CreateApplicationUserAsync(request, CultureInfo.GetCultureInfo(culture));
+            var createUser = await _userService.CreateApplicationUserAsync(request, CultureInfo.GetCultureInfo(culture));
 
             return createUser.IsSuccess ? createUser.ToOkResponse() : createUser.ToBadRequest();
         }
 
         [CustomAuthorize(Roles = [UserRoles.SystemAdministrator, UserRoles.Administrator])]
-        [HttpDelete(nameof(Delete))]
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateUserResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestModel))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

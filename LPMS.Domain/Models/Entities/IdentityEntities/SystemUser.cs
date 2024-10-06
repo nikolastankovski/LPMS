@@ -18,6 +18,6 @@ namespace LPMS.Domain.Models.Entities.IdentityEntities
         public string? RefreshToken { get; set; }
 
         [Column(TypeName = "datetime2(3)"), DataType(DataType.DateTime)]
-        public DateTime? RefreshTokenExpires { get; set; }
+        public DateTime? RefreshTokenExpiresUTC { get; set; }
     }
 }
