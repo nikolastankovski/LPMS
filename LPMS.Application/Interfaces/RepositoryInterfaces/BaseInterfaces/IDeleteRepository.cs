@@ -4,9 +4,9 @@
         where TModel : class
         where PkType : struct
     {
-        bool Delete(PkType id);
+        void Delete(PkType id);
         //Result<TModel> Delete(List<object> ids, string culture);
-        Task<bool> DeleteAsync(PkType id);
+        Task DeleteAsync(PkType id);
         //Task<Result<TModel>> DeleteAsync(List<object> ids, string culture);
     }
 }

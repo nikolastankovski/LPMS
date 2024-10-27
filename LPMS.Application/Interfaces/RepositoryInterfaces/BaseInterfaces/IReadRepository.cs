@@ -19,8 +19,8 @@ namespace LPMS.Application.Interfaces.RepositoryInterfaces.BaseInterfaces
             string includeProperties = ""
         );
 
-        List<TModel> GetAll(bool? isActive = null);
-        Task<List<TModel>> GetAllAsync(bool? isActive = null);
+        List<TModel> GetAll();
+        Task<List<TModel>> GetAllAsync();
         TModel? GetById(PkType id);
         Task<TModel?> GetByIdAsync(PkType id);
     }
