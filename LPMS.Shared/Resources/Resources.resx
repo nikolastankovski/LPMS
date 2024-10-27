@@ -120,6 +120,9 @@
   <data name="Account" xml:space="preserve">
     <value>Профил</value>
   </data>
+  <data name="Account_Is_Blocked" xml:space="preserve">
+    <value>Профилот е блокиран!</value>
+  </data>
   <data name="Code" xml:space="preserve">
     <value>Код</value>
   </data>
@@ -150,8 +153,14 @@
   <data name="Email" xml:space="preserve">
     <value>Емаил</value>
   </data>
+  <data name="Email_Account_NewUserSubject" xml:space="preserve">
+    <value>Нов корисник</value>
+  </data>
   <data name="Email_InvalidFormat" xml:space="preserve">
     <value>Невалиден формат на емаил!</value>
+  </data>
+  <data name="Email_Not_Verified" xml:space="preserve">
+    <value>Емаил адресата не е верификувана!</value>
   </data>
   <data name="Incorrect_credentials" xml:space="preserve">
     <value>Погрешен емаил или лозинка!</value>

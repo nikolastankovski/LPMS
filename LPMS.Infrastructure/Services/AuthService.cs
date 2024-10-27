@@ -31,6 +31,12 @@ namespace LPMS.Infrastructure.Services
                 if (sysUser == null)
                     return Result.Fail(culture.GetResource(nameof(Resources.User_Doesnt_Exist)));
 
+                if (!sysUser.EmailConfirmed)
+                    return Result.Fail(culture.GetResource(nameof(Resources.Email_Not_Verified)));
+
+                if (sysUser.LockoutEnabled && (sysUser.LockoutEnd.HasValue && DateTime.UtcNow > sysUser.LockoutEnd.Value.UtcDateTime))
+                    return Result.Fail(culture.GetResource(nameof(Resources.Account_Is_Blocked)));
+
                 bool areCredentialsCorrect = await _systemUserRepository.IsCorrectPasswordAsync(sysUser, request.Password);
 
                 if (!areCredentialsCorrect)
@@ -70,6 +76,12 @@ namespace LPMS.Infrastructure.Services
 
                 if(DateTime.UtcNow > sysUser.RefreshTokenExpiresUTC || sysUser.RefreshToken != request.RefreshToken)
                     return Result.Fail(culture.GetResource(nameof(Resources.Token_Not_Valid)));
+
+                if (!sysUser.EmailConfirmed)
+                    return Result.Fail(culture.GetResource(nameof(Resources.Email_Not_Verified)));
+
+                if (sysUser.LockoutEnabled && (sysUser.LockoutEnd.HasValue && DateTime.UtcNow > sysUser.LockoutEnd.Value.UtcDateTime))
+                    return Result.Fail(culture.GetResource(nameof(Resources.Account_Is_Blocked)));
 
                 TokenModel? accessToken = await GenerateAccessToken(sysUser);
                 TokenModel? refreshToken = await GenerateRefreshToken(sysUser);

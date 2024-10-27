@@ -120,6 +120,9 @@
   <data name="Account" xml:space="preserve">
     <value>Account</value>
   </data>
+  <data name="Account_Is_Blocked" xml:space="preserve">
+    <value>Account is blocked!</value>
+  </data>
   <data name="Code" xml:space="preserve">
     <value>Code</value>
   </data>
@@ -150,8 +153,14 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="Email_Account_NewUserSubject" xml:space="preserve">
+    <value>New user</value>
+  </data>
   <data name="Email_InvalidFormat" xml:space="preserve">
     <value>Invalid email format!</value>
+  </data>
+  <data name="Email_Not_Verified" xml:space="preserve">
+    <value>Email is not verified!</value>
   </data>
   <data name="Incorrect_credentials" xml:space="preserve">
     <value>Incorrect email or password!</value>

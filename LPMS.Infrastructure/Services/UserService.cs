@@ -3,8 +3,9 @@ using System.Globalization;
 using FluentResults;
 using System.Transactions;
 using LPMS.Domain.Models.RnRModels;
-using System.Formats.Asn1;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using LPMS.EmailService.EmailService;
+using FluentEmail.Core.Models;
+using LPMS.EmailService.EmailTemplates;
 
 namespace LPMS.Infrastructure.Services
 {
@@ -12,11 +13,13 @@ namespace LPMS.Infrastructure.Services
     {
         private readonly IAccountRepository _accountRepository;
         private readonly ISystemUserRepository _systemUserRepository;
+        private readonly IEmailService _emailService;
 
-        public UserService(IAccountRepository accountRepository, ISystemUserRepository systemUserRepository)
+        public UserService(IAccountRepository accountRepository, ISystemUserRepository systemUserRepository, IEmailService emailService)
         {
             _accountRepository = accountRepository;
             _systemUserRepository = systemUserRepository;
+            _emailService = emailService;
         }
 
         public async Task<Result<ApplicationUser>> GetAppUserAsyncById(Guid id, CultureInfo culture)
@@ -66,6 +69,17 @@ namespace LPMS.Infrastructure.Services
 
                     await _accountRepository.CreateAsync(account);
                     #endregion
+
+                    //var emailSetUp = new EmailSetUp()
+                    //{
+                    //    To = new Address(sysUser.Email, account.Name),
+                    //    Subject = culture.GetResource(nameof(Resources.Email_Account_NewUserSubject)),
+                    //    EmailTemplate = EmailTemplates.Account_ConfirmEmail,
+                    //    Culture = culture,
+                    //    Tokens = account
+                    //};
+
+                    //await _emailService.SendEmailAsync(emailSetUp);
 
                     transaction.Complete();
 

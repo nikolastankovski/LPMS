@@ -1,4 +1,5 @@
 ﻿using FluentEmail.Core.Models;
+using LPMS.Application.Interfaces.RepositoryInterfaces;
 using LPMS.EmailService.EmailService;
 using LPMS.EmailService.EmailTemplates;
 using LPMS.Infrastructure.Services;
@@ -13,18 +14,21 @@ namespace LPMS.API.Controllers
     {
         private readonly TestService _test;
         private readonly IEmailService _emailService;
+        private readonly IReferenceRepository _referenceRepo;
 
-        public TestController(TestService test, IEmailService emailService)
+        public TestController(TestService test, IEmailService emailService, IReferenceRepository referenceRepo)
         {
             _test = test;
             _emailService = emailService;
+            _referenceRepo = referenceRepo;
         }
 
         [HttpGet(nameof(Test))]
         public async Task<IActionResult> Test(string culture)
         {
+            var test = await _referenceRepo.GetAllAsync();
 
-            var test = EmailTemplates.Account_ForgotPassword.IndexOf("\\EmailTemplates\\");
+            /*var test = EmailTemplates.Account_ForgotPassword.IndexOf("\\EmailTemplates\\");
 
             var emailSetUp = new EmailSetUp()
             {
@@ -35,9 +39,9 @@ namespace LPMS.API.Controllers
                 Tokens = new { Name = "Nikola" }
             };
 
-            var test123 = await _emailService.SendEmailAsync(emailSetUp);
+            var test123 = await _emailService.SendEmailAsync(emailSetUp);*/
 
-            return Ok(test123);
+            return Ok(true);
 
             /* string[] test1 = ["DPT1", "Test2"];
              List<string> test2 = new List<string>() { "DPT1", "DPT2" };

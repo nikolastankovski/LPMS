@@ -70,6 +70,15 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Профилот е блокиран!.
+        /// </summary>
+        public static string Account_Is_Blocked {
+            get {
+                return ResourceManager.GetString("Account_Is_Blocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Код.
         /// </summary>
         public static string Code {
@@ -160,11 +169,29 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Нов корисник.
+        /// </summary>
+        public static string Email_Account_NewUserSubject {
+            get {
+                return ResourceManager.GetString("Email_Account_NewUserSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Невалиден формат на емаил!.
         /// </summary>
         public static string Email_InvalidFormat {
             get {
                 return ResourceManager.GetString("Email_InvalidFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Емаил адресата не е верификувана!.
+        /// </summary>
+        public static string Email_Not_Verified {
+            get {
+                return ResourceManager.GetString("Email_Not_Verified", resourceCulture);
             }
         }
         
