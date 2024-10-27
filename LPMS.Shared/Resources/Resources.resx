@@ -183,6 +183,9 @@
   <data name="User_Doesnt_Exist" xml:space="preserve">
     <value>Корисникот не постои!</value>
   </data>
+  <data name="User_Not_Found" xml:space="preserve">
+    <value>Корисникот не е пронајден!</value>
+  </data>
   <data name="VLDMSG_Is_Required" xml:space="preserve">
     <value>'{PropertyName}' е задолжително поле!</value>
   </data>

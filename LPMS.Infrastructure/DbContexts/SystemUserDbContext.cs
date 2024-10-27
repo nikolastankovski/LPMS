@@ -41,7 +41,7 @@ namespace LPMS.Infrastructure.Data
             builder.Entity<SystemRole>(entity =>
             {
                 entity.ToTable(nameof(SystemRole));
-                entity.Property(x => x.CreatedOn).HasDefaultValueSql("GETDATE()");
+                entity.Property(x => x.CreatedOnUTC).HasDefaultValueSql("GETDATE()");
                 entity.Property(x => x.IsActive).HasDefaultValueSql("1");
             });
             builder.Entity<SystemUserRole>(entity =>

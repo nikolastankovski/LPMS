@@ -44,11 +44,12 @@ namespace LPMS.Infrastructure.Repositories
             return entities;
         }
 
-        public bool Delete(object id)
+        public bool Delete(Guid id)
         {
             try
             {
-                _context.Accounts.Where(x => x.AccountID == (Guid)id).ExecuteDelete();
+
+                _context.Accounts.Where(x => x.AccountID == id).ExecuteDelete();
 
                 return true;
             }
@@ -58,11 +59,11 @@ namespace LPMS.Infrastructure.Repositories
             }
         }
 
-        public async Task<bool> DeleteAsync(object id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             try
             {
-                await _context.Accounts.Where(x => x.AccountID == (Guid)id).ExecuteDeleteAsync();
+                await _context.Accounts.Where(x => x.AccountID == id).ExecuteDeleteAsync();
 
                 return true;
             }
@@ -136,12 +137,12 @@ namespace LPMS.Infrastructure.Repositories
             return entities;
         }
 
-        public Account? GetById(object id)
+        public Account? GetById(Guid id)
         {
             return _context.Accounts.Find(id);
         }
 
-        public async Task<Account?> GetByIdAsync(object id)
+        public async Task<Account?> GetByIdAsync(Guid id)
         {
             return await _context.Accounts.FindAsync(id);
         }
@@ -166,15 +167,14 @@ namespace LPMS.Infrastructure.Repositories
                         );
         }
 
-        public async Task<ApplicationUserResponse?> GetApplicationUserAsync(string email)
+        public async Task<ApplicationUser?> GetApplicationUserAsync(string email)
         {
             return await _context.vwApplicationUsers
                                     .AsNoTracking()
                                     .Where(x => x.Email == email)
-                                    .Select(x => new ApplicationUserResponse
+                                    .Select(x => new ApplicationUser
                                     {
-                                        AccountId = x.AccountId,
-                                        SystemUserId = x.SystemUserId,
+                                        Id = x.AccountId,
                                         Name = x.Name,
                                         Email = x.Email,
                                         Role = x.Role
@@ -182,15 +182,14 @@ namespace LPMS.Infrastructure.Repositories
                                     .FirstOrDefaultAsync();
         }
 
-        public async Task<ApplicationUserResponse?> GetApplicationUserAsync(Guid accountId)
+        public async Task<ApplicationUser?> GetApplicationUserAsync(Guid accountId)
         {
             return await _context.vwApplicationUsers
                                     .AsNoTracking()
                                     .Where(x => x.AccountId == accountId)
-                                    .Select(x => new ApplicationUserResponse
+                                    .Select(x => new ApplicationUser
                                     {
-                                        AccountId = x.AccountId,
-                                        SystemUserId = x.SystemUserId,
+                                        Id = x.AccountId,
                                         Name = x.Name,
                                         Email = x.Email,
                                         Role = x.Role

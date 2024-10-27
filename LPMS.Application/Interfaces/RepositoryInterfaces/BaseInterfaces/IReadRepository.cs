@@ -2,7 +2,9 @@
 
 namespace LPMS.Application.Interfaces.RepositoryInterfaces.BaseInterfaces
 {
-    public interface IReadRepository<TModel> where TModel : class
+    public interface IReadRepository<TModel, PkType> 
+        where TModel : class
+        where PkType : struct
     {
         List<TModel> Get(
             Expression<Func<TModel, bool>>? filter = null,
@@ -19,7 +21,7 @@ namespace LPMS.Application.Interfaces.RepositoryInterfaces.BaseInterfaces
 
         List<TModel> GetAll(bool? isActive = null);
         Task<List<TModel>> GetAllAsync(bool? isActive = null);
-        TModel? GetById(object id);
-        Task<TModel?> GetByIdAsync(object id);
+        TModel? GetById(PkType id);
+        Task<TModel?> GetByIdAsync(PkType id);
     }
 }

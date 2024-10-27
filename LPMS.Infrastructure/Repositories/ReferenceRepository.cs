@@ -75,12 +75,12 @@ namespace LPMS.Infrastructure.Repositories
             return entities;
         }
 
-        public Reference? GetById(object id)
+        public Reference? GetById(int id)
         {
             return _context.References.Find(id);
         }
 
-        public async Task<Reference?> GetByIdAsync(object id)
+        public async Task<Reference?> GetByIdAsync(int id)
         {
             return await _context.References.FindAsync(id);
         }

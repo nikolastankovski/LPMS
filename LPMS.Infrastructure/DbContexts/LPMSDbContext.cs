@@ -67,11 +67,11 @@ public partial class LPMSDbContext : DbContext
             entity.ToTable("Account", "core");
 
             entity.Property(e => e.AccountID).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.CreatedOn)
+            entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
                 .HasDefaultValueSql("(getdate())");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.ModifiedOn).HasPrecision(3);
+            entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
             entity.Property(e => e.Name).HasMaxLength(256);
         });
 
@@ -81,11 +81,11 @@ public partial class LPMSDbContext : DbContext
 
             entity.ToTable("City", "core");
 
-            entity.Property(e => e.CreatedOn)
+            entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
                 .HasDefaultValueSql("(getdate())");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.ModifiedOn).HasPrecision(3);
+            entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
             entity.Property(e => e.Name_EN).HasMaxLength(500);
             entity.Property(e => e.Name_MK).HasMaxLength(500);
             entity.Property(e => e.PostalCode).HasMaxLength(50);
@@ -105,7 +105,7 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.Address).HasMaxLength(500);
             entity.Property(e => e.Address2).HasMaxLength(500);
             entity.Property(e => e.Code).HasMaxLength(10);
-            entity.Property(e => e.CreatedOn)
+            entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
                 .HasDefaultValueSql("(getdate())");
             entity.Property(e => e.Email).HasMaxLength(256);
@@ -113,7 +113,7 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.IdDocumentNumber).HasMaxLength(10);
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.LegalName).HasMaxLength(500);
-            entity.Property(e => e.ModifiedOn).HasPrecision(3);
+            entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
             entity.Property(e => e.Name).HasMaxLength(256);
             entity.Property(e => e.Phone).HasMaxLength(50);
             entity.Property(e => e.Phone2).HasMaxLength(50);
@@ -127,11 +127,11 @@ public partial class LPMSDbContext : DbContext
 
             entity.ToTable("Country", "core");
 
-            entity.Property(e => e.CreatedOn)
+            entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
                 .HasDefaultValueSql("(getdate())");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.ModifiedOn).HasPrecision(3);
+            entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
             entity.Property(e => e.Name_EN).HasMaxLength(500);
             entity.Property(e => e.Name_MK).HasMaxLength(500);
         });
@@ -143,11 +143,11 @@ public partial class LPMSDbContext : DbContext
             entity.ToTable("Department", "core");
 
             entity.Property(e => e.Code).HasMaxLength(50);
-            entity.Property(e => e.CreatedOn)
+            entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
                 .HasDefaultValueSql("(getdate())");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.ModifiedOn).HasPrecision(3);
+            entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
             entity.Property(e => e.Name_EN).HasMaxLength(256);
             entity.Property(e => e.Name_MK).HasMaxLength(256);
 
@@ -164,11 +164,11 @@ public partial class LPMSDbContext : DbContext
             entity.ToTable("Division", "core");
 
             entity.Property(e => e.Code).HasMaxLength(50);
-            entity.Property(e => e.CreatedOn)
+            entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
                 .HasDefaultValueSql("(getdate())");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.ModifiedOn).HasPrecision(3);
+            entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
             entity.Property(e => e.Name_EN).HasMaxLength(256);
             entity.Property(e => e.Name_MK).HasMaxLength(256);
         });
@@ -179,7 +179,7 @@ public partial class LPMSDbContext : DbContext
 
             entity.ToTable("EmailHistory");
 
-            entity.Property(e => e.CreatedOn)
+            entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
                 .HasDefaultValueSql("(getdate())");
             entity.Property(e => e.From).HasMaxLength(500);
@@ -195,12 +195,12 @@ public partial class LPMSDbContext : DbContext
 
             entity.Property(e => e.Action).HasMaxLength(256);
             entity.Property(e => e.Controller).HasMaxLength(256);
-            entity.Property(e => e.CreatedOn)
+            entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
                 .HasDefaultValueSql("(getdate())");
             entity.Property(e => e.FullPath).HasMaxLength(500);
             entity.Property(e => e.Method).HasMaxLength(10);
-            entity.Property(e => e.ModifiedOn).HasPrecision(3);
+            entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
             entity.Property(e => e.Route).HasMaxLength(256);
         });
 
@@ -210,7 +210,7 @@ public partial class LPMSDbContext : DbContext
 
             entity.ToTable("EndpointOperation");
 
-            entity.Property(e => e.CreatedOn)
+            entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
                 .HasDefaultValueSql("(getdate())");
             entity.Property(e => e.Read).HasDefaultValue(true);
@@ -227,7 +227,7 @@ public partial class LPMSDbContext : DbContext
 
             entity.ToTable("EndpointxSystemRole");
 
-            entity.Property(e => e.CreatedOn)
+            entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
                 .HasDefaultValueSql("(getdate())");
 
@@ -246,13 +246,13 @@ public partial class LPMSDbContext : DbContext
             entity.HasIndex(e => e.Code, "IX_Reference_Code");
 
             entity.Property(e => e.Code).HasMaxLength(50);
-            entity.Property(e => e.CreatedOn)
+            entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
                 .HasDefaultValueSql("(getdate())");
             entity.Property(e => e.Description_EN).HasMaxLength(500);
             entity.Property(e => e.Description_MK).HasMaxLength(500);
             entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.ModifiedOn).HasPrecision(3);
+            entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
             entity.Property(e => e.Name_EN).HasMaxLength(256);
             entity.Property(e => e.Name_MK).HasMaxLength(256);
 
@@ -271,13 +271,13 @@ public partial class LPMSDbContext : DbContext
             entity.HasIndex(e => e.Code, "IX_ReferenceType_Code").IsUnique();
 
             entity.Property(e => e.Code).HasMaxLength(50);
-            entity.Property(e => e.CreatedOn)
+            entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
                 .HasDefaultValueSql("(getdate())");
             entity.Property(e => e.Description_EN).HasMaxLength(500);
             entity.Property(e => e.Description_MK).HasMaxLength(500);
             entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.ModifiedOn).HasPrecision(3);
+            entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
             entity.Property(e => e.Name_EN).HasMaxLength(256);
             entity.Property(e => e.Name_MK).HasMaxLength(256);
         });

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace LPMS.Domain.Models.Entities.IdentityEntities
 {
-    public class SystemRole : IdentityRole<Guid>
+    public class SystemRole : IdentityRole<Guid>, IAuditableEntity
     {
         [Column(TypeName = "nvarchar(256)"), DataType(DataType.Text)]
         public string DisplayName_EN { get; set; } = string.Empty;
@@ -14,11 +14,11 @@ namespace LPMS.Domain.Models.Entities.IdentityEntities
         public Guid CreatedBy { get; set; }
 
         [Column(TypeName = "datetime2(3)"), DataType(DataType.DateTime)]
-        public DateTime CreatedOn { get; set; }
+        public DateTime CreatedOnUTC { get; set; }
         public Guid? ModifiedBy { get; set; }
 
         [Column(TypeName = "datetime2(3)"), DataType(DataType.DateTime)]
-        public DateTime? ModifiedOn { get; set; }
+        public DateTime? ModifiedOnUTC { get; set; }
 
         [Column(TypeName = "bit")]
         public bool? IsActive { get; set; }

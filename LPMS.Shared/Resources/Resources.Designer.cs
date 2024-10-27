@@ -250,6 +250,15 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Корисникот не е пронајден!.
+        /// </summary>
+        public static string User_Not_Found {
+            get {
+                return ResourceManager.GetString("User_Not_Found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Корисничко име.
         /// </summary>
         public static string Username {

@@ -183,6 +183,9 @@
   <data name="User_Doesnt_Exist" xml:space="preserve">
     <value>User does not exist!</value>
   </data>
+  <data name="User_Not_Found" xml:space="preserve">
+    <value>User is not found!</value>
+  </data>
   <data name="VLDMSG_Is_Required" xml:space="preserve">
     <value>'{PropertyName}' is a mandatory field!</value>
   </data>

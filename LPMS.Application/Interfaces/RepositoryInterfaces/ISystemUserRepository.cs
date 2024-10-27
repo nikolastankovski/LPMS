@@ -18,5 +18,6 @@
         Task<bool> IsUserInRolesAsync(string userId, List<string> roles);
         Task<bool> IsCorrectPasswordAsync(SystemUser user, string password);
         Task<bool> IsEmailUsedAsync(string? email);
+        Task DeleteAsync(Guid id);
     }
 }

@@ -20,8 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LPMS.EmailService", "LPMS.EmailService\LPMS.EmailService.csproj", "{D7D43CC6-AD0A-46A2-985B-51C926C01925}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LPMS.Tests", "LPMS.Tests\LPMS.Tests.csproj", "{F3019AEC-16DC-437C-8535-C30E6185ABA0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,10 +50,6 @@ Global
 		{D7D43CC6-AD0A-46A2-985B-51C926C01925}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7D43CC6-AD0A-46A2-985B-51C926C01925}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7D43CC6-AD0A-46A2-985B-51C926C01925}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3019AEC-16DC-437C-8535-C30E6185ABA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3019AEC-16DC-437C-8535-C30E6185ABA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3019AEC-16DC-437C-8535-C30E6185ABA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3019AEC-16DC-437C-8535-C30E6185ABA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

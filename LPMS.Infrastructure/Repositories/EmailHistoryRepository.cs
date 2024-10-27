@@ -9,7 +9,7 @@
             _context = context;
         }
         public async Task<EmailHistory> CreateAsync(EmailHistory entity)
-        {
+       {
             await _context.EmailHistories.AddAsync(entity);
             await _context.SaveChangesAsync();
 

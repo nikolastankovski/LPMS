@@ -2,9 +2,9 @@
 
 namespace LPMS.Application.Interfaces.RepositoryInterfaces
 {
-    public interface IAccountRepository : IBaseRepository<Account>
+    public interface IAccountRepository : IBaseRepository<Account, Guid>
     {
-        Task<ApplicationUserResponse?> GetApplicationUserAsync(string email);
-        Task<ApplicationUserResponse?> GetApplicationUserAsync(Guid accountId);
+        Task<ApplicationUser?> GetApplicationUserAsync(string email);
+        Task<ApplicationUser?> GetApplicationUserAsync(Guid accountId);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace LPMS.Application.Interfaces.RepositoryInterfaces
 {
-    public interface IReferenceTypeRepository : IReadRepository<ReferenceType>
+    public interface IReferenceTypeRepository : IReadRepository<ReferenceType, int>
     {
     }
 }

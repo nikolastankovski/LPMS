@@ -2,9 +2,9 @@
 {
     public static class emSystemUser
     {
-        public static ValidationResult Validate(this SystemUser systemUser, CultureInfo ci, ISystemUserRepository systemUserRepository)
+        public async static Task<ValidationResult> ValidateAsync(this SystemUser systemUser, CultureInfo ci, ISystemUserRepository systemUserRepository)
         {
-            return new SystemUserValidator(ci, systemUserRepository).Validate(systemUser);
+            return await new SystemUserValidator(ci, systemUserRepository).ValidateAsync(systemUser);
         }
     }
 }

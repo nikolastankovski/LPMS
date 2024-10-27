@@ -149,5 +149,13 @@ namespace LPMS.Infrastructure.Repositories
 
             return true;
         }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var sysUser = await GetUserByIdAsync(id);
+
+            if(sysUser is not null)
+                await _userManager.DeleteAsync(sysUser);
+        }
     }
 }
