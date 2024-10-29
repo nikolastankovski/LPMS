@@ -1,32 +1,21 @@
-﻿using FluentValidation;
-using System.Globalization;
-using FluentResults;
+﻿using System.Globalization;
 using System.Transactions;
-using LPMS.Domain.Models.RnRModels;
+using LPMS.Domain.Models.RnRModels.UserModels;
 using LPMS.EmailService.EmailService;
-using FluentEmail.Core.Models;
-using LPMS.EmailService.EmailTemplates;
 
 namespace LPMS.Infrastructure.Services
 {
-    public class UserService : IUserService
+    public class UserService(
+        IAccountRepository accountRepository,
+        ISystemUserRepository systemUserRepository,
+        IEmailService emailService)
+        : IUserService
     {
-        private readonly IAccountRepository _accountRepository;
-        private readonly ISystemUserRepository _systemUserRepository;
-        private readonly IEmailService _emailService;
-
-        public UserService(IAccountRepository accountRepository, ISystemUserRepository systemUserRepository, IEmailService emailService)
-        {
-            _accountRepository = accountRepository;
-            _systemUserRepository = systemUserRepository;
-            _emailService = emailService;
-        }
-
         public async Task<Result<ApplicationUser>> GetAppUserAsyncById(Guid id, CultureInfo culture)
         {
             try
             {
-                ApplicationUser? appUser = await _accountRepository.GetApplicationUserAsync(id);
+                ApplicationUser? appUser = await accountRepository.GetApplicationUserAsync(id);
 
                 if (appUser == null)
                     return Result.Fail(culture.GetResource(nameof(Resources.User_Not_Found)));
@@ -50,13 +39,13 @@ namespace LPMS.Infrastructure.Services
                     #region System User
                     SystemUser sysUser = request.MapToSystemUser();
 
-                    var validationResult = await sysUser.ValidateAsync(culture, _systemUserRepository);
+                    var validationResult = await sysUser.ValidateAsync(culture, systemUserRepository);
                     if (!validationResult.IsValid)
                         return Result.Fail(validationResult.GetErrors());
 
-                    sysUser = await _systemUserRepository.CreateAsync(sysUser);
+                    sysUser = await systemUserRepository.CreateAsync(sysUser);
 
-                    await _systemUserRepository.AddToRoleAsync(sysUser, request.Role);
+                    await systemUserRepository.AddToRoleAsync(sysUser, request.Role);
                     #endregion
 
                     #region Account
@@ -67,19 +56,19 @@ namespace LPMS.Infrastructure.Services
                     if (!validationResult.IsValid)
                         return Result.Fail(validationResult.GetErrors());
 
-                    await _accountRepository.CreateAsync(account);
+                    await accountRepository.CreateAsync(account);
                     #endregion
 
-                    //var emailSetUp = new EmailSetUp()
-                    //{
-                    //    To = new Address(sysUser.Email, account.Name),
-                    //    Subject = culture.GetResource(nameof(Resources.Email_Account_NewUserSubject)),
-                    //    EmailTemplate = EmailTemplates.Account_ConfirmEmail,
-                    //    Culture = culture,
-                    //    Tokens = account
-                    //};
+                    /*var emailSetUp = new EmailSetUp()
+                    {
+                        To = new Address(sysUser.Email, account.Name),
+                        Subject = culture.GetResource(nameof(Resources.Email_Account_NewUserSubject)),
+                        EmailTemplate = EmailTemplates.Account_ConfirmEmail,
+                        Culture = culture,
+                        Tokens = account
+                    };
 
-                    //await _emailService.SendEmailAsync(emailSetUp);
+                    await emailService.SendEmailAsync(emailSetUp);*/
 
                     transaction.Complete();
 
@@ -102,19 +91,19 @@ namespace LPMS.Infrastructure.Services
             {
                 try
                 {
-                    Account? account = await _accountRepository.GetByIdAsync(id);
+                    Account? account = await accountRepository.GetByIdAsync(id);
 
                     if (account == null)
                         return Result.Fail(culture.GetResource(nameof(Resources.User_Doesnt_Exist)));
 
-                    SystemUser? sysUser = await _systemUserRepository.GetUserByIdAsync(account.SystemUserId);
+                    SystemUser? sysUser = await systemUserRepository.GetUserByIdAsync(account.SystemUserId);
                     sysUser.PhoneNumber = request.PhoneNumber;
 
-                    var validationResult = await sysUser.ValidateAsync(culture, _systemUserRepository);
+                    var validationResult = await sysUser.ValidateAsync(culture, systemUserRepository);
                     if (!validationResult.IsValid)
                         return Result.Fail(validationResult.GetErrors());
 
-                    await _systemUserRepository.UpdateUserRoleAsync(sysUser, request.Role);
+                    await systemUserRepository.UpdateUserRoleAsync(sysUser, request.Role);
 
                     account.Name = request.Name;
 
@@ -122,7 +111,7 @@ namespace LPMS.Infrastructure.Services
                     if (!validationResult.IsValid)
                         return Result.Fail(validationResult.GetErrors());
 
-                    await _accountRepository.UpdateAsync(account);
+                    await accountRepository.ModifyAsync(account);
 
                     return Result.Ok();
                 }
@@ -143,11 +132,11 @@ namespace LPMS.Infrastructure.Services
             {
                 try
                 {
-                    var account = await _accountRepository.GetByIdAsync(id);
+                    var account = await accountRepository.GetByIdAsync(id);
 
-                    await _accountRepository.DeleteAsync(id);
+                    await accountRepository.DeleteAsync(id);
 
-                    await _systemUserRepository.DeleteAsync(account.SystemUserId);
+                    await systemUserRepository.DeleteAsync(account.SystemUserId);
 
                     transaction.Complete();
 

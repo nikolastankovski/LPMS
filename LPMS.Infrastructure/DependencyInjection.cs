@@ -14,13 +14,15 @@ public static class DependencyInjection
         services.AddScoped<IReferenceRepository, ReferenceRepository>();
         services.AddScoped<IReferenceTypeRepository, ReferenceTypeRepository>();
         services.AddScoped<IEmailHistoryRepository, EmailHistoryRepository>();
+        services.AddScoped<ICountryRepository, CountryRepository>();
         #endregion
 
         #region SERVICES
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IReferenceService, ReferenceService>();
-        services.AddTransient<ICommonService, CommonService>();
+        services.AddScoped<ICommonService, CommonService>();
+        services.AddScoped<ICountryService, CountryService>();
         services.AddScoped<TestService>();
         #endregion
 

@@ -201,4 +201,7 @@
   <data name="VLDMSG_Max_Chars" xml:space="preserve">
     <value>'{PropertyName}' can support up to {MaxChars} characters!</value>
   </data>
+  <data name="Entity_Not_Found" xml:space="preserve">
+    <value>Entity not found!</value>
+  </data>
 </root>

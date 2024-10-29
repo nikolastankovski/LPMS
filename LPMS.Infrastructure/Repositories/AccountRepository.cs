@@ -1,4 +1,6 @@
 ﻿using FluentValidation;
+using LPMS.Domain.Models.RnRModels.UserModels;
+
 namespace LPMS.Infrastructure.Repositories
 {
     public class AccountRepository : BaseRepository<Account, Guid>, IAccountRepository
@@ -9,7 +11,7 @@ namespace LPMS.Infrastructure.Repositories
             _context = context;
         }
 
-        public override async Task UpdateAsync(Account entity)
+        public override async Task ModifyAsync(Account entity)
         {
             await _context.Accounts
                 .Where(x => x.AccountID == entity.AccountID)

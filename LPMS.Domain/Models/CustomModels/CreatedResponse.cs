@@ -1,4 +1,4 @@
-﻿namespace LPMS.Domain.Models.RnRModels
+﻿namespace LPMS.Domain.Models.CustomModels
 {
     public class CreatedResponse<T> where T : struct
     {

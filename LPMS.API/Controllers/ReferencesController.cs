@@ -4,13 +4,13 @@ using System.Globalization;
 
 namespace LPMS.API.Controllers
 {
-    [Route("api/{culture}/[controller]")]
+    [Route("api/{culture}/references")]
     [ApiController]
-    public class ReferenceController : ControllerBase
+    public class ReferencesController : ControllerBase
     {
         private readonly IReferenceService _referenceService;
 
-        public ReferenceController(IReferenceService referenceService)
+        public ReferencesController(IReferenceService referenceService)
         {
             _referenceService = referenceService;
         }

@@ -1,8 +1,7 @@
 ﻿using LPMS.Domain.Models.Entities;
 using LPMS.Domain.Models.Entities.IdentityEntities;
-using LPMS.Domain.Models.RnRModels.NewFolder;
 
-namespace LPMS.Domain.Models.RnRModels.UserManagementModels
+namespace LPMS.Domain.Models.RnRModels.UserModels
 {
     public class CreateModifyUserRequest
     {

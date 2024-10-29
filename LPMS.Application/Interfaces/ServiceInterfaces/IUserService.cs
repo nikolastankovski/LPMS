@@ -1,6 +1,4 @@
-﻿using FluentResults;
-using LPMS.Domain.Models.RnRModels;
-using LPMS.Domain.Models.RnRModels.UserManagementModels;
+﻿using LPMS.Domain.Models.RnRModels.UserModels;
 
 namespace LPMS.Application.Interfaces.ServiceInterfaces
 {

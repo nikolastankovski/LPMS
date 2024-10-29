@@ -201,4 +201,7 @@
   <data name="VLDMSG_Max_Chars" xml:space="preserve">
     <value>'{PropertyName}' поддружува до {MaxChars} карактери!</value>
   </data>
+  <data name="Entity_Not_Found" xml:space="preserve">
+    <value>Записот не е пронајден!</value>
+  </data>
 </root>

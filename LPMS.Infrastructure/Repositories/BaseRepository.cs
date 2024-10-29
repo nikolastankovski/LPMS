@@ -136,13 +136,13 @@ namespace LPMS.Infrastructure.Repositories
             return await _entity.FindAsync(id);
         }
 
-        public virtual void Update(TModel entity)
+        public virtual void Modify(TModel entity)
         {
             _entity.Update(entity);
             _context.SaveChanges();
         }
 
-        public virtual async Task UpdateAsync(TModel entity)
+        public virtual async Task ModifyAsync(TModel entity)
         {
             _entity.Update(entity);
             await _context.SaveChangesAsync();

@@ -1,6 +1,4 @@
-﻿using Azure.Core;
-using FluentResults;
-using LPMS.Domain.Models.ConfigModels;
+﻿using LPMS.Domain.Models.ConfigModels;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
@@ -8,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using LPMS.Domain.Models.RnRModels.AuthModels;
 
 namespace LPMS.Infrastructure.Services
 {
@@ -34,7 +33,7 @@ namespace LPMS.Infrastructure.Services
                 if (!sysUser.EmailConfirmed)
                     return Result.Fail(culture.GetResource(nameof(Resources.Email_Not_Verified)));
 
-                if (sysUser.LockoutEnabled && (sysUser.LockoutEnd.HasValue && DateTime.UtcNow > sysUser.LockoutEnd.Value.UtcDateTime))
+                if (sysUser.LockoutEnabled && (sysUser.LockoutEnd.HasValue && sysUser.LockoutEnd.Value.UtcDateTime > DateTime.UtcNow))
                     return Result.Fail(culture.GetResource(nameof(Resources.Account_Is_Blocked)));
 
                 bool areCredentialsCorrect = await _systemUserRepository.IsCorrectPasswordAsync(sysUser, request.Password);

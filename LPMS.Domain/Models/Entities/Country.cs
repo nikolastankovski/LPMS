@@ -4,9 +4,9 @@ public partial class Country : IAuditableEntity
 {
     public int CountryID { get; set; }
 
-    public string? Name_EN { get; set; }
+    public string Name_EN { get; set; }
 
-    public string? Name_MK { get; set; }
+    public string Name_MK { get; set; }
 
     public Guid CreatedBy { get; set; }
 

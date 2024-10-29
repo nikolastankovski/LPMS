@@ -1,4 +1,4 @@
-﻿namespace LPMS.Domain.Models.CustomModels;
+﻿namespace LPMS.Domain.Models.RnRModels.UserModels;
 
 public class LoggedInUser
 {

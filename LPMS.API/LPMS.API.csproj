@@ -19,6 +19,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Identity.Web" Version="2.19.1" />
     <PackageReference Include="Microsoft.Identity.Web.DownstreamApi" Version="2.19.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 

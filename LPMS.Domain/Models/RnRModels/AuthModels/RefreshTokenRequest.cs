@@ -1,4 +1,4 @@
-﻿namespace LPMS.Domain.Models.RnRModels.UserManagementModels
+﻿namespace LPMS.Domain.Models.RnRModels.AuthModels
 {
     public class RefreshTokenRequest
     {
