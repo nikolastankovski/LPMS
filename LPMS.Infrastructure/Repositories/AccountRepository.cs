@@ -24,7 +24,6 @@ namespace LPMS.Infrastructure.Repositories
         public async Task<ApplicationUser?> GetApplicationUserAsync(string email)
         {
             return await _context.vwApplicationUsers
-                                    .AsNoTracking()
                                     .Where(x => x.Email == email)
                                     .Select(x => new ApplicationUser
                                     {
@@ -39,7 +38,6 @@ namespace LPMS.Infrastructure.Repositories
         public async Task<ApplicationUser?> GetApplicationUserAsync(Guid accountId)
         {
             return await _context.vwApplicationUsers
-                                    .AsNoTracking()
                                     .Where(x => x.AccountId == accountId)
                                     .Select(x => new ApplicationUser
                                     {
