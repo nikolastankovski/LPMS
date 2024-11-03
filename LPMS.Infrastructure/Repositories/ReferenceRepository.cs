@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using LPMS.Infrastructure.Repositories.BaseRepositories;
 
 namespace LPMS.Infrastructure.Repositories
 {

@@ -1,11 +1,11 @@
-﻿using LPMS.Application.Interfaces.RepositoryInterfaces.BaseInterfaces;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using LPMS.Application.Interfaces.RepositoryInterfaces.BaseInterfaces;
 
-namespace LPMS.Infrastructure.Repositories
+namespace LPMS.Infrastructure.Repositories.BaseRepositories
 {
-    public abstract class BaseRepository<TModel, PkType> : IBaseRepository<TModel, PkType> 
+    public abstract class BaseRepository<TModel, TPkType> : IBaseRepository<TModel, TPkType> 
         where TModel : class
-        where PkType : struct
+        where TPkType : struct
     {
         private readonly LPMSDbContext _context;
         private DbSet<TModel> _entity;
@@ -48,7 +48,19 @@ namespace LPMS.Infrastructure.Repositories
             return entities;
         }
 
-        public virtual void Delete(PkType id)
+        public virtual void Delete(TModel entity)
+        {
+            _entity.Remove(entity);
+            _context.SaveChanges();
+        }
+
+        public virtual async Task DeleteAsync(TModel entity)
+        {
+            _entity.Remove(entity);
+            await _context.SaveChangesAsync();
+        }
+        
+        public virtual void Delete(TPkType id)
         {
             TModel? entity = _entity.Find(id);
 
@@ -59,7 +71,7 @@ namespace LPMS.Infrastructure.Repositories
             _context.SaveChanges();
         }
 
-        public virtual async Task DeleteAsync(PkType id)
+        public virtual async Task DeleteAsync(TPkType id)
         {
             TModel? entity = await _entity.FindAsync(id);
 
@@ -126,12 +138,12 @@ namespace LPMS.Infrastructure.Repositories
             return entities;
         }
 
-        public virtual TModel? GetById(PkType id)
+        public virtual TModel? GetById(TPkType id)
         {
             return _entity.Find(id);
         }
 
-        public virtual async Task<TModel?> GetByIdAsync(PkType id)
+        public virtual async Task<TModel?> GetByIdAsync(TPkType id)
         {
             return await _entity.FindAsync(id);
         }

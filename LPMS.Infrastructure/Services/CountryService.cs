@@ -7,20 +7,11 @@ namespace LPMS.Infrastructure.Services;
 
 public class CountryService(ICountryRepository countryRepository) : ICountryService
 {
-    public async Task<Result<CountryResponse?>> GetByIdAsync(int id, CultureInfo ci)
+    public async Task<CountryResponse?> GetByIdAsync(int id, CultureInfo ci)
     {
-        try
-        {
-            var country = await countryRepository.GetByIdAsync(id);
+        var country = await countryRepository.GetByIdAsync(id);
 
-            return Result.Ok(country.ToResponse(ci));
-        }
-        catch (Exception e)
-        {
-            Log.Error(exception: e, messageTemplate: e.ToMessageTemplate());
-        }
-        
-        return Result.Fail(ci.GetAttribute(nameof(Resources.Unexpected_Error)));
+        return country.ToResponse(ci);
     }
 
     public async Task<Result<CreatedResponse<int>>> CreateAsync(CountryRequest request, CultureInfo ci)
@@ -52,14 +43,12 @@ public class CountryService(ICountryRepository countryRepository) : ICountryServ
         {
             var dbCountry = await countryRepository.GetByIdAsync(id);
 
-            if (dbCountry is null)
-                Result.Fail(ci.GetResource(nameof(Resources.Entity_Not_Found)));
+            if (dbCountry == null)
+                return Result.Fail(ci.GetResource(nameof(Resources.Entity_Not_Found)));
             
-            var requestCountry = request.ToModel();
-            
-            dbCountry.Name_EN = requestCountry.Name_EN;
-            dbCountry.Name_MK = requestCountry.Name_MK;
-            dbCountry.IsActive = requestCountry.IsActive;
+            dbCountry.Name_EN = request.Name_EN;
+            dbCountry.Name_MK = request.Name_MK;
+            dbCountry.IsActive = request.IsActive;
             
             var validationResult = dbCountry.Validate(ci);
 
@@ -82,7 +71,12 @@ public class CountryService(ICountryRepository countryRepository) : ICountryServ
     {
         try
         {
-            await countryRepository.DeleteAsync(id);
+            var entity = await countryRepository.GetByIdAsync(id);
+            
+            if(entity is null)
+                return Result.Fail(ci.GetResource(nameof(Resources.Entity_Not_Found)));
+
+            await countryRepository.DeleteAsync(entity);
             
             return Result.Ok();
         }

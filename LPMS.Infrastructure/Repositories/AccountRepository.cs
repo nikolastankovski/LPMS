@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using LPMS.Domain.Models.RnRModels.UserModels;
+using LPMS.Infrastructure.Repositories.BaseRepositories;
 
 namespace LPMS.Infrastructure.Repositories
 {

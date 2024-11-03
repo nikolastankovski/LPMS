@@ -87,6 +87,15 @@ namespace LPMS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Држава.
+        /// </summary>
+        public static string Country {
+            get {
+                return ResourceManager.GetString("Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Успешно креирано!.
         /// </summary>
         public static string Create_Success {
@@ -245,6 +254,15 @@ namespace LPMS.Shared.Resources {
         public static string PhoneNumber {
             get {
                 return ResourceManager.GetString("PhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Поштенски број.
+        /// </summary>
+        public static string PostalCode {
+            get {
+                return ResourceManager.GetString("PostalCode", resourceCulture);
             }
         }
         

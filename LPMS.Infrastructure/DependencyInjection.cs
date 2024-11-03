@@ -15,6 +15,7 @@ public static class DependencyInjection
         services.AddScoped<IReferenceTypeRepository, ReferenceTypeRepository>();
         services.AddScoped<IEmailHistoryRepository, EmailHistoryRepository>();
         services.AddScoped<ICountryRepository, CountryRepository>();
+        services.AddScoped<ICityRepository, CityRepository>();
         #endregion
 
         #region SERVICES
@@ -23,6 +24,7 @@ public static class DependencyInjection
         services.AddScoped<IReferenceService, ReferenceService>();
         services.AddScoped<ICommonService, CommonService>();
         services.AddScoped<ICountryService, CountryService>();
+        services.AddScoped<ICityService, CityService>();
         services.AddScoped<TestService>();
         #endregion
 
