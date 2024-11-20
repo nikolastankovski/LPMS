@@ -7,8 +7,7 @@ namespace LPMS.Infrastructure.Services
 {
     public class UserService(
         IAccountRepository accountRepository,
-        ISystemUserRepository systemUserRepository,
-        IEmailService emailService)
+        ISystemUserRepository systemUserRepository)
         : IUserService
     {
         public async Task<Result<ApplicationUser>> GetAppUserAsyncById(Guid id, CultureInfo culture)

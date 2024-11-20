@@ -8,7 +8,8 @@ namespace LPMS.Domain.Models.Entities.IdentityEntities
     {
         public Guid CreatedBy { get; set; }
 
-        [Column(TypeName = "datetime2(3)"), DataType(DataType.DateTime)]
+        //[Column(TypeName = "datetime2(3)"), DataType(DataType.DateTime)]
+        [Column(TypeName = "TIMESTAMP(3)"), DataType(DataType.DateTime)]
         public DateTime CreatedOn { get; set; }
     }
 }

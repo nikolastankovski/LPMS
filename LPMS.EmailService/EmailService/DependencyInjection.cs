@@ -5,6 +5,7 @@ using LPMS.Domain.Nomenclature;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
 namespace LPMS.EmailService.EmailService;
 

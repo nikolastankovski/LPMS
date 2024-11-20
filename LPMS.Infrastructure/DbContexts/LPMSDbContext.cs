@@ -28,7 +28,6 @@ public partial class LPMSDbContext : DbContext
     public virtual DbSet<Department> Departments { get; set; }
 
     public virtual DbSet<Division> Divisions { get; set; }
-
     public virtual DbSet<EmailHistory> EmailHistories { get; set; }
 
     public virtual DbSet<Endpoint> Endpoints { get; set; }
@@ -36,11 +35,9 @@ public partial class LPMSDbContext : DbContext
     public virtual DbSet<EndpointOperation> EndpointOperations { get; set; }
 
     public virtual DbSet<EndpointxSystemRole> EndpointxSystemRoles { get; set; }
-
     public virtual DbSet<Reference> References { get; set; }
 
     public virtual DbSet<ReferenceType> ReferenceTypes { get; set; }
-
 
     public virtual DbSet<vwApplicationUser> vwApplicationUsers { get; set; }
 
@@ -54,22 +51,25 @@ public partial class LPMSDbContext : DbContext
             .AddJsonFile("appsettings.json")
             .Build();
 
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            //optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
         }
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDefaultSchema("dbo");
+        
         modelBuilder.Entity<Account>(entity =>
         {
             entity.HasKey(e => e.AccountID).HasName("PK_Account_AccountID");
 
             entity.ToTable("Account", "core");
 
-            entity.Property(e => e.AccountID).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.AccountID);
             entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
-                .HasDefaultValueSql("(getdate())");
+                .HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
             entity.Property(e => e.Name).HasMaxLength(256);
@@ -83,7 +83,7 @@ public partial class LPMSDbContext : DbContext
 
             entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
-                .HasDefaultValueSql("(getdate())");
+                .HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
             entity.Property(e => e.Name_EN).HasMaxLength(500);
@@ -107,7 +107,7 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.Code).HasMaxLength(10);
             entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
-                .HasDefaultValueSql("(getdate())");
+                .HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
             entity.Property(e => e.Email).HasMaxLength(256);
             entity.Property(e => e.Email2).HasMaxLength(256);
             entity.Property(e => e.IdDocumentNumber).HasMaxLength(10);
@@ -129,7 +129,7 @@ public partial class LPMSDbContext : DbContext
 
             entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
-                .HasDefaultValueSql("(getdate())");
+                .HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
             entity.Property(e => e.Name_EN).HasMaxLength(500);
@@ -145,7 +145,7 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.Code).HasMaxLength(50);
             entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
-                .HasDefaultValueSql("(getdate())");
+                .HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
             entity.Property(e => e.Name_EN).HasMaxLength(256);
@@ -166,7 +166,7 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.Code).HasMaxLength(50);
             entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
-                .HasDefaultValueSql("(getdate())");
+                .HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
             entity.Property(e => e.Name_EN).HasMaxLength(256);
@@ -181,7 +181,7 @@ public partial class LPMSDbContext : DbContext
 
             entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
-                .HasDefaultValueSql("(getdate())");
+                .HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
             entity.Property(e => e.From).HasMaxLength(500);
             entity.Property(e => e.IsSent).HasDefaultValue(false);
             entity.Property(e => e.Template).HasMaxLength(256);
@@ -197,7 +197,7 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.Controller).HasMaxLength(256);
             entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
-                .HasDefaultValueSql("(getdate())");
+                .HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
             entity.Property(e => e.FullPath).HasMaxLength(500);
             entity.Property(e => e.Method).HasMaxLength(10);
             entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
@@ -212,7 +212,7 @@ public partial class LPMSDbContext : DbContext
 
             entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
-                .HasDefaultValueSql("(getdate())");
+                .HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
             entity.Property(e => e.Read).HasDefaultValue(true);
 
             entity.HasOne(d => d.Endpoint).WithMany(p => p.EndpointOperations)
@@ -229,14 +229,14 @@ public partial class LPMSDbContext : DbContext
 
             entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
-                .HasDefaultValueSql("(getdate())");
+                .HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
 
             entity.HasOne(d => d.Endpoint).WithMany(p => p.EndpointxSystemRoles)
                 .HasForeignKey(d => d.EndpointId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_EndpointxSystemRole_Endpoint");
         });
-
+        
         modelBuilder.Entity<Reference>(entity =>
         {
             entity.HasKey(e => e.ReferenceID).HasName("PK_Reference_ReferenceID");
@@ -248,7 +248,7 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.Code).HasMaxLength(50);
             entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
-                .HasDefaultValueSql("(getdate())");
+                .HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
             entity.Property(e => e.Description_EN).HasMaxLength(500);
             entity.Property(e => e.Description_MK).HasMaxLength(500);
             entity.Property(e => e.IsActive).HasDefaultValue(true);
@@ -273,7 +273,7 @@ public partial class LPMSDbContext : DbContext
             entity.Property(e => e.Code).HasMaxLength(50);
             entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
-                .HasDefaultValueSql("(getdate())");
+                .HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
             entity.Property(e => e.Description_EN).HasMaxLength(500);
             entity.Property(e => e.Description_MK).HasMaxLength(500);
             entity.Property(e => e.IsActive).HasDefaultValue(true);

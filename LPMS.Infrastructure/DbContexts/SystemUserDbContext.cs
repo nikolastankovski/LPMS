@@ -22,7 +22,8 @@ namespace LPMS.Infrastructure.Data
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-                optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                //optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
             }
         }
         protected override void OnModelCreating(ModelBuilder builder)
@@ -35,19 +36,20 @@ namespace LPMS.Infrastructure.Data
             {
                 entity.ToTable(nameof(SystemUser));
                 entity.Property(x => x.PasswordChangePeriodInMonths).HasDefaultValueSql("12");
-                entity.Property(x => x.LastLogin).HasDefaultValueSql("GETDATE()");
-                entity.Property(x => x.LastPasswordChange).HasDefaultValueSql("GETDATE()");
+                entity.Property(x => x.LastLogin).HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
+                entity.Property(x => x.LastPasswordChange).HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
             });
             builder.Entity<SystemRole>(entity =>
             {
                 entity.ToTable(nameof(SystemRole));
-                entity.Property(x => x.CreatedOnUTC).HasDefaultValueSql("GETDATE()");
-                entity.Property(x => x.IsActive).HasDefaultValueSql("1");
+                entity.Property(x => x.CreatedOnUTC).HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
+                //entity.Property(x => x.IsActive).HasDefaultValueSql("1");
+                entity.Property(x => x.IsActive).HasDefaultValueSql("true");
             });
             builder.Entity<SystemUserRole>(entity =>
             {
                 entity.ToTable(nameof(SystemUserRole));
-                entity.Property(x => x.CreatedOn).HasDefaultValueSql("GETDATE()");
+                entity.Property(x => x.CreatedOn).HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
             });
             builder.Entity<IdentityUserClaim<Guid>>().ToTable("SystemUserClaim");
             builder.Entity<IdentityUserLogin<Guid>>().ToTable("SystemUserLogin");

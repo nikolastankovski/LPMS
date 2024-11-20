@@ -6,6 +6,9 @@ namespace LPMS.Application.ExtensionMethods
     {
         public static ReferenceWReferenceTypeResponse ToRefWRefTypeResponse(this List<Reference> references, CultureInfo ci)
         {
+            if (!references.Any())
+                return new ReferenceWReferenceTypeResponse();
+            
             string nameAttribute = $"Name_{ci.TwoLetterISOLanguageName.ToUpper()}";
             string descriptionAttribute = $"Description_{ci.TwoLetterISOLanguageName.ToUpper()}";
 

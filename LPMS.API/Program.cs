@@ -15,6 +15,8 @@ using LPMS.Domain.Models.ConfigModels;
 using LPMS.API.Middleware;
 using LPMS.EmailService.EmailService;
 using LPMS.Infrastructure.Interceptors;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,11 +29,13 @@ builder.Services.AddDbContext<LPMSDbContext>((sp, options) =>
     var auditingInterceptor = sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>()!;
    
     options
-        .UseSqlServer(connectionString)
+        .UseNpgsql(connectionString)
+        //.UseSqlServer(connectionString)
         .AddInterceptors(auditingInterceptor);
 });
 
-builder.Services.AddDbContext<SystemUserDbContext>(options => options.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<SystemUserDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<SystemUserDbContext>(options => options.UseNpgsql(connectionString));
 
 builder.Services.AddIdentity<SystemUser, SystemRole>(options =>
 {
@@ -94,7 +98,7 @@ builder.Services
         .AddInfrastructure()
         .AddAPI();
 
-builder.AddEmailService();
+//builder.AddEmailService();
 #endregion
 
 Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
@@ -165,5 +169,13 @@ app.UseMiddleware<CultureValidationMiddleware>();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetService<LPMSDbContext>();
+    dbContext.Database.Migrate();
+    var dbContext1 = scope.ServiceProvider.GetService<SystemUserDbContext>();
+    dbContext1.Database.Migrate();
+}
 
 app.Run();

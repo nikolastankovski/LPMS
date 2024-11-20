@@ -13,13 +13,12 @@ namespace LPMS.API.Controllers
     public class TestController : ControllerBase
     {
         private readonly TestService _test;
-        private readonly IEmailService _emailService;
+        //private readonly IEmailService _emailService;
         private readonly IReferenceRepository _referenceRepo;
 
-        public TestController(TestService test, IEmailService emailService, IReferenceRepository referenceRepo)
+        public TestController(TestService test, IReferenceRepository referenceRepo)
         {
             _test = test;
-            _emailService = emailService;
             _referenceRepo = referenceRepo;
         }
 
