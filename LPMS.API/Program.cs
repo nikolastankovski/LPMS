@@ -156,6 +156,7 @@ if (app.Environment.IsDevelopment())
     {
         opt.DefaultModelsExpandDepth(-1);
     });
+    await app.ApplyMigrationsAsync();
 }
 
 app.UseSerilogRequestLogging();
@@ -169,13 +170,5 @@ app.UseMiddleware<CultureValidationMiddleware>();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
-
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetService<LPMSDbContext>();
-    dbContext.Database.Migrate();
-    var dbContext1 = scope.ServiceProvider.GetService<SystemUserDbContext>();
-    dbContext1.Database.Migrate();
-}
 
 app.Run();
