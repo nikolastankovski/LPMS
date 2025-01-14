@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DocumentGenerator\DocumentGenerator.csproj" />
     <ProjectReference Include="..\LPMS.Infrastructure\LPMS.Infrastructure.csproj" />
   </ItemGroup>
 

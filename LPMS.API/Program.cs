@@ -13,10 +13,7 @@ using LPMS.Infrastructure.Data;
 using LPMS.Infrastructure.DbContexts;
 using LPMS.Domain.Models.ConfigModels;
 using LPMS.API.Middleware;
-using LPMS.EmailService.EmailService;
 using LPMS.Infrastructure.Interceptors;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -170,5 +167,9 @@ app.UseMiddleware<CultureValidationMiddleware>();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
+
+app.RegisterEndpoints();
+
+
 
 app.Run();

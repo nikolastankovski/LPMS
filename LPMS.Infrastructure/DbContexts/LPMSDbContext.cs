@@ -31,9 +31,7 @@ public partial class LPMSDbContext : DbContext
     public virtual DbSet<EmailHistory> EmailHistories { get; set; }
 
     public virtual DbSet<Endpoint> Endpoints { get; set; }
-
-    public virtual DbSet<EndpointOperation> EndpointOperations { get; set; }
-
+    
     public virtual DbSet<EndpointxSystemRole> EndpointxSystemRoles { get; set; }
     public virtual DbSet<Reference> References { get; set; }
 
@@ -193,32 +191,11 @@ public partial class LPMSDbContext : DbContext
 
             entity.ToTable("Endpoint");
 
-            entity.Property(e => e.Action).HasMaxLength(256);
-            entity.Property(e => e.Controller).HasMaxLength(256);
+            entity.Property(e => e.RequestPath).HasMaxLength(256);
             entity.Property(e => e.CreatedOnUTC)
                 .HasPrecision(3)
                 .HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
-            entity.Property(e => e.FullPath).HasMaxLength(500);
-            entity.Property(e => e.Method).HasMaxLength(10);
             entity.Property(e => e.ModifiedOnUTC).HasPrecision(3);
-            entity.Property(e => e.Route).HasMaxLength(256);
-        });
-
-        modelBuilder.Entity<EndpointOperation>(entity =>
-        {
-            entity.HasKey(e => e.EndpointOperationID).HasName("PK_EndpointOperation_EndpointOperationID");
-
-            entity.ToTable("EndpointOperation");
-
-            entity.Property(e => e.CreatedOnUTC)
-                .HasPrecision(3)
-                .HasDefaultValueSql("(NOW() AT TIME ZONE 'UTC')");
-            entity.Property(e => e.Read).HasDefaultValue(true);
-
-            entity.HasOne(d => d.Endpoint).WithMany(p => p.EndpointOperations)
-                .HasForeignKey(d => d.EndpointId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_EndpointOperation_Endpoint");
         });
 
         modelBuilder.Entity<EndpointxSystemRole>(entity =>

@@ -5,6 +5,7 @@ using LPMS.EmailService.EmailTemplates;
 using LPMS.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using ClassLibrary1;
 
 namespace LPMS.API.Controllers
 {
@@ -25,31 +26,9 @@ namespace LPMS.API.Controllers
         [HttpGet(nameof(Test))]
         public async Task<IActionResult> Test(string culture)
         {
-            var test = await _referenceRepo.GetAllAsync();
+            DocumentGenerator.Generate();
 
-            /*var test = EmailTemplates.Account_ForgotPassword.IndexOf("\\EmailTemplates\\");
-
-            var emailSetUp = new EmailSetUp()
-            {
-                To = new Address("stankovski.n@hotmail.com", "Nikola Stankovski"),
-                Subject = "Test",
-                EmailTemplate = EmailTemplates.Account_ForgotPassword,
-                Culture = CultureInfo.GetCultureInfo(culture),
-                Tokens = new { Name = "Nikola" }
-            };
-
-            var test123 = await _emailService.SendEmailAsync(emailSetUp);*/
-
-            return Ok(true);
-
-            /* string[] test1 = ["DPT1", "Test2"];
-             List<string> test2 = new List<string>() { "DPT1", "DPT2" };
-
-             var test = test2.Intersect(test1).Any();
-
-
-             return Ok(_test.Test(CultureInfo.GetCultureInfo(culture)));
-            */
+            return Ok();
         }
     }
 }
