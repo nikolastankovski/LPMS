@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using QuestPDF.Fluent;
+﻿using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 
@@ -58,7 +57,7 @@ public static class DocumentGenerator
                 .AlignMiddle();
         }
         
-        Document.Create(container =>
+       Document.Create(container =>
             {
                 container.Page(page =>
                 {
